@@ -1,11 +1,10 @@
-import 'dart:typed_data';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:dharmlok/models/audio_track_model.dart';
+import 'package:dharmlok/views/AudioTracksPage/progress_manager.dart';
 
 import '../../constants/AppColors.dart';
+import '../../constants/AppStrings.dart';
 import '../../extensions/device_size.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/background_image_widget.dart';
@@ -32,46 +31,29 @@ class _AudioTracksPageWidgetState extends State<AudioTracksPageWidget>
     with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _templeKey = GlobalKey();
 
-  AudioPlayer player = AudioPlayer();
-  bool isPlaying = false;
-  late Source audioSource;
-  Duration duration = const Duration(seconds: 0);
-  Duration currentPosition = const Duration(seconds: 0);
-  int maxDuration = 100;
-  int currentPos = 0;
-  String currentPostLabel = "00:00";
-  final assetsAudioPlayer = AssetsAudioPlayer();
+  late PageManager _pageManager;
+
+  String formatTime(Duration duration){
+    String twoDigits(int n ) => n.toString().padLeft(2,'0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes);
+    final seconds = twoDigits(duration.inSeconds);
+
+    return [
+      if(duration.inHours > 0) hours,
+      minutes,seconds
+    ].join(":");
+  }
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      player.onDurationChanged.listen((Duration d) {
-        //get the duration of audio
-        maxDuration = d.inMilliseconds;
-        setState(() {});
-      });
+  }
 
-      player.onPositionChanged.listen((Duration p) {
-        currentPos =
-            p.inMilliseconds; //get the current position of playing audio
-
-        //generating the duration label
-        int shours = Duration(milliseconds: currentPos).inHours;
-        int sminutes = Duration(milliseconds: currentPos).inMinutes;
-        int sseconds = Duration(milliseconds: currentPos).inSeconds;
-
-        int rhours = shours;
-        int rminutes = sminutes - (shours * 60);
-        int rseconds = sseconds - (sminutes * 60 + shours * 60 * 60);
-
-        currentPostLabel = "$rhours:$rminutes:$rseconds";
-
-        setState(() {
-          //refresh the UI
-        });
-      });
-    });
+  @override
+  void dispose() {
+    _pageManager.dispose();
+    super.dispose();
   }
 
   @override
@@ -123,154 +105,228 @@ class _AudioTracksPageWidgetState extends State<AudioTracksPageWidget>
                   height: context.height * 0.02,
                 ),
                 Expanded(
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child:
-                        widget.playList.isNotEmpty
-                            ? GridView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemCount: widget.playList.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio:
-                                      MediaQuery.of(context).size.width /
-                                          (MediaQuery.of(context).size.height /
-                                              1.1),
-                                ),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, right: 8.0, bottom: 12.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.brown, width: 8.0),
-                                          color: AppColors.onPrimary),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Image.network(
-                                              'https://www.dharmlok.com/view/${widget.playList[index].bannerImageUrl}',
-                                              fit: BoxFit.cover,
-                                              height: context.height * 0.2,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                widget.playList[index].title,
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    color: AppColors.primary,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                'By: ${widget.playList[index].description}',
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    color: AppColors.primary,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                // audioSource = UrlSource(
-                                                //     'https://www.dharmlok.com/view/${widget.playList[index].audioUrl}');
-                                                // //print('https://www.dharmlok.com/view/${widget.playList[index].audioUrl}');
-                                                // player.play(audioSource);
-                                                assetsAudioPlayer.open(
-                                                  Audio.network('https://www.dharmlok.com/view/${widget.playList[index].audioUrl}'),
-                                                  autoStart: true,
-                                                  showNotification: true,
-                                                );
-                                                assetsAudioPlayer.play();
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.red),
-                                              child: const Text(
-                                                'PLAY',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                          ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: widget.playList.isNotEmpty
+                        ? GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: widget.playList.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: MediaQuery.of(context)
+                                      .size
+                                      .width /
+                                  (MediaQuery.of(context).size.height / 1.1),
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0, right: 8.0, bottom: 12.0),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                      // border: Border.all(
+                                      //     color: Colors.brown, width: 8.0),
+                                      color: Colors.white70),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Image.network(
+                                          '${AppStrings.imageUrl}${widget.playList[index].bannerImageUrl}',
+                                          fit: BoxFit.cover,
+                                          height: context.height * 0.2,
                                         ),
-                                      ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            widget.playList[index].title,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'By: ${widget.playList[index].description}',
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                color: AppColors.primary,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            _pageManager = PageManager('${AppStrings.imageUrl}${widget.playList[index].audioUrl}');
+                                            //setAudio('https://www.dharmlok.com/view/${widget.playList[index].audioUrl}');
+                                            showModalBottomSheet(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                context: context,
+                                                isScrollControlled: true,
+                                                builder: (builder) {
+                                                  return Container(
+                                                    height:
+                                                        context.height * 0.65,
+                                                    color: Colors.transparent,
+                                                    //could change this to Color(0xFF737373),
+                                                    //so you don't have to change MaterialApp canvasColor
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          10.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          10.0))),
+                                                      child: Center(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            SizedBox(
+                                                              height: context
+                                                                      .height *
+                                                                  0.03,
+                                                            ),
+                                                            Image.network(
+                                                              '${AppStrings.imageUrl}${widget.playList[index].bannerImageUrl}',
+                                                              fit: BoxFit.cover,
+                                                              height: context
+                                                                      .height *
+                                                                  0.3,
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Text(
+                                                                widget
+                                                                    .playList[
+                                                                        index]
+                                                                    .title,
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    color: AppColors
+                                                                        .primary,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Text(
+                                                                'By: ${widget.playList[index].description}',
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    color: AppColors
+                                                                        .primary,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                            ValueListenableBuilder<ProgressBarState>(
+                                                              valueListenable: _pageManager.progressNotifier,
+                                                              builder: (_, value, __) {
+                                                                return Padding(
+                                                                  padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                                                                  child: ProgressBar(
+                                                                    progress: value.current,
+                                                                    buffered: value.buffered,
+                                                                    total: value.total,
+                                                                    onSeek: _pageManager.seek,
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                            ValueListenableBuilder<ButtonState>(
+                                                              valueListenable: _pageManager.buttonNotifier,
+                                                              builder: (_, value, __) {
+                                                                switch (value) {
+                                                                  case ButtonState.loading:
+                                                                    return Container(
+                                                                      margin: const EdgeInsets.all(8.0),
+                                                                      width: 32.0,
+                                                                      height: 32.0,
+                                                                      child: const CircularProgressIndicator(),
+                                                                    );
+                                                                  case ButtonState.paused:
+                                                                    return IconButton(
+                                                                      icon: const Icon(Icons.play_arrow),
+                                                                      iconSize: 32.0,
+                                                                      onPressed: _pageManager.play,
+                                                                    );
+                                                                  case ButtonState.playing:
+                                                                    return IconButton(
+                                                                      icon: const Icon(Icons.pause),
+                                                                      iconSize: 32.0,
+                                                                      onPressed: _pageManager.pause,
+                                                                    );
+                                                                }
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).whenComplete((){
+                                                  _pageManager.dispose();
+                                              print('Dispose is called');
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red),
+                                          child: const Text(
+                                            'PLAY',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                              )
-                            : SizedBox(
-                                height: context.height * 0.2,
-                                child: const Center(
-                                  child: Text('No Record Found'),
+                                  ),
                                 ),
-                              ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          width: context.width,
-                          height: context.height * 0.08,
-                          color: Colors.red,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: context.width * 0.6,
-                                child: Slider(
-                                  value: double.parse(currentPos.toString()),
-                                  min: 0,
-                                  max: double.parse(maxDuration.toString()),
-                                  divisions: maxDuration,
-                                  label: currentPostLabel,
-                                  onChanged: (double value) async {
-                                    int seekval = value.round();
-                                    player
-                                        .seek(Duration(milliseconds: seekval));
-                                  },
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  if(isPlaying){
-                                    player.pause();
-                                    setState(() {
-                                      isPlaying = false;
-                                    });
-                                  }
-                                  else{
-                                    player.play(audioSource);
-                                    setState(() {
-                                      isPlaying = true;
-                                    });
-                                  }
-                                },
-                                icon: Icon(
-                                    isPlaying ? Icons.pause : Icons.play_arrow),
-                              ),
-                            ],
+                              );
+                            },
+                          )
+                        : SizedBox(
+                            height: context.height * 0.2,
+                            child: const Center(
+                              child: Text('No Record Found'),
+                            ),
                           ),
-                        ),
-                      )
-                    ],
                   ),
                 )
               ],

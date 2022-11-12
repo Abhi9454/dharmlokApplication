@@ -50,7 +50,7 @@ class TemplePageWidget extends StatelessWidget {
                             icon: const Icon(Icons.arrow_back_ios)),
                         const ImageIcon(
                           AssetImage(AppAssets.templeImageWhite),
-                          color: Colors.brown,
+                          color: Color(0XFF604e36),
                           size: 50,
                         ),
                         const Padding(
@@ -59,7 +59,7 @@ class TemplePageWidget extends StatelessWidget {
                             AppStrings.temple,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.brown,
+                                color: Color(0XFF604e36),
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -77,10 +77,10 @@ class TemplePageWidget extends StatelessWidget {
                           onTap: () => templeModel.updateCategory('Sanatan'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Color(0XFF604e36)),
                               color: templeModel.category == 'Sanatan'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -99,10 +99,10 @@ class TemplePageWidget extends StatelessWidget {
                           onTap: () => templeModel.updateCategory('Buddhism'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Color(0XFF604e36)),
                               color: templeModel.category == 'Buddhism'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -125,10 +125,10 @@ class TemplePageWidget extends StatelessWidget {
                           onTap: () => templeModel.updateCategory('Sikh'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Color(0XFF604e36)),
                               color: templeModel.category == 'Sikh'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -147,10 +147,10 @@ class TemplePageWidget extends StatelessWidget {
                           onTap: () => templeModel.updateCategory('Jain'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Color(0XFF604e36)),
                               color: templeModel.category == 'Jain'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -184,7 +184,7 @@ class TemplePageWidget extends StatelessWidget {
                                 'In your city',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Colors.brown,
+                                    color: Color(0XFF604e36),
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -223,13 +223,12 @@ class TemplePageWidget extends StatelessWidget {
                                                             right: 8.0,
                                                             bottom: 12.0),
                                                     child: Container(
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(
-                                                              color:
-                                                                  Colors.brown,
-                                                              width: 8.0),
-                                                          color: AppColors
-                                                              .onPrimary),
+                                                      decoration: const BoxDecoration(
+                                                          // border: Border.all(
+                                                          //     color:
+                                                          //         Color(0XFF604e36),
+                                                          //     width: 8.0),
+                                                          color: Colors.white60),
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -237,7 +236,7 @@ class TemplePageWidget extends StatelessWidget {
                                                         child: Column(
                                                           children: [
                                                             Image.network(
-                                                              'https://www.dharmlok.com/view/${templeModel.myTempleList[index].bannerImageUrl}',
+                                                              '${AppStrings.imageUrl}${templeModel.myTempleList[index].bannerImageUrl}',
                                                               fit: BoxFit
                                                                   .contain,
                                                               height: context
@@ -258,8 +257,7 @@ class TemplePageWidget extends StatelessWidget {
                                                                     TextOverflow
                                                                         .ellipsis,
                                                                 style: const TextStyle(
-                                                                    color: AppColors
-                                                                        .primary,
+                                                                    color: Colors.black,
                                                                     fontSize:
                                                                         14,
                                                                     fontWeight:
@@ -273,9 +271,9 @@ class TemplePageWidget extends StatelessWidget {
                                                                     imageLinks =
                                                                     [];
                                                                 imageLinks.add(
-                                                                    'https://www.dharmlok.com/view/${templeModel.otherTempleList[index].bannerImageUrl}');
+                                                                    '${AppStrings.imageUrl}${templeModel.otherTempleList[index].bannerImageUrl}');
                                                                 imageLinks.add(
-                                                                    'https://www.dharmlok.com/view/${templeModel.otherTempleList[index].relatedImageUrl}');
+                                                                    '${AppStrings.imageUrl}${templeModel.otherTempleList[index].relatedImageUrl}');
                                                                 Navigator.of(
                                                                         context)
                                                                     .push(MaterialPageRoute(
@@ -325,7 +323,7 @@ class TemplePageWidget extends StatelessWidget {
                                 'In Other City',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Colors.brown,
+                                    color: Color(0XFF604e36),
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -355,12 +353,13 @@ class TemplePageWidget extends StatelessWidget {
                                                     right: 8.0,
                                                     bottom: 12.0),
                                                 child: Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.brown,
-                                                          width: 8.0),
+                                                  decoration: const BoxDecoration(
+                                                      // border: Border.all(
+                                                      //     color: Color(0XFF604e36),
+                                                      //     width: 8.0),
+                                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                                       color:
-                                                          AppColors.onPrimary),
+                                                          Colors.white60),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.all(
@@ -368,7 +367,7 @@ class TemplePageWidget extends StatelessWidget {
                                                     child: Column(
                                                       children: [
                                                         Image.network(
-                                                          'https://www.dharmlok.com/view/${templeModel.otherTempleList[index].bannerImageUrl}',
+                                                          '${AppStrings.imageUrl}${templeModel.otherTempleList[index].bannerImageUrl}',
                                                           fit: BoxFit.contain,
                                                           height:
                                                               context.height *
@@ -388,8 +387,7 @@ class TemplePageWidget extends StatelessWidget {
                                                                 TextOverflow
                                                                     .ellipsis,
                                                             style: const TextStyle(
-                                                                color: AppColors
-                                                                    .primary,
+                                                                color: Colors.black,
                                                                 fontSize: 14,
                                                                 fontWeight:
                                                                     FontWeight
@@ -401,9 +399,9 @@ class TemplePageWidget extends StatelessWidget {
                                                             List<String>
                                                                 imageLinks = [];
                                                             imageLinks.add(
-                                                                'https://www.dharmlok.com/view/${templeModel.otherTempleList[index].bannerImageUrl}');
+                                                                '${AppStrings.imageUrl}${templeModel.otherTempleList[index].bannerImageUrl}');
                                                             imageLinks.add(
-                                                                'https://www.dharmlok.com/view/${templeModel.otherTempleList[index].relatedImageUrl}');
+                                                                '${AppStrings.imageUrl}${templeModel.otherTempleList[index].relatedImageUrl}');
                                                             Navigator.of(context).push(
                                                                 MaterialPageRoute(
                                                                     builder:

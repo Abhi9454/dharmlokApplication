@@ -9,7 +9,7 @@ class BackgroundOverlayWidget extends StatelessWidget {
     return Container(
       width: context.width,
       height: context.height,
-      color: Colors.white.withOpacity(0.8),
+      color: Colors.blue.withOpacity(0.1),
     );
   }
 }

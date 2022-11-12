@@ -8,7 +8,7 @@ class BackgroundImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image(
       image: const AssetImage(
-        'images/background.png',
+        'images/background.jpeg',
       ),
       width: context.width,
       height: context.height,

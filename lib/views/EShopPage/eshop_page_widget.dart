@@ -1,8 +1,6 @@
 import 'package:dharmlok/constants/AppColors.dart';
 import 'package:dharmlok/extensions/device_size.dart';
-import 'package:dharmlok/viewModels/bal_vidya_view_model.dart';
 import 'package:dharmlok/viewModels/eshop_view_model.dart';
-import 'package:dharmlok/views/PdfViewer/pdf_viewer_page_widget.dart';
 import 'package:dharmlok/views/ProductDetailPage/product_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -146,17 +144,18 @@ class EShopPageWidget extends StatelessWidget {
                                               bottom: 12.0),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.brown,
-                                                    width: 8.0),
-                                                color: AppColors.onPrimary),
+                                              // border: Border.all(
+                                              //     color: Colors.brown,
+                                              //     width: 8.0),
+                                                borderRadius: BorderRadius.circular(10.0),
+                                                color: Colors.white70),
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
                                                   Image.network(
-                                                    'https://www.dharmlok.com/view/${eshopModel.productList[index].imageUrl}',
+                                                    '${AppStrings.imageUrl}${eshopModel.productList[index].imageUrl}',
                                                     fit: BoxFit.cover,
                                                     height:
                                                         context.height * 0.2,
@@ -174,7 +173,7 @@ class EShopPageWidget extends StatelessWidget {
                                                           TextOverflow.ellipsis,
                                                       style: const TextStyle(
                                                           color:
-                                                              AppColors.primary,
+                                                              Colors.black,
                                                           fontSize: 14,
                                                           fontWeight:
                                                               FontWeight.bold),
@@ -191,7 +190,7 @@ class EShopPageWidget extends StatelessWidget {
                                                           TextOverflow.ellipsis,
                                                       style: const TextStyle(
                                                           color:
-                                                              AppColors.primary,
+                                                              Colors.black,
                                                           fontSize: 14,
                                                           fontWeight:
                                                               FontWeight.bold),

@@ -81,7 +81,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                         const Text(
                           'Profile',
                           style: TextStyle(
-                              color: AppColors.primary,
+                              color: Color(0XFF604E36),
                               fontSize: 22,
                               fontWeight: FontWeight.bold),
                         )
@@ -118,11 +118,11 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                             profileModel.setSelectedTab(0),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.brown),
+                                            // border:
+                                            //     Border.all(color: Colors.brown),
                                             color: profileModel.selectedTab == 0
-                                                ? Colors.orange
-                                                : Colors.yellow,
+                                                ? Colors.white70
+                                                : Colors.white30,
                                             borderRadius: const BorderRadius
                                                     .all(
                                                 Radius.circular(
@@ -144,11 +144,11 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.brown),
+                                            // border:
+                                            //     Border.all(color: Colors.brown),
                                             color: profileModel.selectedTab == 1
-                                                ? Colors.orange
-                                                : Colors.yellow,
+                                                ? Colors.white70
+                                                : Colors.white30,
                                             borderRadius: const BorderRadius
                                                     .all(
                                                 Radius.circular(
@@ -172,11 +172,11 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                             profileModel.setSelectedTab(2),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.brown),
+                                            // border:
+                                            //     Border.all(color: Colors.brown),
                                             color: profileModel.selectedTab == 2
-                                                ? Colors.orange
-                                                : Colors.yellow,
+                                                ? Colors.white70
+                                                : Colors.white30,
                                             borderRadius: const BorderRadius
                                                     .all(
                                                 Radius.circular(
@@ -197,11 +197,11 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                             profileModel.setSelectedTab(3),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.brown),
+                                            // border:
+                                            //     Border.all(color: Colors.brown),
                                             color: profileModel.selectedTab == 3
-                                                ? Colors.orange
-                                                : Colors.yellow,
+                                                ? Colors.white70
+                                                : Colors.white30,
                                             borderRadius: const BorderRadius
                                                     .all(
                                                 Radius.circular(

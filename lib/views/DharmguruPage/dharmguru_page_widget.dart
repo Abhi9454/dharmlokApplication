@@ -70,7 +70,7 @@ class DharmguruPageWidget extends StatelessWidget {
                                 AppStrings.dharmaGuru,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Colors.brown,
+                                    color: Color(0XFF604e36),
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -89,10 +89,10 @@ class DharmguruPageWidget extends StatelessWidget {
                                   'Sanatan', 'Dharmguru'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Sanatan'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here
@@ -112,10 +112,10 @@ class DharmguruPageWidget extends StatelessWidget {
                                   'Buddhism', 'Dharmguru'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                 // border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Buddhism'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here
@@ -139,10 +139,10 @@ class DharmguruPageWidget extends StatelessWidget {
                                   'Sikh', 'Dharmguru'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Sikh'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here
@@ -162,10 +162,10 @@ class DharmguruPageWidget extends StatelessWidget {
                                   'Jain', 'Dharmguru'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Jain'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here

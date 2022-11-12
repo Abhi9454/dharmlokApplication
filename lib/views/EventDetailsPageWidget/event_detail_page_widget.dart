@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
+import '../../constants/AppStrings.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
@@ -98,7 +99,7 @@ class EventDetailPageWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Image.network(
-                          'https://www.dharmlok.com/view/$eventImage',
+                          '${AppStrings.imageUrl}$eventImage',
                           fit: BoxFit.contain,
                           height: context.height * 0.45,
                         ),

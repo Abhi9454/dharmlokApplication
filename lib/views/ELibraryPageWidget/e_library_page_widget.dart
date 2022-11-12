@@ -78,10 +78,10 @@ class ELibraryPageWidget extends StatelessWidget {
                           onTap: () => ebookModel.updateCategory('Sanatan'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: ebookModel.category == 'Sanatan'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -100,10 +100,10 @@ class ELibraryPageWidget extends StatelessWidget {
                           onTap: () => ebookModel.updateCategory('Buddhism'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: ebookModel.category == 'Buddhism'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -126,10 +126,10 @@ class ELibraryPageWidget extends StatelessWidget {
                           onTap: () => ebookModel.updateCategory('Sikh'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: ebookModel.category == 'Sikh'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -148,10 +148,10 @@ class ELibraryPageWidget extends StatelessWidget {
                           onTap: () => ebookModel.updateCategory('Jain'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: ebookModel.category == 'Jain'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -223,11 +223,11 @@ class ELibraryPageWidget extends StatelessWidget {
                                                           bottom: 12.0),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.brown,
-                                                            width: 8.0),
-                                                        color: AppColors
-                                                            .onPrimary),
+                                                        // border: Border.all(
+                                                        //     color: Colors.brown,
+                                                        //     width: 8.0),
+                                                      borderRadius: BorderRadius.circular(10.0),
+                                                        color: Colors.white70),
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -235,7 +235,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                       child: Column(
                                                         children: [
                                                           Image.network(
-                                                            'https://www.dharmlok.com/view/${ebookModel.ebookTrendingList[index].thumbNailImageUrl}',
+                                                            '${AppStrings.imageUrl}${ebookModel.ebookTrendingList[index].thumbNailImageUrl}',
                                                             fit: BoxFit.cover,
                                                             height:
                                                                 context.height *
@@ -255,8 +255,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                                   TextOverflow
                                                                       .ellipsis,
                                                               style: const TextStyle(
-                                                                  color: AppColors
-                                                                      .primary,
+                                                                  color: Colors.black,
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
@@ -340,17 +339,18 @@ class ELibraryPageWidget extends StatelessWidget {
                                                   bottom: 12.0),
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.brown,
-                                                        width: 8.0),
-                                                    color: AppColors.onPrimary),
+                                                  // border: Border.all(
+                                                  //     color: Colors.brown,
+                                                  //     width: 8.0),
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    color: Colors.white70),
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Column(
                                                     children: [
                                                       Image.network(
-                                                        'https://www.dharmlok.com/view/${ebookModel.ebookDevotionList[index].thumbNailImageUrl}',
+                                                        '${AppStrings.imageUrl}${ebookModel.ebookDevotionList[index].thumbNailImageUrl}',
                                                         fit: BoxFit.cover,
                                                         height: context.height *
                                                             0.2,
@@ -368,8 +368,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           style: const TextStyle(
-                                                              color: AppColors
-                                                                  .primary,
+                                                              color: Colors.black,
                                                               fontSize: 14,
                                                               fontWeight:
                                                                   FontWeight
@@ -452,17 +451,18 @@ class ELibraryPageWidget extends StatelessWidget {
                                                   bottom: 12.0),
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.brown,
-                                                        width: 8.0),
-                                                    color: AppColors.onPrimary),
+                                                  // border: Border.all(
+                                                  //     color: Colors.brown,
+                                                  //     width: 8.0),
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    color: Colors.white70),
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Column(
                                                     children: [
                                                       Image.network(
-                                                        'https://www.dharmlok.com/view/${ebookModel.ebookFictionList[index].thumbNailImageUrl}',
+                                                        '${AppStrings.imageUrl}${ebookModel.ebookFictionList[index].thumbNailImageUrl}',
                                                         fit: BoxFit.cover,
                                                         height: context.height *
                                                             0.2,
@@ -480,8 +480,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           style: const TextStyle(
-                                                              color: AppColors
-                                                                  .primary,
+                                                              color: Colors.black,
                                                               fontSize: 14,
                                                               fontWeight:
                                                                   FontWeight

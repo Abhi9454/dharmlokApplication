@@ -113,18 +113,19 @@ class DharamshalaPageWidget extends StatelessWidget {
                                               right: 8.0,
                                               bottom: 12.0),
                                           child: Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.brown,
-                                                    width: 8.0),
-                                                color: AppColors.onPrimary),
+                                            decoration:BoxDecoration(
+                                              // border: Border.all(
+                                              //     color: Colors.brown,
+                                              //     width: 8.0),
+                                                borderRadius: BorderRadius.circular(10.0),
+                                                color: Colors.white70),
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
                                                   Image.network(
-                                                    'https://www.dharmlok.com/view/${dharmshalaModel.dharmshalaList[index].bannerImageUrl}',
+                                                    '${AppStrings.imageUrl}${dharmshalaModel.dharmshalaList[index].bannerImageUrl}',
                                                     fit: BoxFit.cover,
                                                     height:
                                                         context.height * 0.2,
@@ -142,7 +143,7 @@ class DharamshalaPageWidget extends StatelessWidget {
                                                       maxLines: 2,
                                                       style: const TextStyle(
                                                           color:
-                                                              AppColors.primary,
+                                                              Colors.black,
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.bold),
@@ -159,7 +160,7 @@ class DharamshalaPageWidget extends StatelessWidget {
                                                       maxLines: 1,
                                                       style: const TextStyle(
                                                           color:
-                                                              AppColors.primary,
+                                                              Colors.black,
                                                           fontSize: 13,
                                                           fontWeight: FontWeight
                                                               .normal),
@@ -170,9 +171,9 @@ class DharamshalaPageWidget extends StatelessWidget {
                                                       List<String> imageLinks =
                                                           [];
                                                       imageLinks.add(
-                                                          'https://www.dharmlok.com/view/${dharmshalaModel.dharmshalaList[index].bannerImageUrl}');
+                                                          '${AppStrings.imageUrl}${dharmshalaModel.dharmshalaList[index].bannerImageUrl}');
                                                       imageLinks.add(
-                                                          'https://www.dharmlok.com/view/${dharmshalaModel.dharmshalaList[index].relatedImageUrl}');
+                                                          '${AppStrings.imageUrl}${dharmshalaModel.dharmshalaList[index].relatedImageUrl}');
                                                       String location =
                                                           '${dharmshalaModel.dharmshalaList[index].city},${dharmshalaModel.dharmshalaList[index].state}';
                                                       Navigator.of(context).push(

@@ -26,6 +26,7 @@ import 'package:dharmlok/widgets/background_overlay_widget.dart';
 import 'package:dharmlok/widgets/drawer_widget.dart';
 import 'package:dharmlok/widgets/home_container_tile_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../extensions/device_size.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,17 @@ class HomePageWidget extends StatelessWidget {
   HomePageWidget({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+
+  Future<void> _launchInBrowser() async {
+    if (!await launchUrl(
+      Uri.parse('https://www.dharmlok.in'),
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +78,14 @@ class HomePageWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: context.height * 0.03,
-                          ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 10.0, right: 10.0, bottom: 15.0),
+                                left: 10.0, right: 10.0, bottom: 12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.dharmaGuruImageWhite,
+                                    imageName: AppAssets.dharmaGuruImage,
                                     imageText: AppStrings.dharmaGuru,
                                     onPressed: () {
                                       Navigator.push(
@@ -96,7 +105,7 @@ class HomePageWidget extends StatelessWidget {
                                                           DharmguruPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.kathavachakImageWhite,
+                                    imageName: AppAssets.kathavachakImage,
                                     imageText: AppStrings.kathavachak,
                                     onPressed: () {
                                       Navigator.push(
@@ -116,7 +125,7 @@ class HomePageWidget extends StatelessWidget {
                                                           KathavachakPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.templeImageWhite,
+                                    imageName: AppAssets.templeImage,
                                     imageText: AppStrings.temple,
                                     onPressed: () {
                                       Navigator.push(
@@ -140,12 +149,12 @@ class HomePageWidget extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 10.0, right: 10.0, bottom: 15.0),
+                                left: 10.0, right: 10.0, bottom: 12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.balVidyaImageWhite,
+                                    imageName: AppAssets.balVidyaImage,
                                     imageText: AppStrings.balVidya,
                                     onPressed: () {
                                       Navigator.push(
@@ -162,7 +171,7 @@ class HomePageWidget extends StatelessWidget {
                                                   ], child: BalVidyaPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.audioImageWhite,
+                                    imageName: AppAssets.audioImage,
                                     imageText: AppStrings.audioLibrary,
                                     onPressed: () {
                                       Navigator.push(
@@ -182,7 +191,7 @@ class HomePageWidget extends StatelessWidget {
                                                       AudioPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.eLibraryImageWhite,
+                                    imageName: AppAssets.eLibraryImage,
                                     imageText: AppStrings.eLibrary,
                                     onPressed: () {
                                       Navigator.push(
@@ -206,12 +215,12 @@ class HomePageWidget extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 10.0, right: 10.0, bottom: 15.0),
+                                left: 10.0, right: 10.0, bottom: 12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.eventImageWhite,
+                                    imageName: AppAssets.eventImage,
                                     imageText: AppStrings.eventBooking,
                                     onPressed: () {
                                       Navigator.push(
@@ -231,7 +240,7 @@ class HomePageWidget extends StatelessWidget {
                                                           EventBookingPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.poojaImageWhite,
+                                    imageName: AppAssets.poojaImage,
                                     imageText: AppStrings.bookPooja,
                                     onPressed: () {
                                       Navigator.push(
@@ -248,7 +257,7 @@ class HomePageWidget extends StatelessWidget {
                                                   ], child: PoojaPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.dharmshalaImageWhite,
+                                    imageName: AppAssets.dharmshalaImage,
                                     imageText: AppStrings.dharmshala,
                                     onPressed: () {
                                       Navigator.push(
@@ -269,12 +278,12 @@ class HomePageWidget extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 10.0, right: 10.0, bottom: 15.0),
+                                left: 10.0, right: 10.0, bottom: 12.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.eshopImageWhite,
+                                    imageName: AppAssets.eshopImage,
                                     imageText: AppStrings.eshop,
                                     onPressed: () {
                                       Navigator.push(
@@ -291,7 +300,7 @@ class HomePageWidget extends StatelessWidget {
                                                   ], child: EShopPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.dharshanImageWhite,
+                                    imageName: AppAssets.dharshanImage,
                                     imageText: AppStrings.liveDharshan,
                                     onPressed: () {
                                       Navigator.push(
@@ -308,7 +317,7 @@ class HomePageWidget extends StatelessWidget {
                                                   ], child: DharshanPageWidget())));
                                     }),
                                 HomeContainerTileWidget(
-                                    imageName: AppAssets.panchangImageWhite,
+                                    imageName: AppAssets.panchangImage,
                                     imageText: AppStrings.dailyPanchang,
                                     onPressed: () => Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -317,19 +326,28 @@ class HomePageWidget extends StatelessWidget {
                               ],
                             ),
                           ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: HomeContainerTileWidget(
+                                  imageName: AppAssets.travelImage,
+                                  imageText: 'Travel',
+                                  onPressed: () => _launchInBrowser()),
+                            ),
+                          ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 18.0, right: 18.0),
                             child: Container(
                               width: context.width,
-                              height: context.height * 0.07,
-                              color: Colors.red,
+                              height: context.height * 0.06,
+                              color: const Color(0XFFa60606),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(right: 15.0),
+                                    padding: EdgeInsets.only(right: 10.0),
                                     child: Text(
                                       'Today\'s Aarti',
                                       style: TextStyle(
@@ -346,9 +364,9 @@ class HomePageWidget extends StatelessWidget {
                                     child: const Text(
                                       'Start',
                                       style: TextStyle(
-                                          color: Colors.brown,
+                                          color: Color(0XFF604e36),
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 20),
+                                          fontSize: 17),
                                     ),
                                   )
                                 ],

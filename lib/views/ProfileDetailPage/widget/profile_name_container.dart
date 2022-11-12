@@ -29,7 +29,7 @@ class ProfileNameContainer extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                      color: AppColors.primary,
+                      color: Color(0XFF604E36),
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
@@ -37,7 +37,7 @@ class ProfileNameContainer extends StatelessWidget {
               Text(
                 category,
                 style: const TextStyle(
-                    color: AppColors.primary,
+                    color: Color(0XFF604E36),
                     fontSize: 16,
                     fontWeight: FontWeight.normal),
               )

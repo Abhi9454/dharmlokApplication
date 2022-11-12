@@ -14,10 +14,13 @@ class HomeContainerTileWidget extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: context.width * 0.28,
-        height: context.height * 0.15,
-        color: Colors.brown,
+        height: context.height * 0.13,
+        decoration: const BoxDecoration(
+          color: Colors.white70,
+          borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(3.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,18 +29,19 @@ class HomeContainerTileWidget extends StatelessWidget {
                 image: AssetImage(
                   imageName,
                 ),
-                width: 45,
-                height: 45,
-                fit: BoxFit.cover,
+                width: 50,
+                height: 50,
+                fit: BoxFit.contain,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 2.0),
                 child: Text(
                   imageText,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
                   style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                      color: Color(0XFF604E36),
+                      fontSize: 12,
                       fontWeight: FontWeight.bold),
                 ),
               ),

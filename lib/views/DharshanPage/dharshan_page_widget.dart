@@ -95,10 +95,10 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                           onTap: () => dharshanModel.updateCategory('Sanatan'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: dharshanModel.category == 'Sanatan'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -117,10 +117,10 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                           onTap: () => dharshanModel.updateCategory('Buddhism'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: dharshanModel.category == 'Buddhism'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -139,10 +139,10 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                           onTap: () => dharshanModel.updateCategory('Sikh'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: dharshanModel.category == 'Sikh'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -161,10 +161,10 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                           onTap: () => dharshanModel.updateCategory('Jain'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: dharshanModel.category == 'Jain'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -235,12 +235,12 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                                                           right: 8.0,
                                                           bottom: 12.0),
                                                   child: Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.brown,
-                                                            width: 8.0),
-                                                        color: AppColors
-                                                            .onPrimary),
+                                                    decoration: const BoxDecoration(
+                                                      // border: Border.all(
+                                                      //     color: Colors.brown,
+                                                      //     width: 8.0),
+                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                        color: Colors.white70),
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -287,8 +287,7 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                                                                   TextOverflow
                                                                       .ellipsis,
                                                               style: const TextStyle(
-                                                                  color: AppColors
-                                                                      .primary,
+                                                                  color: Colors.black,
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
@@ -355,12 +354,12 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                                                           right: 8.0,
                                                           bottom: 12.0),
                                                   child: Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.brown,
-                                                            width: 8.0),
-                                                        color: AppColors
-                                                            .onPrimary),
+                                                    decoration: const BoxDecoration(
+                                                      // border: Border.all(
+                                                      //     color: Colors.brown,
+                                                      //     width: 8.0),
+                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                        color: Colors.white70),
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -425,8 +424,7 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                                                                   TextOverflow
                                                                       .ellipsis,
                                                               style: const TextStyle(
-                                                                  color: AppColors
-                                                                      .primary,
+                                                                  color: Colors.black,
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight

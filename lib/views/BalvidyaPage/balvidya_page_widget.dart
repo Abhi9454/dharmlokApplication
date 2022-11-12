@@ -50,7 +50,7 @@ class BalVidyaPageWidget extends StatelessWidget {
                           icon: const Icon(Icons.arrow_back_ios)),
                       const ImageIcon(
                         AssetImage(AppAssets.balVidyaImageWhite),
-                        color: Colors.brown,
+                        color: Color(0XFF604E36),
                         size: 50,
                       ),
                       const Padding(
@@ -59,7 +59,7 @@ class BalVidyaPageWidget extends StatelessWidget {
                           AppStrings.balVidya,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Colors.brown,
+                              color: Color(0XFF604E36),
                               fontSize: 30,
                               fontWeight: FontWeight.bold),
                         ),
@@ -77,10 +77,10 @@ class BalVidyaPageWidget extends StatelessWidget {
                         onTap: () => balModel.updateCategory('Sanatan'),
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.brown),
+                            //border: Border.all(color: Color(OXFF604E36)),
                             color: balModel.category == 'Sanatan'
-                                ? Colors.orange
-                                : Colors.yellow,
+                                ? Colors.white70
+                                : Colors.white30,
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(
                                     5.0) //                 <--- border radius here
@@ -99,10 +99,10 @@ class BalVidyaPageWidget extends StatelessWidget {
                         onTap: () => balModel.updateCategory('Buddhism'),
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.brown),
+                            //border: Border.all(color: Color(OXFF604E36)),
                             color: balModel.category == 'Buddhism'
-                                ? Colors.orange
-                                : Colors.yellow,
+                                ? Colors.white70
+                                : Colors.white30,
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(
                                     5.0) //                 <--- border radius here
@@ -125,10 +125,10 @@ class BalVidyaPageWidget extends StatelessWidget {
                         onTap: () => balModel.updateCategory('Sikh'),
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.brown),
+                           // border: Border.all(color: Color(OXFF604E36)),
                             color: balModel.category == 'Sikh'
-                                ? Colors.orange
-                                : Colors.yellow,
+                                ? Colors.white70
+                                : Colors.white30,
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(
                                     5.0) //                 <--- border radius here
@@ -147,10 +147,10 @@ class BalVidyaPageWidget extends StatelessWidget {
                         onTap: () => balModel.updateCategory('Jain'),
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.brown),
+                            //border: Border.all(color: Color(OXFF604E36)),
                             color: balModel.category == 'Jain'
-                                ? Colors.orange
-                                : Colors.yellow,
+                                ? Colors.white70
+                                : Colors.white30,
                             borderRadius: const BorderRadius.all(
                                 Radius.circular(
                                     5.0) //                 <--- border radius here
@@ -212,17 +212,18 @@ class BalVidyaPageWidget extends StatelessWidget {
                                             right: 8.0,
                                             bottom: 12.0),
                                         child: Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.brown,
-                                                  width: 8.0),
-                                              color: AppColors.onPrimary),
+                                          decoration: const BoxDecoration(
+                                              // border: Border.all(
+                                              //     color: Color(OXFF604E36),
+                                              //     width: 8.0),
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                              color: Colors.white70),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               children: [
                                                 Image.network(
-                                                  'https://www.dharmlok.com/view/${balModel.balVidyaDetails[index].thumbNailImageUrl}',
+                                                  '${AppStrings.imageUrl}${balModel.balVidyaDetails[index].thumbNailImageUrl}',
                                                   fit: BoxFit.cover,
                                                   height: context.height * 0.2,
                                                 ),
@@ -238,7 +239,7 @@ class BalVidyaPageWidget extends StatelessWidget {
                                                         TextOverflow.ellipsis,
                                                     style: const TextStyle(
                                                         color:
-                                                            AppColors.primary,
+                                                            Colors.black,
                                                         fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.bold),

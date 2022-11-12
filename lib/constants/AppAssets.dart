@@ -19,11 +19,12 @@ class AppAssets{
   static const eventImageWhite = '$basePath/event_w.png';
   static const kathavachakImage = '$basePath/kathavachak_b.png';
   static const kathavachakImageWhite = '$basePath/kathavachak_w.png';
-  static const panchangImage = '$basePath/panchang_b.png';
+  static const panchangImage = '$basePath/panchang.png';
   static const panchangImageWhite = '$basePath/panchang_w.png';
   static const poojaImage = '$basePath/pooja_b.png';
   static const poojaImageWhite = '$basePath/pooja_w.png';
   static const templeImage = '$basePath/temple_b.png';
+  static const travelImage = '$basePath/travel.png';
   static const templeImageWhite = '$basePath/temple_w.png';
   static const myOrdersImage = '$basePath/myOrders_b.png';
   static const profileImage = '$basePath/profile_b.png';

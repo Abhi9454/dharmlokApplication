@@ -30,7 +30,7 @@ class TempleDetailPageWidget extends StatelessWidget {
   final String state;
   final String userLocation;
 
-  late GoogleMapController mapController;
+  late final GoogleMapController mapController;
 
   final LatLng _center = const LatLng(8.5164032, 76.9359872);
 

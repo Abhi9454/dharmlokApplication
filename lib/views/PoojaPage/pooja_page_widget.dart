@@ -122,11 +122,11 @@ class PoojaPageWidget extends StatelessWidget {
                                                           bottom: 12.0),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.brown,
-                                                            width: 8.0),
-                                                        color: AppColors
-                                                            .onPrimary),
+                                                      // border: Border.all(
+                                                      //     color: Colors.brown,
+                                                      //     width: 8.0),
+                                                        borderRadius: BorderRadius.circular(10.0),
+                                                        color: Colors.white70),
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -134,7 +134,7 @@ class PoojaPageWidget extends StatelessWidget {
                                                       child: Column(
                                                         children: [
                                                           Image.network(
-                                                            'https://www.dharmlok.com/view/${poojaModel.myPoojaList[index].profileImageUrl}',
+                                                            '${AppStrings.imageUrl}${poojaModel.myPoojaList[index].profileImageUrl}',
                                                             fit: BoxFit.cover,
                                                             height:
                                                                 context.height *
@@ -154,8 +154,7 @@ class PoojaPageWidget extends StatelessWidget {
                                                                   TextOverflow
                                                                       .ellipsis,
                                                               style: const TextStyle(
-                                                                  color: AppColors
-                                                                      .primary,
+                                                                  color: Colors.black,
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
@@ -240,17 +239,18 @@ class PoojaPageWidget extends StatelessWidget {
                                                   bottom: 12.0),
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.brown,
-                                                        width: 8.0),
-                                                    color: AppColors.onPrimary),
+                                                  // border: Border.all(
+                                                  //     color: Colors.brown,
+                                                  //     width: 8.0),
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    color: Colors.white70),
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Column(
                                                     children: [
                                                       Image.network(
-                                                        'https://www.dharmlok.com/view/${poojaModel.otherPoojaList[index].profileImageUrl}',
+                                                        '${AppStrings.imageUrl}${poojaModel.otherPoojaList[index].profileImageUrl}',
                                                         fit: BoxFit.cover,
                                                         height: context.height *
                                                             0.2,
@@ -268,8 +268,7 @@ class PoojaPageWidget extends StatelessWidget {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           style: const TextStyle(
-                                                              color: AppColors
-                                                                  .primary,
+                                                              color: Colors.black,
                                                               fontSize: 14,
                                                               fontWeight:
                                                                   FontWeight

@@ -89,10 +89,10 @@ class KathavachakPageWidget extends StatelessWidget {
                                   'Sanatan', 'Kathavachak'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Sanatan'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here
@@ -112,10 +112,10 @@ class KathavachakPageWidget extends StatelessWidget {
                                   'Buddhism', 'Kathavachak'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Buddhism'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here
@@ -139,10 +139,10 @@ class KathavachakPageWidget extends StatelessWidget {
                                   'Sikh', 'Kathavachak'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Sikh'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here
@@ -162,10 +162,10 @@ class KathavachakPageWidget extends StatelessWidget {
                                   'Jain', 'Kathavachak'),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.brown),
+                                  //border: Border.all(color: Colors.brown),
                                   color: vendorModel.category == 'Jain'
-                                      ? Colors.orange
-                                      : Colors.yellow,
+                                      ? Colors.white70
+                                      : Colors.white30,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                           5.0) //                 <--- border radius here

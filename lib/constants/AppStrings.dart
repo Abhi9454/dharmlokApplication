@@ -6,7 +6,7 @@ class AppStrings{
   static const String audioLibrary = 'Audio Library';
   static const String temple = 'Temple';
   static const String balVidya = 'Bal Vidya';
-  static const String dharmshala = 'Book Dharamshala';
+  static const String dharmshala = 'Dharamshala';
   static const String eshop = 'Eshop';
   static const String liveDharshan = 'Live Dharshan';
   static const String dailyPanchang = 'Daily Panchang';
@@ -14,4 +14,5 @@ class AppStrings{
 
   static const String apiUrl = 'https://dharmlok.com/api/';
   static const String signInButton = 'Sign In';
+  static const String imageUrl = 'https://dharmlok.s3.amazonaws.com/';
 }

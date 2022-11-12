@@ -7,6 +7,7 @@ import 'package:quantity_input/quantity_input.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/AppColors.dart';
+import '../../constants/AppStrings.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
@@ -105,7 +106,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                       child: Column(
                         children: [
                           Image.network(
-                            'https://www.dharmlok.com/view/${widget.productImage}',
+                            '${AppStrings.imageUrl}${widget.productImage}',
                             fit: BoxFit.cover,
                             height: context.height * 0.45,
                           ),
@@ -134,7 +135,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                               overflow:
                               TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  color: AppColors.primary,
+                                  color: Colors.black,
                                   fontSize: 22,
                                   fontWeight:
                                   FontWeight.bold),
@@ -146,7 +147,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                           Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Container(
-                              color: Colors.brown,
+                              color: Colors.white70,
                               width: context.width,
                               child:
                               Padding(
@@ -162,7 +163,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                                         maxLines: 15,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 16,
                                             fontWeight: FontWeight.normal),
                                       ),
@@ -175,7 +176,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                                         maxLines: 15,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 16,
                                             fontWeight: FontWeight.normal),
                                       ),
@@ -188,13 +189,13 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                                         maxLines: 15,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 16,
                                             fontWeight: FontWeight.normal),
                                       ),
                                     ),
                                     QuantityInput(
-                                        buttonColor: Colors.orange,
+                                        buttonColor: const Color(0XFFa60606),
                                         value: quantity,
                                         minValue: 1,
                                         maxValue: 300,

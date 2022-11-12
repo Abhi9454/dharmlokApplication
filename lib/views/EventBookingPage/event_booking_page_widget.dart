@@ -78,10 +78,10 @@ class EventBookingPageWidget extends StatelessWidget {
                           onTap: () => eventModel.updateCategory('Sanatan'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: eventModel.category == 'Sanatan'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -100,10 +100,10 @@ class EventBookingPageWidget extends StatelessWidget {
                           onTap: () => eventModel.updateCategory('Buddhism'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: eventModel.category == 'Buddhism'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -126,10 +126,10 @@ class EventBookingPageWidget extends StatelessWidget {
                           onTap: () => eventModel.updateCategory('Sikh'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: eventModel.category == 'Sikh'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -148,10 +148,10 @@ class EventBookingPageWidget extends StatelessWidget {
                           onTap: () => eventModel.updateCategory('Jain'),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.brown),
+                              //border: Border.all(color: Colors.brown),
                               color: eventModel.category == 'Jain'
-                                  ? Colors.orange
-                                  : Colors.yellow,
+                                  ? Colors.white70
+                                  : Colors.white30,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(
                                       5.0) //                 <--- border radius here
@@ -217,17 +217,18 @@ class EventBookingPageWidget extends StatelessWidget {
                                               bottom: 12.0),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.brown,
-                                                    width: 8.0),
-                                                color: AppColors.onPrimary),
+                                              // border: Border.all(
+                                              //     color: Colors.brown,
+                                              //     width: 8.0),
+                                                borderRadius: BorderRadius.circular(10.0),
+                                                color: Colors.white70),
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
                                                   Image.network(
-                                                    'https://www.dharmlok.com/view/${eventModel.eventDetails[index].bannerImageUrl}',
+                                                    '${AppStrings.imageUrl}${eventModel.eventDetails[index].bannerImageUrl}',
                                                     fit: BoxFit.contain,
                                                     height:
                                                         context.height * 0.2,
@@ -243,7 +244,7 @@ class EventBookingPageWidget extends StatelessWidget {
                                                       maxLines: 3,
                                                       style: const TextStyle(
                                                           color:
-                                                              AppColors.primary,
+                                                              Colors.black,
                                                           fontSize: 14,
                                                           fontWeight:
                                                               FontWeight.bold),

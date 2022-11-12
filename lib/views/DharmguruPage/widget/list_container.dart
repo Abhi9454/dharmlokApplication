@@ -1,6 +1,8 @@
 import 'package:dharmlok/extensions/device_size.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants/AppStrings.dart';
+
 class DharmguruListContainer extends StatelessWidget {
   const DharmguruListContainer({required this.profileImage,required this.name,required this.category,required this.onPressed,Key? key}) : super(key: key);
 
@@ -16,8 +18,8 @@ class DharmguruListContainer extends StatelessWidget {
       child: Container(
         height: context.height * 0.12,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.brown),
-          color: Colors.brown,
+          border: Border.all(color: Colors.white70),
+          color: Colors.white70,
           borderRadius: const BorderRadius.all(
               Radius.circular(
                   5.0) //                 <--- border radius here
@@ -36,29 +38,34 @@ class DharmguruListContainer extends StatelessWidget {
                     CircleAvatar(
                       radius: 30, // Image radius
                       backgroundImage: NetworkImage(
-                          'https://www.dharmlok.com/view/$profileImage'),
+                          '${AppStrings.imageUrl}$profileImage'),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                        CrossAxisAlignment.center,
                         children: [
                           SizedBox(
                             width : context.width * 0.5,
-                            child: Text(
-                              name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  color: Colors.yellow,
-                                  fontSize: 16),
+                            child: Center(
+                              child: Text(
+                                name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Color(0XFF604e36),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
                             ),
                           ),
                           Text(
                             'Dharmguru/$category',
                             style: const TextStyle(
-                                color: Colors.yellow,
+                                color: Color(0XFF604e36),
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16),
                           ),
                         ],
@@ -75,7 +82,7 @@ class DharmguruListContainer extends StatelessWidget {
                   style:
                   ElevatedButton.styleFrom(
                       backgroundColor:
-                      Colors.red),
+                      Color(0XFFA60606)),
                   child: const Text(
                     'View',
                     style: TextStyle(
