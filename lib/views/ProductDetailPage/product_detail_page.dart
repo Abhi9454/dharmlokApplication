@@ -22,6 +22,7 @@ class ProductDetailPageWidget extends StatefulWidget {
         required this.vendorName,
         required this.vendorPhone,
         required this.productId,
+        required this.userLocation,
         Key? key})
       : super(key: key);
 
@@ -34,6 +35,7 @@ class ProductDetailPageWidget extends StatefulWidget {
   final String vendorName;
   final String vendorPhone;
   final String productId;
+  final String userLocation;
 
   @override
   State<ProductDetailPageWidget> createState() => _ProductDetailPageWidgetState();
@@ -66,7 +68,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
               children: [
                 HomePageAppBarWidget(
                   scaffoldKey: _dharmshalaPageKey,
-                  location: 'New Delhi',
+                  location: widget.userLocation,
                   languageButtonPressed: () {},
                   logoutPressed: () {},
                 ),

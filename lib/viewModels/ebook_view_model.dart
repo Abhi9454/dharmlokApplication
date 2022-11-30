@@ -1,4 +1,5 @@
 
+import '../helpers/location_manager.dart';
 import '../models/ebook_model.dart';
 import '../../services/ebook_service.dart';
 
@@ -16,6 +17,15 @@ class EbookViewModel extends ChangeNotifier {
   String category = 'Sanatan';
 
   Status get status => _status;
+
+  final LocationManager _locationManager = LocationManager();
+
+  String userLocation = '';
+
+  getUserLocation() async{
+    userLocation = await _locationManager.getLocationName();
+    notifyListeners();
+  }
 
   List<EbookModel> _ebookTrendingList = [] ;
 

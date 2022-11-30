@@ -19,6 +19,7 @@ class EShopPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<EshopViewModel>(context, listen: false).getUserLocation();
     Provider.of<EshopViewModel>(context, listen: false).getAllProducts();
     return Consumer<EshopViewModel>(builder: (con, eshopModel, _) {
       return Scaffold(
@@ -33,7 +34,7 @@ class EShopPageWidget extends StatelessWidget {
                 children: [
                   HomePageAppBarWidget(
                     scaffoldKey: _eshopKey,
-                    location: 'New Delhi',
+                    location: eshopModel.userLocation,
                     languageButtonPressed: () {},
                     logoutPressed: () {},
                   ),
@@ -132,7 +133,7 @@ class EShopPageWidget extends StatelessWidget {
                                                     .vendorPhoneNumber,
                                                 productId: eshopModel
                                                     .productList[index].id
-                                                    .toString(),
+                                                    .toString(), userLocation: eshopModel.userLocation,
                                               ),
                                             ),
                                           );

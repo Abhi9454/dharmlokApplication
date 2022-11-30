@@ -21,6 +21,7 @@ class EventBookingPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<EventViewModel>(context, listen: false).getUserLocation();
     Provider.of<EventViewModel>(context, listen: false).getAllEvents();
     return Consumer<EventViewModel>(
       builder: (con, eventModel, _) {
@@ -35,7 +36,7 @@ class EventBookingPageWidget extends StatelessWidget {
                   children: [
                     HomePageAppBarWidget(
                       scaffoldKey: _eventBookingPageKey,
-                      location: 'New Delhi',
+                      location: eventModel.userLocation,
                       languageButtonPressed: () {},
                       logoutPressed: () {},
                     ),
@@ -309,7 +310,7 @@ class EventBookingPageWidget extends StatelessWidget {
                                                             toTime: eventModel
                                                                 .eventDetails[
                                                                     index]
-                                                                .toTime,
+                                                                .toTime, userLocation: eventModel.userLocation,
                                                           ),
                                                         ),
                                                       );

@@ -18,7 +18,7 @@ class HttpService {
     return dio.post(url,
         data: json.encode(data),
         options: Options(
-            headers: headers, receiveTimeout: 10 * 1000, sendTimeout: 8 * 1000));
+            headers: headers, receiveTimeout: 25 * 1000, sendTimeout: 8 * 1000));
   }
 
   Future<Response<dynamic>> getUrl(String url, Map<String, dynamic> data,
@@ -31,6 +31,6 @@ class HttpService {
     };
     return dio.get(url,
         options: Options(
-            headers: headers, receiveTimeout: 10 * 1000, sendTimeout: 8 * 1000));
+            headers: headers, receiveTimeout: 25 * 1000, sendTimeout: 8 * 1000));
   }
 }

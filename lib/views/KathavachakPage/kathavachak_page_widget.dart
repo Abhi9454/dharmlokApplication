@@ -24,6 +24,7 @@ class KathavachakPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<VendorViewModel>(context, listen: false).getUserLocation();
     Provider.of<VendorViewModel>(context, listen: false)
         .getVendorList('Kathavachak');
     return Consumer<VendorViewModel>(builder: (con, vendorModel, _) {
@@ -39,7 +40,7 @@ class KathavachakPageWidget extends StatelessWidget {
                 children: [
                   HomePageAppBarWidget(
                     scaffoldKey: _dharmguruKey,
-                    location: 'New Delhi',
+                    location: vendorModel.userLocation,
                     languageButtonPressed: () {},
                     logoutPressed: () {},
                   ),
@@ -249,7 +250,10 @@ class KathavachakPageWidget extends StatelessWidget {
                                                                       .vendorDetails[
                                                                           index]
                                                                       .profileImageUrl,
-                                                                  userType: "0",
+                                                                  userType: "0", coverImageUrl: vendorModel
+                                                                        .vendorDetails[
+                                                                    index]
+                                                                        .coverImageUrl,
                                                                 ),
                                                               ),
                                                             ),

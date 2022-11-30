@@ -19,6 +19,7 @@ class ELibraryPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<EbookViewModel>(context, listen: false).getUserLocation();
     Provider.of<EbookViewModel>(context, listen: false).getTrendingEbook();
     Provider.of<EbookViewModel>(context, listen: false).getDevotionEbook();
     Provider.of<EbookViewModel>(context, listen: false).getFictionEbook();
@@ -35,7 +36,7 @@ class ELibraryPageWidget extends StatelessWidget {
                   children: [
                     HomePageAppBarWidget(
                       scaffoldKey: _eLibraryKey,
-                      location: 'New Delhi',
+                      location: ebookModel.userLocation,
                       languageButtonPressed: () {},
                       logoutPressed: () {},
                     ),
@@ -273,7 +274,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                                       pdfLink: ebookModel
                                                                           .ebookTrendingList[
                                                                               index]
-                                                                          .pdFuploadUrl)));
+                                                                          .pdFuploadUrl, userLocation: ebookModel.userLocation,)));
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(
@@ -386,7 +387,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                                   pdfLink: ebookModel
                                                                       .ebookDevotionList[
                                                                           index]
-                                                                      .pdFuploadUrl)));
+                                                                      .pdFuploadUrl, userLocation: ebookModel.userLocation,)));
                                                         },
                                                         style: ElevatedButton
                                                             .styleFrom(
@@ -498,7 +499,7 @@ class ELibraryPageWidget extends StatelessWidget {
                                                                   pdfLink: ebookModel
                                                                       .ebookFictionList[
                                                                           index]
-                                                                      .pdFuploadUrl)));
+                                                                      .pdFuploadUrl, userLocation: ebookModel.userLocation,)));
                                                         },
                                                         style: ElevatedButton
                                                             .styleFrom(

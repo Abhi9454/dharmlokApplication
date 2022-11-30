@@ -1,5 +1,6 @@
 
 
+import '../helpers/location_manager.dart';
 import '../models/post_model.dart';
 import '../models/profile_detail_model.dart';
 
@@ -40,6 +41,15 @@ class ProfileDetailViewModel extends ChangeNotifier {
   ProfileModel get profileDetails => _profileDetails;
 
   List<PostModel> get postList => _postList;
+
+  final LocationManager _locationManager = LocationManager();
+
+  String userLocation = '';
+
+  getUserLocation() async{
+    userLocation = await _locationManager.getLocationName();
+    notifyListeners();
+  }
 
   Future<void> _setProfileDetail(ProfileModel profileDetails) async {
     _profileDetails = profileDetails;

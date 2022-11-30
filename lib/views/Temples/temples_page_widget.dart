@@ -235,13 +235,18 @@ class TemplePageWidget extends StatelessWidget {
                                                                 .all(8.0),
                                                         child: Column(
                                                           children: [
-                                                            Image.network(
-                                                              '${AppStrings.imageUrl}${templeModel.myTempleList[index].bannerImageUrl}',
-                                                              fit: BoxFit
-                                                                  .contain,
-                                                              height: context
-                                                                      .height *
-                                                                  0.2,
+                                                            Container(
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(color: Colors.white70, width: 1.0)
+                                                              ),
+                                                              child: Image.network(
+                                                                '${AppStrings.imageUrl}${templeModel.myTempleList[index].bannerImageUrl}',
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                                height: context
+                                                                        .height *
+                                                                    0.2,
+                                                              ),
                                                             ),
                                                             Padding(
                                                               padding:
@@ -285,6 +290,8 @@ class TemplePageWidget extends StatelessWidget {
                                                                               city: templeModel.otherTempleList[index].city,
                                                                               state: templeModel.otherTempleList[index].state,
                                                                               userLocation: templeModel.userLocation,
+                                                                              latitude: templeModel.otherTempleList[index].latitude,
+                                                                              longitude: templeModel.otherTempleList[index].longitude,
                                                                             )));
                                                               },
                                                               style: ElevatedButton
@@ -366,12 +373,17 @@ class TemplePageWidget extends StatelessWidget {
                                                             8.0),
                                                     child: Column(
                                                       children: [
-                                                        Image.network(
-                                                          '${AppStrings.imageUrl}${templeModel.otherTempleList[index].bannerImageUrl}',
-                                                          fit: BoxFit.contain,
-                                                          height:
-                                                              context.height *
-                                                                  0.2,
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                              border: Border.all(color: Colors.white70, width: 2.0)
+                                                          ),
+                                                          child: Image.network(
+                                                            '${AppStrings.imageUrl}${templeModel.otherTempleList[index].bannerImageUrl}',
+                                                            fit: BoxFit.cover,
+                                                            height:
+                                                                context.height *
+                                                                    0.2,
+                                                          ),
                                                         ),
                                                         Padding(
                                                           padding:
@@ -414,6 +426,8 @@ class TemplePageWidget extends StatelessWidget {
                                                                               city: templeModel.otherTempleList[index].city,
                                                                               state: templeModel.otherTempleList[index].state,
                                                                               userLocation: templeModel.userLocation,
+                                                                              latitude: templeModel.otherTempleList[index].latitude,
+                                                                              longitude: templeModel.otherTempleList[index].longitude,
                                                                             )));
                                                           },
                                                           style: ElevatedButton

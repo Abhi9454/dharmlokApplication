@@ -14,6 +14,8 @@ class TempleDetails {
     required this.active,
     required this.createdAt,
     required this.v,
+    required this.latitude,
+    required this.longitude,
   });
 
   final String id;
@@ -30,6 +32,8 @@ class TempleDetails {
   final int active;
   final DateTime createdAt;
   final int v;
+  final String latitude;
+  final String longitude;
 
   factory TempleDetails.fromJson(Map<String, dynamic> json) => TempleDetails(
     id: json["_id"],
@@ -46,6 +50,8 @@ class TempleDetails {
     active: json["active"],
     createdAt: DateTime.parse(json["createdAt"]),
     v: json["__v"],
+    latitude: json["latitude"] ?? '',
+    longitude: json["longitude"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +69,7 @@ class TempleDetails {
     "active": active,
     "createdAt": createdAt.toIso8601String(),
     "__v": v,
+    "latitude": latitude,
+    "longitude": longitude,
   };
 }

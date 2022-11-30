@@ -15,6 +15,7 @@ class VendorModel {
   final String typeVendor;
   final String userType;
   final String id;
+  final String address;
 
   VendorModel({
     required this.active,
@@ -32,6 +33,7 @@ class VendorModel {
     required this.state,
     required this.typeVendor,
     required this.userType,
+    required this.address,
     required this.id,
   });
 
@@ -53,6 +55,7 @@ class VendorModel {
       typeVendor: json['typeVendor'],
       userType : json['userType'],
       id: json['_id'],
+      address: json['address'] ?? ''
     );
   }
 }

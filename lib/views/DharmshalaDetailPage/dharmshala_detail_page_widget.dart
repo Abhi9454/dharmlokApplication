@@ -13,6 +13,9 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
       required this.imageLink,
       required this.description,
       required this.location,
+        required this.userLocation,
+        required this.latitude,
+        required this.longitude,
       Key? key})
       : super(key: key);
 
@@ -22,6 +25,9 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
   final List<String> imageLink;
   final String location;
   final String description;
+  final String userLocation;
+  final String latitude;
+  final String longitude;
 
   late GoogleMapController mapController;
 
@@ -43,7 +49,7 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
               children: [
                 HomePageAppBarWidget(
                   scaffoldKey: _dharmshalaPageKey,
-                  location: 'New Delhi',
+                  location: userLocation,
                   languageButtonPressed: () {},
                   logoutPressed: () {},
                 ),
@@ -152,7 +158,8 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
                           child: GoogleMap(
                             onMapCreated: _onMapCreated,
                             initialCameraPosition: CameraPosition(
-                              target: _center,
+                              target: latitude == ''? _center
+                                  :LatLng(double.parse(latitude), double.parse(longitude)),
                               zoom: 11.0,
                             ),
                           ),

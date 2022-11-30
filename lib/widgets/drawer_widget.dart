@@ -1,8 +1,10 @@
-import 'package:dharmlok/extensions/device_size.dart';
-import 'package:dharmlok/viewModels/dharmshala_view_model.dart';
-import 'package:dharmlok/viewModels/eshop_view_model.dart';
-import 'package:dharmlok/views/DharamshalaPage/dharamshala_page_widget.dart';
-import 'package:dharmlok/views/EShopPage/eshop_page_widget.dart';
+import '../extensions/device_size.dart';
+import '../viewModels/dharmshala_view_model.dart';
+import '../viewModels/eshop_view_model.dart';
+import '../viewModels/event_view_model.dart';
+import '../views/DharamshalaPage/dharamshala_page_widget.dart';
+import '../views/EShopPage/eshop_page_widget.dart';
+import '../views/EventBookingPage/event_booking_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -120,6 +122,21 @@ class DrawerWidget extends StatelessWidget {
             child: const DrawerListTileWidget(
                 imageName: AppAssets.dharmshalaImage,
                 imageText: AppStrings.dharmshala),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MultiProvider(providers: <
+                          ChangeNotifierProvider<EventViewModel>>[
+                        ChangeNotifierProvider<EventViewModel>(
+                            create: (_) => EventViewModel())
+                      ], child: EventBookingPageWidget())));
+            },
+            child: const DrawerListTileWidget(
+                imageName: AppAssets.eventImage,
+                imageText: AppStrings.eventBooking),
           ),
           InkWell(
             onTap: () {

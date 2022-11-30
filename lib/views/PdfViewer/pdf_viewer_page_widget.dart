@@ -9,11 +9,12 @@ import '../HomePage/components/home_appbar_widget.dart';
 
 class PdfViewPageWidget extends StatefulWidget {
   const PdfViewPageWidget(
-      {required this.pdfName, required this.pdfLink, Key? key})
+      {required this.pdfName, required this.pdfLink, required this.userLocation,Key? key})
       : super(key: key);
 
   final String pdfName;
   final String pdfLink;
+  final String userLocation;
 
   @override
   State<PdfViewPageWidget> createState() => _PdfViewPageWidgetState();
@@ -41,7 +42,7 @@ class _PdfViewPageWidgetState extends State<PdfViewPageWidget> {
               children: [
                 HomePageAppBarWidget(
                   scaffoldKey: _pdfViewerKey,
-                  location: 'New Delhi',
+                  location: widget.userLocation,
                   languageButtonPressed: () {},
                   logoutPressed: () {},
                 ),

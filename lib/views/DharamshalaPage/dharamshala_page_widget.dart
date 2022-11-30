@@ -19,6 +19,7 @@ class DharamshalaPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<DharmshalaViewModel>(context, listen: false).getUserLocation();
     Provider.of<DharmshalaViewModel>(context, listen: false).getDharmshala();
     return Consumer<DharmshalaViewModel>(
       builder: (con, dharmshalaModel, _) {
@@ -33,7 +34,7 @@ class DharamshalaPageWidget extends StatelessWidget {
                   children: [
                     HomePageAppBarWidget(
                       scaffoldKey: _dharamshalaPageWidget,
-                      location: 'New Delhi',
+                      location: dharmshalaModel.userLocation,
                       languageButtonPressed: () {},
                       logoutPressed: () {},
                     ),
@@ -191,7 +192,9 @@ class DharamshalaPageWidget extends StatelessWidget {
                                                                     description: dharmshalaModel
                                                                         .dharmshalaList[
                                                                             index]
-                                                                        .description,
+                                                                        .description, userLocation: dharmshalaModel.userLocation,
+                                                                    latitude:  dharmshalaModel.dharmshalaList[index].latitude,
+                                                                    longitude:  dharmshalaModel.dharmshalaList[index].longitude,
                                                                   )));
                                                     },
                                                     style: ElevatedButton

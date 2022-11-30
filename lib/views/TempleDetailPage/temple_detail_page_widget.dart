@@ -8,8 +8,8 @@ import '../../widgets/background_image_widget.dart';
 import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
 
-class TempleDetailPageWidget extends StatelessWidget {
-  TempleDetailPageWidget(
+class TempleDetailPageWidget extends StatefulWidget {
+  const TempleDetailPageWidget(
       {required this.templeName,
       required this.imageLink,
       required this.description,
@@ -17,10 +17,10 @@ class TempleDetailPageWidget extends StatelessWidget {
       required this.city,
       required this.state,
       required this.userLocation,
+        required this.latitude,
+        required this.longitude,
       Key? key})
       : super(key: key);
-
-  final GlobalKey<ScaffoldState> _templeDetailsPageKey = GlobalKey();
 
   final String templeName;
   final List<String> imageLink;
@@ -29,6 +29,15 @@ class TempleDetailPageWidget extends StatelessWidget {
   final String city;
   final String state;
   final String userLocation;
+  final String latitude;
+  final String longitude;
+
+  @override
+  State<TempleDetailPageWidget> createState() => _TempleDetailPageWidgetState();
+}
+
+class _TempleDetailPageWidgetState extends State<TempleDetailPageWidget> {
+  final GlobalKey<ScaffoldState> _templeDetailsPageKey = GlobalKey();
 
   late final GoogleMapController mapController;
 
@@ -36,6 +45,38 @@ class TempleDetailPageWidget extends StatelessWidget {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  TextEditingController fullName = TextEditingController();
+
+  TextEditingController email = TextEditingController();
+
+  TextEditingController person = TextEditingController();
+
+  TextEditingController mobile = TextEditingController();
+
+  TextEditingController tourDetails = TextEditingController();
+
+  TextEditingController duration = TextEditingController();
+
+  TextEditingController dateController = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
+
+  _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2019, 8),
+        lastDate: DateTime(2100));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        var date =
+            "${picked.toLocal().day}/${picked.toLocal().month}/${picked.toLocal().year}";
+        dateController.text = date;
+      });
+    }
   }
 
   @override
@@ -50,7 +91,7 @@ class TempleDetailPageWidget extends StatelessWidget {
               children: [
                 HomePageAppBarWidget(
                   scaffoldKey: _templeDetailsPageKey,
-                  location: userLocation,
+                  location: widget.userLocation,
                   languageButtonPressed: () {},
                   logoutPressed: () {},
                 ),
@@ -72,7 +113,7 @@ class TempleDetailPageWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 5, right: 5),
                         child: Text(
-                          templeName,
+                          widget.templeName,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -95,7 +136,7 @@ class TempleDetailPageWidget extends StatelessWidget {
                       CarouselSlider(
                         options: CarouselOptions(
                             autoPlay: true, enableInfiniteScroll: true),
-                        items: imageLink
+                        items: widget.imageLink
                             .map((item) => SizedBox(
                                   child: Center(
                                       child: Image.network(
@@ -113,7 +154,7 @@ class TempleDetailPageWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5, right: 5),
                         child: Text(
-                          '$city,$state',
+                          '${widget.city},${widget.state}',
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -144,7 +185,7 @@ class TempleDetailPageWidget extends StatelessWidget {
                             //       fontSize: 18,
                             //       fontWeight: FontWeight.normal),
                             // ),
-                            child: Html(data: description),
+                            child: Html(data: widget.description),
                           ),
                         ),
                       ),
@@ -159,7 +200,8 @@ class TempleDetailPageWidget extends StatelessWidget {
                           child: GoogleMap(
                             onMapCreated: _onMapCreated,
                             initialCameraPosition: CameraPosition(
-                              target: _center,
+                              target: widget.latitude == ''? _center
+                                  :LatLng(double.parse(widget.latitude), double.parse(widget.longitude)),
                               zoom: 11.0,
                             ),
                           ),
@@ -205,7 +247,414 @@ class TempleDetailPageWidget extends StatelessWidget {
                                   ),
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Dialog(
+                                              insetPadding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: SingleChildScrollView(
+                                                scrollDirection: Axis.vertical,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(12.0),
+                                                      child: Text(
+                                                        'Enter Details',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Form(
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: <Widget>[
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 15.0,
+                                                                    right: 15,
+                                                                    top: 5.0,
+                                                                    bottom: 5.0),
+                                                            child: TextFormField(
+                                                              autofocus: false,
+                                                              controller:
+                                                                  fullName,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .phone,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                      hintText:
+                                                                          'Full Name',
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 15.0,
+                                                                    right: 15,
+                                                                    top: 5.0,
+                                                                    bottom: 5.0),
+                                                            child: TextFormField(
+                                                              autofocus: false,
+                                                              controller: email,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .emailAddress,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                      hintText:
+                                                                          'Email',
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 15.0,
+                                                                    right: 15,
+                                                                    top: 5.0,
+                                                                    bottom: 5.0),
+                                                            child: InkWell(
+                                                              onTap: (){
+                                                                _selectDate(context);
+                                                              },
+                                                              child: TextFormField(
+                                                                autofocus: false,
+                                                                controller:
+                                                                    dateController,
+                                                                maxLines: 1,
+                                                                readOnly: true,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize: 18),
+                                                                decoration:
+                                                                const InputDecoration(
+                                                                      prefixIcon: Icon(Icons.date_range),
+                                                                  hintText:
+                                                                      'Travel Dates',
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide: BorderSide(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        width: 0.0),
+                                                                    borderRadius: BorderRadius
+                                                                        .all(Radius
+                                                                            .circular(
+                                                                                10)),
+                                                                  ),
+                                                                  focusedBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide: BorderSide(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        width: 0.0),
+                                                                    borderRadius: BorderRadius
+                                                                        .all(Radius
+                                                                            .circular(
+                                                                                10)),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 15.0,
+                                                                    right: 15,
+                                                                    top: 5.0,
+                                                                    bottom: 5.0),
+                                                            child: TextFormField(
+                                                              autofocus: false,
+                                                              controller:
+                                                                  tourDetails,
+                                                              maxLines: 5,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .emailAddress,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                      hintText:
+                                                                          'Tour Description',
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 15.0,
+                                                                    right: 15,
+                                                                    top: 5.0,
+                                                                    bottom: 5.0),
+                                                            child: TextFormField(
+                                                              autofocus: false,
+                                                              controller: person,
+                                                              maxLines: 1,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .number,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                      hintText:
+                                                                          'Number of Person',
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 15.0,
+                                                                    right: 15,
+                                                                    top: 5.0,
+                                                                    bottom: 5.0),
+                                                            child: TextFormField(
+                                                              autofocus: false,
+                                                              controller:
+                                                                  duration,
+                                                              maxLines: 1,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .number,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                      hintText:
+                                                                          'Duration of Stay',
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            width:
+                                                                                0.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(
+                                                                                Radius.circular(10)),
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                context.height *
+                                                                    0.02,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                              children: [
+                                                                ElevatedButton(
+                                                                  onPressed: () {},
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                          backgroundColor:
+                                                                              Colors
+                                                                                  .green),
+                                                                  child: const Text(
+                                                                    'Submit',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                ),
+                                                                ElevatedButton(
+                                                                  onPressed: () {
+                                                                    Navigator.of(context).pop();
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                      backgroundColor:
+                                                                      Colors
+                                                                          .red),
+                                                                  child: const Text(
+                                                                    'Close',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red),
                                   child: const Text(

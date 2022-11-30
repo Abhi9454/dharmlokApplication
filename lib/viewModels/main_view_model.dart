@@ -11,6 +11,7 @@ class MainViewModel extends ChangeNotifier{
   late LocationData locationDetails;
   Location currentLocation = Location();
   final LocationManager _locationManager = LocationManager();
+  late SharedPreferences preferences;
 
     fetchUserLocation() async{
     if (await permission.Permission.location.status.isGranted) {
@@ -25,6 +26,11 @@ class MainViewModel extends ChangeNotifier{
       await [permission.Permission.location].request();
       _locationManager.setLocationName('');
     }
+  }
+
+  logout() async{
+      preferences = await SharedPreferences.getInstance();
+      preferences.clear();
   }
 
 }

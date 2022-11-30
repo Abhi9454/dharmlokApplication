@@ -48,12 +48,12 @@ class DharmguruListContainer extends StatelessWidget {
                         CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width : context.width * 0.5,
+                            width : context.width * 0.45,
                             child: Center(
                               child: Text(
                                 name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                 maxLines: 1,
+                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: Color(0XFF604e36),
                                     fontWeight: FontWeight.bold,

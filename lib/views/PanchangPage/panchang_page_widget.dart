@@ -9,7 +9,10 @@ import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
 
 class PanchangPageWidget extends StatelessWidget {
-  PanchangPageWidget({Key? key}) : super(key: key);
+  PanchangPageWidget({required this.userLocation,Key? key}) : super(key: key);
+
+
+  final String userLocation;
 
   final GlobalKey<ScaffoldState> _panchangPageKey = GlobalKey();
 
@@ -26,7 +29,7 @@ class PanchangPageWidget extends StatelessWidget {
               children: [
                 HomePageAppBarWidget(
                   scaffoldKey: _panchangPageKey,
-                  location: 'New Delhi',
+                  location: userLocation,
                   languageButtonPressed: () {},
                   logoutPressed: () {},
                 ),

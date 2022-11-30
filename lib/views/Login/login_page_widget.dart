@@ -169,7 +169,7 @@ class LoginPageWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 5.0),
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegistrationPageWidget()));
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegistrationPageWidget()));
                                 },
                                 child: const Text(
                                   'Create Account',

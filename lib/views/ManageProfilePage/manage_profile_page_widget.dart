@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/AppColors.dart';
+import '../../helpers/enum.dart';
+import '../../viewModels/main_view_model.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
@@ -13,13 +15,12 @@ class ManageProfilePageWidget extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _manageProfileKey = GlobalKey();
 
-  final TextEditingController fullName = TextEditingController();
-  final TextEditingController email = TextEditingController();
-  final TextEditingController phone = TextEditingController();
-  final TextEditingController address = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ManageProfileViewModel>(context,listen: false).getUserLocation();
+    Provider.of<ManageProfileViewModel>(context,listen: false).getVendorDetails();
     Provider.of<ManageProfileViewModel>(context,listen: false).getAllStates();
     return Consumer<ManageProfileViewModel>(
       builder: (con, manageModel, _) {
@@ -54,69 +55,70 @@ class ManageProfilePageWidget extends StatelessWidget {
                       height: context.height * 0.02,
                     ),
                     Expanded(
-                      child: SingleChildScrollView(
+                      child: manageModel.status == Status.loading ?
+                          const Center(child: CircularProgressIndicator(),) :
+                      SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
                           children: [
-                            Container(
-                              height: context.height * 0.2,
-                              width: context.width * 0.4,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.green,
+                            // CircleAvatar(
+                            //   radius: 100,
+                            //   child: Image.network(
+                            //     'https://dharmlok.s3.amazonaws.com/${manageModel.profileImageUrl}',
+                            //   ),
+                            // ),
+                            ClipOval(
+                              child: SizedBox.fromSize(
+                                size: const Size.fromRadius(80), // Image radius
+                                child: Image.network('https://dharmlok.s3.amazonaws.com/${manageModel.profileImageUrl}', fit: BoxFit.cover),
                               ),
-                              child: Icon(
-                                Icons.camera,
-                                color: Colors.white,
-                              ),
-                              alignment: Alignment.center,
                             ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 15.0, right: 15, top: 5.0, bottom: 5.0),
+                            //   child: TextFormField(
+                            //     autofocus: false,
+                            //     controller: manageModel.email,
+                            //     style:
+                            //     const TextStyle(color: Colors.black, fontSize: 18),
+                            //     decoration: const InputDecoration(
+                            //         hintText: 'Email',
+                            //         enabledBorder: OutlineInputBorder(
+                            //           borderSide:
+                            //           BorderSide(color: Colors.grey, width: 0.0),
+                            //           borderRadius:
+                            //           BorderRadius.all(Radius.circular(10)),
+                            //         ),
+                            //         focusedBorder: OutlineInputBorder(
+                            //           borderSide:
+                            //           BorderSide(color: Colors.grey, width: 0.0),
+                            //           borderRadius:
+                            //           BorderRadius.all(Radius.circular(10)),
+                            //         )),
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: context.height * 0.02,
+                            // ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 15.0, right: 15, top: 5.0, bottom: 5.0),
                               child: TextFormField(
                                 autofocus: false,
-                                controller: email,
-                                style:
-                                const TextStyle(color: Colors.black, fontSize: 18),
-                                decoration: const InputDecoration(
-                                    hintText: 'Email',
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                    )),
-                              ),
-                            ),
-                            SizedBox(
-                              height: context.height * 0.02,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15.0, right: 15, top: 5.0, bottom: 5.0),
-                              child: TextFormField(
-                                autofocus: false,
-                                controller: fullName,
+                                controller: manageModel.fullName,
                                 style:
                                 const TextStyle(color: Colors.black, fontSize: 18),
                                 decoration: const InputDecoration(
                                     hintText: 'Full Name',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
+                                      BorderSide(color: Colors.black, width: 0.0),
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
+                                      BorderSide(color: Colors.black, width: 0.0),
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                     )),
@@ -130,7 +132,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                   left: 15.0, right: 15, top: 5.0, bottom: 5.0),
                               child: TextFormField(
                                 autofocus: false,
-                                controller: phone,
+                                controller: manageModel.phone,
                                 keyboardType: TextInputType.phone,
                                 style:
                                 const TextStyle(color: Colors.black, fontSize: 18),
@@ -138,13 +140,13 @@ class ManageProfilePageWidget extends StatelessWidget {
                                     hintText: 'Phone Number',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
+                                      BorderSide(color: Colors.black, width: 0.0),
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
+                                      BorderSide(color: Colors.black, width: 0.0),
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                     )),
@@ -160,7 +162,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
-                                  border: Border.all(color: Colors.grey, width: 0),
+                                  border: Border.all(color: Colors.black, width: 0),
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
@@ -178,7 +180,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                             child: Text(
                                               typeValue,
                                               style: const TextStyle(
-                                                  color: Colors.black54, fontSize: 18),
+                                                  color: Colors.black, fontSize: 18),
                                             ),
                                           );
                                         }).toList(),
@@ -190,7 +192,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                     hint: const Text(
                                       'Select State',
                                       style: TextStyle(
-                                          color: Colors.black54,
+                                          color: Colors.black,
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -208,7 +210,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
-                                  border: Border.all(color: Colors.grey, width: 0),
+                                  border: Border.all(color: Colors.black, width: 0),
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
@@ -226,7 +228,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                             child: Text(
                                               typeValue,
                                               style: const TextStyle(
-                                                  color: Colors.black54, fontSize: 18),
+                                                  color: Colors.black, fontSize: 18),
                                             ),
                                           );
                                         }).toList(),
@@ -238,7 +240,7 @@ class ManageProfilePageWidget extends StatelessWidget {
                                     hint: const Text(
                                       'Select City',
                                       style: TextStyle(
-                                          color: Colors.black54,
+                                          color: Colors.black,
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -254,21 +256,21 @@ class ManageProfilePageWidget extends StatelessWidget {
                                   left: 15.0, right: 15, top: 5.0, bottom: 5.0),
                               child: TextFormField(
                                 autofocus: false,
-                                controller: address,
-                                keyboardType: TextInputType.phone,
+                                controller: manageModel.address,
+                                keyboardType: TextInputType.text,
                                 style:
                                 const TextStyle(color: Colors.black, fontSize: 18),
                                 decoration: const InputDecoration(
-                                    hintText: 'Address',
+                                    hintText: 'Enter Address',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
+                                      BorderSide(color: Colors.black, width: 0.0),
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.grey, width: 0.0),
+                                      BorderSide(color: Colors.black, width: 0.0),
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                     )),
@@ -279,14 +281,12 @@ class ManageProfilePageWidget extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                if (fullName.text.isNotEmpty &&
-                                    email.text.isNotEmpty &&
-                                    phone.text.isNotEmpty &&
-                                    address.text.isNotEmpty &&
+                                if (manageModel.fullName.text.isNotEmpty &&
+                                    manageModel.phone.text.isNotEmpty &&
                                     manageModel.selectedState != 'Select state' &&
                                     manageModel.selectedCity != 'Select city') {
-                                  manageModel.updateUserDetails(fullName.text,
-                                      email.text, phone.text, address.text);
+                                  manageModel.updateUserDetails(manageModel.fullName.text,
+                                      manageModel.email.text, manageModel.phone.text, manageModel.address.text,context);
                                 } else {
                                   const snackBar = SnackBar(
                                     content: Text(

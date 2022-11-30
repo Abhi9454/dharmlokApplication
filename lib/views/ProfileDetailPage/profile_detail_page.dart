@@ -1,16 +1,11 @@
 import 'dart:convert';
-
-import 'package:delta_markdown/delta_markdown.dart' as deltaMark;
 import 'package:dharmlok/viewModels/profile_detail_view_model.dart';
 import 'package:dharmlok/views/ProfileDetailPage/widget/profile_head_container.dart';
 import 'package:dharmlok/views/ProfileDetailPage/widget/profile_name_container.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:markdown/markdown.dart' as mark;
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:provider/provider.dart';
-import 'package:html/parser.dart' as html_parse;
 
 import '../../constants/AppAssets.dart';
 import '../../constants/AppColors.dart';
@@ -29,6 +24,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
       required this.name,
       required this.category,
       required this.profileImageUrl,
+        required this.coverImageUrl,
       required this.userType,
       Key? key})
       : super(key: key);
@@ -37,6 +33,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
   final String category;
   final String id;
   final String profileImageUrl;
+  final String coverImageUrl;
   final String userType;
 
   String updatedBiography = '';
@@ -46,6 +43,8 @@ class ProfileDetailPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileDetailViewModel>(context, listen: false)
+        .getUserLocation();
     Provider.of<ProfileDetailViewModel>(context, listen: false)
         .getProfileDetail(id);
     Provider.of<ProfileDetailViewModel>(context, listen: false)
@@ -64,7 +63,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                   children: [
                     HomePageAppBarWidget(
                       scaffoldKey: _profileDetailPageKey,
-                      location: 'New Delhi',
+                      location: profileModel.userLocation,
                       languageButtonPressed: () {},
                       logoutPressed: () {},
                     ),
@@ -99,6 +98,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                 children: [
                                   ProfileHeadWidget(
                                     profileImage: profileImageUrl,
+                                    coverImageUrl: coverImageUrl,
                                   ),
                                   ProfileNameContainer(
                                       name: name,
@@ -226,7 +226,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                       ? Padding(
                                           padding: const EdgeInsets.all(12.0),
                                           child: Container(
-                                            color: Colors.brown,
+                                            color: Colors.white70,
                                             child: SingleChildScrollView(
                                               scrollDirection: Axis.vertical,
                                               child: Padding(
@@ -314,16 +314,16 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .start,
-                                                                  children: const [
+                                                                  children: [
                                                                     Text(
-                                                                      'Goswami Mridul Krishna Ji',
-                                                                      style: TextStyle(
+                                                                      profileModel.postList[index].userName,
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               AppColors.onPrimary),
                                                                     ),
                                                                     Text(
-                                                                      '1 month Ago',
-                                                                      style: TextStyle(
+                                                                      GetTimeAgo.parse(profileModel.postList[index].createdAt),
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               AppColors.onPrimary),
                                                                     )
@@ -334,7 +334,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                           ),
                                                         ),
                                                         Image.asset(
-                                                            'images/dashboard.jpeg',
+                                                            profileModel.postList[index].imageUrl,
                                                             width:
                                                                 context.width,
                                                             fit: BoxFit.cover,
@@ -352,9 +352,9 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                                     0.05,
                                                             child: Row(
                                                               children: [
-                                                                const Text(
-                                                                  '2 Likes',
-                                                                  style: TextStyle(
+                                                                Text(
+                                                                  '${profileModel.postList[index].like} Like',
+                                                                  style: const TextStyle(
                                                                       color: AppColors
                                                                           .onPrimary),
                                                                 ),
@@ -363,9 +363,9 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                                           .width *
                                                                       0.05,
                                                                 ),
-                                                                const Text(
-                                                                  '12 Comments',
-                                                                  style: TextStyle(
+                                                                Text(
+                                                                  '${profileModel.postList[index].comment} Comments',
+                                                                  style: const TextStyle(
                                                                       color: AppColors
                                                                           .onPrimary),
                                                                 )

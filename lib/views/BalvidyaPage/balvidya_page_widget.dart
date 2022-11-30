@@ -257,7 +257,7 @@ class BalVidyaPageWidget extends StatelessWidget {
                                                                 pdfLink: balModel
                                                                     .balVidyaDetails[
                                                                         index]
-                                                                    .PDFuploadUrl)));
+                                                                    .PDFuploadUrl, userLocation: balModel.userLocation,)));
                                                   },
                                                   style:
                                                       ElevatedButton.styleFrom(

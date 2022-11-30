@@ -33,4 +33,25 @@ class VendorService {
       }
     }
   }
+
+  Future<Map<String,dynamic>> getDetails(String id, String token) async {
+    try {
+      final Map<String, dynamic> _header = <String, dynamic>{
+        "token" : token
+      };
+      final Map<String, dynamic> map = <String, dynamic>{
+        'id': id,
+        //'typeVendor': typeVendor
+      };
+      final Response<dynamic> response = await httpService.getUrl(AppStrings.apiUrl + 'mydetails', map, _header);
+      return response.data as Map<String,dynamic>;
+    } on DioError catch (error) {
+      if (error.type == DioErrorType.receiveTimeout ||
+          error.type == DioErrorType.connectTimeout) {
+        throw ShowError('Server timeout');
+      } else {
+        throw ShowError('We are working at backend. Please try again in few minutes');
+      }
+    }
+  }
 }

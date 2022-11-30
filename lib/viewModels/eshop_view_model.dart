@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../helpers/enum.dart';
 import '../helpers/error_handler.dart';
+import '../helpers/location_manager.dart';
 import '../helpers/read_user_data.dart';
 
 
@@ -21,6 +22,15 @@ class EshopViewModel extends ChangeNotifier {
   final UserDetails getUser = UserDetails();
   String category = 'Sanatan';
   String vendorName = '', vendorPhoneNumber = '';
+
+  final LocationManager _locationManager = LocationManager();
+
+  String userLocation = '';
+
+  getUserLocation() async{
+    userLocation = await _locationManager.getLocationName();
+    notifyListeners();
+  }
 
   Status get status => _status;
 

@@ -14,13 +14,14 @@ class ManageProfileService {
         "token" : token
       };
       final Map<String, dynamic> map = <String, dynamic>{
+        'name': fullName,
+        'address':fullAddress,
+        'profileImageUrl':imageUrl,
+        'city':city,
+        'state':state
       };
-      final Response<dynamic> response = await httpService.postUrl(AppStrings.apiUrl + 'getallebook',map, _header);
-      var jsonString = response.data as Map<String, dynamic>;
-      print("this is reponse" + jsonString.toString());
-      return jsonString['message']
-          .map<EbookModel>((json) => EbookModel.fromJson(json))
-          .toList();
+      final Response<dynamic> response = await httpService.postUrl(AppStrings.apiUrl + 'updatevendorbio',map, _header);
+      return response.data as Map<String, dynamic>;
     } on DioError catch (error) {
       if (error.type == DioErrorType.receiveTimeout ||
           error.type == DioErrorType.connectTimeout) {

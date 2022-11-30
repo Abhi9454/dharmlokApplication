@@ -24,6 +24,7 @@ class DharmguruPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<VendorViewModel>(context, listen: false).getUserLocation();
     Provider.of<VendorViewModel>(context, listen: false)
         .getVendorList('Dharmguru');
     return Consumer<VendorViewModel>(builder: (con, vendorModel, _) {
@@ -39,7 +40,7 @@ class DharmguruPageWidget extends StatelessWidget {
                 children: [
                   HomePageAppBarWidget(
                     scaffoldKey: _dharmguruKey,
-                    location: 'New Delhi',
+                    location: vendorModel.userLocation,
                     languageButtonPressed: () {},
                     logoutPressed: () {},
                   ),
@@ -207,6 +208,7 @@ class DharmguruPageWidget extends StatelessWidget {
                                             shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
+                                            // physics: BouncingScrollPhysics(),
                                             scrollDirection: Axis.vertical,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
@@ -247,7 +249,10 @@ class DharmguruPageWidget extends StatelessWidget {
                                                                 .vendorDetails[
                                                                     index]
                                                                 .profileImageUrl,
-                                                        userType: "1",
+                                                        userType: "1", coverImageUrl: vendorModel
+                                                              .vendorDetails[
+                                                          index]
+                                                              .coverImageUrl,
                                                       ),
                                                     ),
                                                   ),

@@ -22,6 +22,8 @@ class EventDetailPageWidget extends StatelessWidget {
       required this.eventFees,
         required this.fromTime,
         required this.toTime,
+        required this.userLocation,
+
       Key? key})
       : super(key: key);
 
@@ -36,6 +38,7 @@ class EventDetailPageWidget extends StatelessWidget {
   final int eventFees;
   final String fromTime;
   final String toTime;
+  final String userLocation;
 
   late GoogleMapController mapController;
 
@@ -57,7 +60,7 @@ class EventDetailPageWidget extends StatelessWidget {
               children: [
                 HomePageAppBarWidget(
                   scaffoldKey: _dharmshalaPageKey,
-                  location: 'New Delhi',
+                  location: userLocation,
                   languageButtonPressed: () {},
                   logoutPressed: () {},
                 ),

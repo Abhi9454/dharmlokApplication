@@ -1,7 +1,11 @@
+import 'package:provider/provider.dart';
+
 import '../../../extensions/device_size.dart';
 import 'package:flutter/material.dart';
 
+import '../../../viewModels/main_view_model.dart';
 import '../../../widgets/logo_widget.dart';
+import '../../Login/login_page_widget.dart';
 
 class HomePageAppBarWidget extends StatelessWidget {
   const HomePageAppBarWidget({required this.scaffoldKey,required this.location,required this.logoutPressed,required this.languageButtonPressed,Key? key}) : super(key: key);
@@ -64,7 +68,12 @@ class HomePageAppBarWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: IconButton(onPressed: logoutPressed, icon: const Icon(Icons.power_settings_new)),
+                child: IconButton(onPressed: (){
+                    Provider.of<MainViewModel>(context,listen: false).logout();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPageWidget()),
+                            (Route<dynamic> route) => false);
+                }, icon: const Icon(Icons.power_settings_new)),
               )
             ],
           )

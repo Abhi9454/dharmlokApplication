@@ -2,6 +2,7 @@ import 'package:dharmlok/constants/AppColors.dart';
 import 'package:dharmlok/extensions/device_size.dart';
 import 'package:dharmlok/viewModels/pooja_view_model.dart';
 import 'package:dharmlok/viewModels/temple_view_model.dart';
+import 'package:dharmlok/views/PanditDetailsPage/pandit_details_page.dart';
 import 'package:dharmlok/views/TempleDetailPage/temple_detail_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../constants/AppAssets.dart';
 import '../../constants/AppStrings.dart';
 import '../../helpers/enum.dart';
+import '../../viewModels/pandit_details_view_model.dart';
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
@@ -163,17 +165,27 @@ class PoojaPageWidget extends StatelessWidget {
                                                           ),
                                                           ElevatedButton(
                                                             onPressed: () {
-                                                              // Navigator.of(context).push(MaterialPageRoute(
-                                                              //     builder: (context) =>
-                                                              //         PdfViewPageWidget(
-                                                              //             pdfName: poojaModel
-                                                              //                 .ebookTrendingList[
-                                                              //             index]
-                                                              //                 .name,
-                                                              //             pdfLink: poojaModel
-                                                              //                 .ebookTrendingList[
-                                                              //             index]
-                                                              //                 .pdFuploadUrl)));
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          MultiProvider(
+                                                                              providers: <
+                                                                                  ChangeNotifierProvider<
+                                                                                      PanditDetailsViewModel>>[
+                                                                                ChangeNotifierProvider<
+                                                                                    PanditDetailsViewModel>(
+                                                                                    create: (_) =>
+                                                                                        PanditDetailsViewModel())
+                                                                              ],
+                                                                              child:
+                                                                              PanditDetailsPageWidget(panditId:   poojaModel
+                                                                                  .myPoojaList[
+                                                                              index]
+                                                                                  .id, phoneNumber: poojaModel
+                                                                                  .myPoojaList[
+                                                                              index]
+                                                                                  .phone,))));
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(
@@ -277,32 +289,27 @@ class PoojaPageWidget extends StatelessWidget {
                                                       ),
                                                       ElevatedButton(
                                                         onPressed: () {
-                                                          // List<String>
-                                                          //     imageLinks = [];
-                                                          // imageLinks.add(
-                                                          //     'https://www.dharmlok.com/view/${poojaModel.otherTempleList[index].bannerImageUrl}');
-                                                          // imageLinks.add(
-                                                          //     'https://www.dharmlok.com/view/${poojaModel.otherTempleList[index].relatedImageUrl}');
-                                                          // Navigator.of(context).push(
-                                                          //     MaterialPageRoute(
-                                                          //         builder:
-                                                          //             (context) =>
-                                                          //                 TempleDetailPageWidget(
-                                                          //                   templeName:
-                                                          //                       poojaModel.otherTempleList[index].name,
-                                                          //                   imageLink:
-                                                          //                       imageLinks,
-                                                          //                   description:
-                                                          //                       poojaModel.otherTempleList[index].description,
-                                                          //                   location:
-                                                          //                       poojaModel.otherTempleList[index].location,
-                                                          //                   city:
-                                                          //                       poojaModel.otherTempleList[index].city,
-                                                          //                   state:
-                                                          //                       poojaModel.otherTempleList[index].state,
-                                                          //                   userLocation:
-                                                          //                       poojaModel.userLocation,
-                                                          //                 )));
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      MultiProvider(
+                                                                          providers: <
+                                                                              ChangeNotifierProvider<
+                                                                                  PanditDetailsViewModel>>[
+                                                                            ChangeNotifierProvider<
+                                                                                PanditDetailsViewModel>(
+                                                                                create: (_) =>
+                                                                                    PanditDetailsViewModel())
+                                                                          ],
+                                                                          child:
+                                                                          PanditDetailsPageWidget(panditId:poojaModel
+                                                                              .otherPoojaList[
+                                                                          index]
+                                                                              .serviceId, phoneNumber: poojaModel
+                                                                              .otherPoojaList[
+                                                                          index]
+                                                                              .phone,))));
                                                         },
                                                         style: ElevatedButton
                                                             .styleFrom(

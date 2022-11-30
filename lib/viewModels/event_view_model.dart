@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../helpers/enum.dart';
 import '../helpers/error_handler.dart';
+import '../helpers/location_manager.dart';
 import '../helpers/read_user_data.dart';
 
 
@@ -19,6 +20,16 @@ class EventViewModel extends ChangeNotifier {
   String category = 'Sanatan';
 
   Status get status => _status;
+
+  final LocationManager _locationManager = LocationManager();
+
+  String userLocation = '';
+
+  getUserLocation() async{
+    userLocation = await _locationManager.getLocationName();
+    notifyListeners();
+  }
+
 
   List<EventModel> _eventDetails = [] ;
 
