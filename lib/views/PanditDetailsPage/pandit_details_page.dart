@@ -1,5 +1,7 @@
 import 'package:dharmlok/extensions/device_size.dart';
+import 'package:dharmlok/viewModels/form_page_view_model.dart';
 import 'package:dharmlok/viewModels/pandit_details_view_model.dart';
+import 'package:dharmlok/views/FormPage/form_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
@@ -35,30 +37,6 @@ class _PanditDetailsPageWidgetState extends State<PanditDetailsPageWidget> {
     }
   }
 
-  TextEditingController fullName = TextEditingController();
-
-  TextEditingController mobile = TextEditingController();
-
-  TextEditingController dateController = TextEditingController();
-  TextEditingController city = TextEditingController();
-
-  DateTime selectedDate = DateTime.now();
-
-  _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2019, 8),
-        lastDate: DateTime(2100));
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-        var date =
-            "${picked.toLocal().day}/${picked.toLocal().month}/${picked.toLocal().year}";
-        dateController.text = date;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,310 +237,22 @@ class _PanditDetailsPageWidgetState extends State<PanditDetailsPageWidget> {
                                         ),
                                         ElevatedButton(
                                           onPressed: () async{
-                                            showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return Padding(
-                                                    padding: const EdgeInsets.all(12.0),
-                                                    child: Dialog(
-                                                      insetPadding:
-                                                      const EdgeInsets.all(5.0),
-                                                      child: SingleChildScrollView(
-                                                        scrollDirection: Axis.vertical,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment.start,
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            const Padding(
-                                                              padding:
-                                                              EdgeInsets.all(12.0),
-                                                              child: Text(
-                                                                'Enter Details',
-                                                                style: TextStyle(
-                                                                  fontWeight:
-                                                                  FontWeight.bold,
-                                                                  fontSize: 20,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Form(
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                MainAxisSize.min,
-                                                                children: <Widget>[
-                                                                  SizedBox(
-                                                                    height:
-                                                                    context.height *
-                                                                        0.02,
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left: 15.0,
-                                                                        right: 15,
-                                                                        top: 5.0,
-                                                                        bottom: 5.0),
-                                                                    child: TextFormField(
-                                                                      autofocus: false,
-                                                                      controller:
-                                                                      fullName,
-                                                                      keyboardType:
-                                                                      TextInputType
-                                                                          .phone,
-                                                                      style: const TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize: 18),
-                                                                      decoration:
-                                                                      const InputDecoration(
-                                                                          hintText:
-                                                                          'Full Name',
-                                                                          enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width:
-                                                                                0.0),
-                                                                            borderRadius:
-                                                                            BorderRadius.all(
-                                                                                Radius.circular(10)),
-                                                                          ),
-                                                                          focusedBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width:
-                                                                                0.0),
-                                                                            borderRadius:
-                                                                            BorderRadius.all(
-                                                                                Radius.circular(10)),
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                    context.height *
-                                                                        0.02,
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left: 15.0,
-                                                                        right: 15,
-                                                                        top: 5.0,
-                                                                        bottom: 5.0),
-                                                                    child: TextFormField(
-                                                                      autofocus: false,
-                                                                      controller:
-                                                                      mobile,
-                                                                      keyboardType:
-                                                                      TextInputType
-                                                                          .phone,
-                                                                      style: const TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize: 18),
-                                                                      decoration:
-                                                                      const InputDecoration(
-                                                                          hintText:
-                                                                          'Mobile Number',
-                                                                          enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width:
-                                                                                0.0),
-                                                                            borderRadius:
-                                                                            BorderRadius.all(
-                                                                                Radius.circular(10)),
-                                                                          ),
-                                                                          focusedBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width:
-                                                                                0.0),
-                                                                            borderRadius:
-                                                                            BorderRadius.all(
-                                                                                Radius.circular(10)),
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                    context.height *
-                                                                        0.02,
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left: 15.0,
-                                                                        right: 15,
-                                                                        top: 5.0,
-                                                                        bottom: 5.0),
-                                                                    child: InkWell(
-                                                                      onTap: (){
-                                                                        _selectDate(context);
-                                                                      },
-                                                                      child: TextFormField(
-                                                                        autofocus: false,
-                                                                        controller:
-                                                                        dateController,
-                                                                        maxLines: 1,
-                                                                        readOnly: true,
-                                                                        style: const TextStyle(
-                                                                            color: Colors
-                                                                                .black,
-                                                                            fontSize: 18),
-                                                                        decoration:
-                                                                        const InputDecoration(
-                                                                          prefixIcon: Icon(Icons.date_range),
-                                                                          hintText:
-                                                                          'Pooja Dates',
-                                                                          enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width: 0.0),
-                                                                            borderRadius: BorderRadius
-                                                                                .all(Radius
-                                                                                .circular(
-                                                                                10)),
-                                                                          ),
-                                                                          focusedBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width: 0.0),
-                                                                            borderRadius: BorderRadius
-                                                                                .all(Radius
-                                                                                .circular(
-                                                                                10)),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                    context.height *
-                                                                        0.02,
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left: 15.0,
-                                                                        right: 15,
-                                                                        top: 5.0,
-                                                                        bottom: 5.0),
-                                                                    child: TextFormField(
-                                                                      autofocus: false,
-                                                                      controller:
-                                                                      city,
-                                                                      keyboardType:
-                                                                      TextInputType
-                                                                          .phone,
-                                                                      style: const TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize: 18),
-                                                                      decoration:
-                                                                      const InputDecoration(
-                                                                          hintText:
-                                                                          'City',
-                                                                          enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width:
-                                                                                0.0),
-                                                                            borderRadius:
-                                                                            BorderRadius.all(
-                                                                                Radius.circular(10)),
-                                                                          ),
-                                                                          focusedBorder:
-                                                                          OutlineInputBorder(
-                                                                            borderSide: BorderSide(
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                width:
-                                                                                0.0),
-                                                                            borderRadius:
-                                                                            BorderRadius.all(
-                                                                                Radius.circular(10)),
-                                                                          )),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                    context.height *
-                                                                        0.02,
-                                                                  ),
-
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .all(8.0),
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                      children: [
-                                                                        ElevatedButton(
-                                                                          onPressed: () {},
-                                                                          style: ElevatedButton
-                                                                              .styleFrom(
-                                                                              backgroundColor:
-                                                                              Colors
-                                                                                  .green),
-                                                                          child: const Text(
-                                                                            'Submit',
-                                                                            style: TextStyle(
-                                                                                color: Colors
-                                                                                    .white),
-                                                                          ),
-                                                                        ),
-                                                                        ElevatedButton(
-                                                                          onPressed: () {
-
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                          style: ElevatedButton
-                                                                              .styleFrom(
-                                                                              backgroundColor:
-                                                                              Colors
-                                                                                  .red),
-                                                                          child: const Text(
-                                                                            'Close',
-                                                                            style: TextStyle(
-                                                                                color: Colors
-                                                                                    .white),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MultiProvider(
+                                                            providers: <
+                                                                ChangeNotifierProvider<
+                                                                    FormPageViewModel>>[
+                                                              ChangeNotifierProvider<
+                                                                  FormPageViewModel>(
+                                                                  create: (_) =>
+                                                                      FormPageViewModel())
+                                                            ],
+                                                            child:
+                                                            FormPageWidget(poojaName: panditDetailsModel.panditDetails.message.name,
+                                                              providerId: widget.panditId, serviceId: panditDetailsModel.panditDetails.message.id,))));
                                           },
                                           style:
                                           ElevatedButton.styleFrom(

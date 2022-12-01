@@ -10,6 +10,7 @@ import 'package:dharmlok/viewModels/event_view_model.dart';
 import 'package:dharmlok/viewModels/home_page_view_model.dart';
 import 'package:dharmlok/viewModels/pooja_view_model.dart';
 import 'package:dharmlok/viewModels/temple_view_model.dart';
+import 'package:dharmlok/views/AartiPage/aarti_page_widget.dart';
 import 'package:dharmlok/views/BalvidyaPage/balvidya_page_widget.dart';
 import 'package:dharmlok/views/DharamshalaPage/dharamshala_page_widget.dart';
 import 'package:dharmlok/views/DharmguruPage/dharmguru_page_widget.dart';
@@ -49,6 +50,8 @@ class HomePageWidget extends StatelessWidget {
       throw 'Could not launch';
     }
   }
+
+  List<String> religionList= ['Sanatan','Buddhism','Sikh', 'Jain'];
 
 
   @override
@@ -356,18 +359,39 @@ class HomePageWidget extends StatelessWidget {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MultiProvider(providers: <
-                                                    ChangeNotifierProvider<
-                                                        DharshanViewModel>>[
-                                                  ChangeNotifierProvider<
-                                                      DharshanViewModel>(
-                                                      create: (_) =>
-                                                          DharshanViewModel())
-                                                ], child: DharshanPageWidget())));
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Center(child: Text('Select')),
+                                            content: SizedBox(
+                                              height: MediaQuery.of(context).size.height * 0.4, // Change as per your requirement
+                                              width: MediaQuery.of(context).size.width * 0.6, // Change as per your requirement
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: religionList.length,
+                                                itemBuilder: (BuildContext context, int index) {
+                                                  return InkWell(
+                                                    onTap: (){
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => const AartiPageWidget()),
+                                                      );
+                                                    },
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Card(
+                                                        child: ListTile(
+                                                          title: Text(religionList[index]),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        });
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.yellow,

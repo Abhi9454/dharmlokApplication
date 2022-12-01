@@ -29,5 +29,6 @@ class AppAssets{
   static const myOrdersImage = '$basePath/myOrders_b.png';
   static const profileImage = '$basePath/profile_b.png';
   static const homeImage = '$basePath/home_b.png';
+  static const templeFrame = '$basePath/template-frame.png';
 
 }

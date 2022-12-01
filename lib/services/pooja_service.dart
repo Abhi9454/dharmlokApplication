@@ -75,9 +75,8 @@ class PoojaService {
         'providerId': providerId,
         'serviceId': serviceId,
         'state': state
-
       };
-      final Response<dynamic> response = await httpService.postUrl(AppStrings.apiUrl + 'getservicedetail',map, _header);
+      final Response<dynamic> response = await httpService.postUrl(AppStrings.apiUrl + 'addenquiry',map, _header);
       print('This is pandit details ${response.data}');
       return response.data as Map<String,dynamic>;
     } on DioError catch (error) {

@@ -21,9 +21,7 @@ class PanditDetailsViewModel extends ChangeNotifier {
 
   PanditDetails get panditDetails => _panditDetails;
 
-  late Map<String, dynamic> _enquiryMap;
 
-  Map<String, dynamic> get enquiryMap => _enquiryMap;
 
   final LocationManager _locationManager = LocationManager();
 
@@ -34,16 +32,7 @@ class PanditDetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _setEnquiryDetails(Map<String, dynamic> details) async {
-    _enquiryMap = details;
-    if(_enquiryMap['success'] == true){
-      _status = Status.success;
-    }
-    else{
-      _status = Status.failed;
-    }
-    notifyListeners();
-  }
+
 
 
   Future<void> _setPanditDetails(PanditDetails panditDetails) async {
@@ -68,20 +57,6 @@ class PanditDetailsViewModel extends ChangeNotifier {
     } on ShowError catch (error) {
       _status = Status.error;
       _setError(error);
-    }
-    notifyListeners();
-  }
-
-
-  addEnquiry(String name, String phone,
-      String date, String poojaName,
-      String providerId, String serviceId, String state, String city) async{
-    try {
-      _status = Status.loading;
-     _setEnquiryDetails(await _poojaService.addEnquiry(name, phone, date, poojaName, providerId,serviceId, state,await getUser.getToken(), city));
-    } on ShowError catch (error) {
-    _status = Status.error;
-    _setError(error);
     }
     notifyListeners();
   }
