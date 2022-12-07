@@ -1,4 +1,3 @@
-import 'package:dharmlok/constants/AppColors.dart';
 import 'package:dharmlok/extensions/device_size.dart';
 import 'package:dharmlok/viewModels/dharmshala_view_model.dart';
 import 'package:dharmlok/views/DharmshalaDetailPage/dharmshala_detail_page_widget.dart';
@@ -169,6 +168,7 @@ class DharamshalaPageWidget extends StatelessWidget {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
+                                                      print('This is location${dharmshalaModel.dharmshalaList[index].longitude}');
                                                       List<String> imageLinks =
                                                           [];
                                                       imageLinks.add(

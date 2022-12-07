@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:dharmlok/viewModels/main_view_model.dart';
 import 'package:dharmlok/viewModels/manage_profile_view_model.dart';
 import 'package:flutter/services.dart';
@@ -80,6 +81,7 @@ class NavigationTab extends StatefulWidget {
 class _NavigationTabState extends State<NavigationTab> {
   final UserDetails _userDetails = UserDetails();
   int _currentIndex = 0;
+  final templeBellAsset = AssetsAudioPlayer();
   final List<Widget> _children = [
     ChangeNotifierProvider<HomePageViewModel>(
       create: (_) => HomePageViewModel(),
@@ -98,6 +100,10 @@ class _NavigationTabState extends State<NavigationTab> {
     super.initState();
     checkLoginStatus();
     Provider.of<MainViewModel>(context,listen: false).fetchUserLocation();
+    templeBellAsset.open(
+      Audio(AppAssets.templeBell),
+    );
+    templeBellAsset.play();
   }
 
   checkLoginStatus() async {

@@ -373,6 +373,7 @@ class HomePageWidget extends StatelessWidget {
                                                 itemBuilder: (BuildContext context, int index) {
                                                   return InkWell(
                                                     onTap: (){
+                                                      Navigator.of(context).pop();
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(builder: (context) => const AartiPageWidget()),

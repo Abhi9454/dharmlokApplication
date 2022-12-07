@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dharmlok/extensions/device_size.dart';
+import 'package:dharmlok/viewModels/dharmshala_form_view_model.dart';
+import 'package:dharmlok/views/DharmshalaFormPage/dharmshala_form_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/background_image_widget.dart';
 import '../../widgets/background_overlay_widget.dart';
@@ -37,8 +42,27 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
     mapController = controller;
   }
 
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{}; // CLASS MEMBER, MAP OF MARKS
+
+  void _add() {
+    var markerIdVal = Random().nextInt(1002).toString();
+    final MarkerId markerId = MarkerId(markerIdVal);
+
+    // creating a new MARKER
+    final Marker marker = Marker(
+      markerId: markerId,
+      position: LatLng(
+        double.parse(latitude),
+        double.parse(longitude)
+      ),
+      infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
+    );
+    markers[markerId] = marker;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _add();
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -160,7 +184,10 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
                             initialCameraPosition: CameraPosition(
                               target: latitude == ''? _center
                                   :LatLng(double.parse(latitude), double.parse(longitude)),
-                              zoom: 11.0,
+                              zoom: 5.0,
+                            ),
+                            markers: Set<Marker>.of(
+                                markers.values
                             ),
                           ),
                         ),
@@ -207,6 +234,21 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
                                 ),
                                 ElevatedButton(
                                   onPressed: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MultiProvider(
+                                                    providers: <
+                                                        ChangeNotifierProvider<
+                                                            DharmshalaFormPageViewModel>>[
+                                                      ChangeNotifierProvider<
+                                                          DharmshalaFormPageViewModel>(
+                                                          create: (_) =>
+                                                              DharmshalaFormPageViewModel())
+                                                    ],
+                                                    child:
+                                                    const DharmshalaFormPageWidget(type: 'dharmshala',))));
                                   },
                                   style:
                                   ElevatedButton.styleFrom(

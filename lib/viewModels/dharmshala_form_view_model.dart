@@ -4,6 +4,7 @@ import 'package:dharmlok/helpers/location_manager.dart';
 import 'package:dharmlok/models/bal_vidya_model.dart';
 import 'package:dharmlok/models/service_model.dart';
 import 'package:dharmlok/services/bal_vidya_service.dart';
+import 'package:dharmlok/services/dharmshala_service.dart';
 import 'package:dharmlok/services/pooja_service.dart';
 import 'package:dharmlok/services/termple_service.dart';
 
@@ -18,8 +19,8 @@ import '../models/temple_model.dart';
 import '../services/manage_profile_service.dart';
 
 
-class FormPageViewModel extends ChangeNotifier {
-  final PoojaService _poojaService = PoojaService();
+class DharmshalaFormPageViewModel extends ChangeNotifier {
+  final DharmshalaService _dharmshalaService = DharmshalaService();
   Status _status = Status.init;
   final UserDetails getUser = UserDetails();
   final ManageProfileService _manageProfileService = ManageProfileService();
@@ -106,7 +107,7 @@ class FormPageViewModel extends ChangeNotifier {
 
   getAllStates() async{
     try {
-     // _status = Status.loading;
+      // _status = Status.loading;
       _setStateList(await _manageProfileService.getAllStates(await getUser.getToken()));
     } on ShowError catch (error) {
       _status = Status.error;
@@ -115,12 +116,11 @@ class FormPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addEnquiry(String name, String phone,
-      String date, String poojaName,
-      String providerId, String serviceId, String city) async{
+  addEnquiry(String name, String email,
+      String date, String description, String duration, String numberOfPerson, String phone, String type) async{
     try {
       _status = Status.loading;
-     // _setEnquiryDetails(await _poojaService.addEnquiry(name, phone, date, selectedState,await getUser.getToken(), city));
+      _setEnquiryDetails(await _dharmshalaService.addEnquiry(name, email, date, description, duration, numberOfPerson,await getUser.getToken(), phone, type ));
     } on ShowError catch (error) {
       _status = Status.error;
       _setError(error);

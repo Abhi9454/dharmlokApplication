@@ -30,5 +30,29 @@ class AppAssets{
   static const profileImage = '$basePath/profile_b.png';
   static const homeImage = '$basePath/home_b.png';
   static const templeFrame = '$basePath/template-frame.png';
+  static const ganeshImage = '$basePath/ganesh.png';
+  static const hanuManImage = '$basePath/hanuman.png';
+  static const durgaImage = '$basePath/durga.png';
+  static const kaliImage = '$basePath/kali.png';
+  static const krishnaImage = '$basePath/krishna.png';
+  static const shivImage = '$basePath/shiv.png';
+  static const aartiImage = '$basePath/aarti.png';
+  static const shankhImage = '$basePath/shankh.png';
+  static const songLibraryImage = '$basePath/song-library.png';
+  static const thaliImage = '$basePath/thali.png';
+  static const flowerImage = '$basePath/flower.png';
+  static const thaliJson = '$basePath/aarti-thali.json';
+  static const bellJson = '$basePath/bell.json';
+  static const bellImage = '$basePath/bell.png';
+  static const flowerImage1 = '$basePath/flower1.png';
+  static const flowerImage2 = '$basePath/flower2.png';
+  static const flowerImage3 = '$basePath/flower3.png';
+  static const shankhSound = '$basePath/shankh.mp3';
+  static const templeArti = '$basePath/Temple-aarti.mp3';
+  static const templeBell = '$basePath/temple-bell.mp3';
+  static const aartiAnimated = '$basePath/aarti-animated.json';
+  static const diyaStick = '$basePath/diya-with-stick.json';
+  static const matchStick = '$basePath/matchstick.json';
+  static const aarti = '$basePath/aarti.mp3';
 
 }

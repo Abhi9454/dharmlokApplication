@@ -48,7 +48,7 @@ class DharmshalaModel {
         active: json["active"],
         createdAt: DateTime.parse(json["createdAt"]),
         v: json["__v"],
-        latitude: json["latitude"] ?? '',
+        latitude: json["lattitude"] ?? '',
         longitude: json["longitude"] ?? '',
       );
 
