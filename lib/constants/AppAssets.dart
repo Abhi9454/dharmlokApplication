@@ -54,5 +54,10 @@ class AppAssets{
   static const diyaStick = '$basePath/diya-with-stick.json';
   static const matchStick = '$basePath/matchstick.json';
   static const aarti = '$basePath/aarti.mp3';
+  static const guruNanak = '$basePath/gurunanak.png';
+  static const ardaas = '$basePath/ardaas.mp3';
+  static const buddhaAarti = '$basePath/budh-aarti.mp3';
+  static const jainBhagwan = '$basePath/jain-bhagwan.png';
+  static const buddhaBhagwan = '$basePath/budh-bhagwan.png';
 
 }

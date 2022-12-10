@@ -106,6 +106,13 @@ class _NavigationTabState extends State<NavigationTab> {
     templeBellAsset.play();
   }
 
+
+  @override
+  dispose(){
+    templeBellAsset.dispose();
+    super.dispose();
+  }
+
   checkLoginStatus() async {
     String token = await _userDetails.getToken();
     if (token.isEmpty) {

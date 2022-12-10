@@ -12,35 +12,46 @@ import 'package:dharmlok/viewModels/pooja_view_model.dart';
 import 'package:dharmlok/viewModels/temple_view_model.dart';
 import 'package:dharmlok/views/AartiPage/aarti_page_widget.dart';
 import 'package:dharmlok/views/BalvidyaPage/balvidya_page_widget.dart';
+import 'package:dharmlok/views/BuddhaArtiPage/buddha_aarti_page_widget.dart';
 import 'package:dharmlok/views/DharamshalaPage/dharamshala_page_widget.dart';
 import 'package:dharmlok/views/DharmguruPage/dharmguru_page_widget.dart';
 import 'package:dharmlok/views/DharshanPage/dharshan_page_widget.dart';
 import 'package:dharmlok/views/ELibraryPageWidget/e_library_page_widget.dart';
 import 'package:dharmlok/views/EShopPage/eshop_page_widget.dart';
 import 'package:dharmlok/views/EventBookingPage/event_booking_page_widget.dart';
+import 'package:dharmlok/views/JainAartiPage/jain_aarti_page_widget.dart';
 import 'package:dharmlok/views/KathavachakPage/kathavachak_page_widget.dart';
 import 'package:dharmlok/views/PanchangPage/panchang_page_widget.dart';
 import 'package:dharmlok/views/PoojaPage/pooja_page_widget.dart';
+import 'package:dharmlok/views/SikhAartiPage/sikh_aarti_page_widget.dart';
 import 'package:dharmlok/views/Temples/temples_page_widget.dart';
 import 'package:dharmlok/widgets/background_image_widget.dart';
 import 'package:dharmlok/widgets/background_overlay_widget.dart';
 import 'package:dharmlok/widgets/drawer_widget.dart';
 import 'package:dharmlok/widgets/home_container_tile_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../extensions/device_size.dart';
 import 'package:flutter/material.dart';
 
+import '../../helpers/read_user_data.dart';
 import '../../viewModels/vendor_view_model.dart';
 import '../AudioPage/audio_page_widget.dart';
 import 'components/home_appbar_widget.dart';
 
-class HomePageWidget extends StatelessWidget {
+class HomePageWidget extends StatefulWidget {
   HomePageWidget({Key? key}) : super(key: key);
 
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  @override
+  State<HomePageWidget> createState() => _HomePageWidgetState();
+}
 
+class _HomePageWidgetState extends State<HomePageWidget> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  late SharedPreferences _prefs;
+  final UserDetails _userDetails = UserDetails();
 
   Future<void> _launchInBrowser() async {
     if (!await launchUrl(
@@ -51,8 +62,57 @@ class HomePageWidget extends StatelessWidget {
     }
   }
 
-  List<String> religionList= ['Sanatan','Buddhism','Sikh', 'Jain'];
+  @override
+  initState(){
+    dialogView();
+    super.initState();
+  }
 
+  dialogView() async {
+    _prefs = await SharedPreferences.getInstance();
+    String token = await _userDetails.getToken();
+    if (token.isNotEmpty) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Center(child: Text('Select')),
+              content: SizedBox(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.4, // Change as per your requirement
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.6, // Change as per your requirement
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: religionList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        _prefs.setString('religion', religionList[index]);
+                        Navigator.of(context).pop();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(religionList[index]),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            );
+          });
+    }
+ }
+
+  List<String> religionList= ['Sanatan','Buddhism','Sikh', 'Jain'];
 
   @override
   Widget build(BuildContext context) {
@@ -359,40 +419,31 @@ class HomePageWidget extends StatelessWidget {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Center(child: Text('Select')),
-                                            content: SizedBox(
-                                              height: MediaQuery.of(context).size.height * 0.4, // Change as per your requirement
-                                              width: MediaQuery.of(context).size.width * 0.6, // Change as per your requirement
-                                              child: ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: religionList.length,
-                                                itemBuilder: (BuildContext context, int index) {
-                                                  return InkWell(
-                                                    onTap: (){
-                                                      Navigator.of(context).pop();
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(builder: (context) => const AartiPageWidget()),
-                                                      );
-                                                    },
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: Card(
-                                                        child: ListTile(
-                                                          title: Text(religionList[index]),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        });
+                                    String? religion = _prefs.getString('religion');
+                                    if(religion! == 'Sanatan'){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const AartiPageWidget()),
+                                      );
+                                    }
+                                    else if(religion == 'Sikh'){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const SikhAartiPageWidget()),
+                                      );
+                                    }
+                                    else if(religion == 'Jain'){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const JainAartiPageWidget()),
+                                      );
+                                    }
+                                    else if(religion == 'Buddhism'){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const BuddhaAartiPageWidget()),
+                                      );
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.yellow,

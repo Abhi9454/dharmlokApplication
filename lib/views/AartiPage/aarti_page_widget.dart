@@ -60,6 +60,10 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
 
   bool showHint = true;
 
+  bool artiPlaying  = false;
+
+  bool shankhPlaying = false;
+
   @override
   void initState() {
     super.initState();
@@ -91,6 +95,7 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
     templeAartiAsset.dispose();
     templeBellAsset.dispose();
     shankhAsset.dispose();
+    Wakelock.disable();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -257,37 +262,24 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                       children: [
                         InkWell(
                           onTap: () {
-                            if (rotateAarti) {
+                            if (rotateAarti && artiPlaying) {
                               rotateAarti = false;
+                              artiPlaying = false;
                               //_lottieAartiAnimation.reset();
                               animationController.reset();
                               _lottieBellAnimation.reset();
                               _lottieThaliAnimation.reset();
                               isFalling = false;
-                              templeAartiAsset.stop();
-                              shankhAsset.stop();
+                              templeAartiAsset.dispose();
+                              shankhAsset.dispose();
                             } else {
                               rotateAarti = true;
                               isFalling = true;
                               showHint = false;
-                              if(shankhAsset.isPlaying.value){
-                                shankhAsset.stop();
-                              }
-                              else{
-                                shankhAsset.open(
-                                  Audio(AppAssets.shankhSound),
-                                );
-                                shankhAsset.play();
-                              }
-                              if(templeAartiAsset.isPlaying.value){
-                                templeAartiAsset.stop();
-                              }
-                              else{
-                                templeAartiAsset.open(
-                                  Audio(AppAssets.aarti),
-                                );
-                                templeAartiAsset.play();
-                              }
+                              artiPlaying = true;
+                              templeAartiAsset.open(
+                                Audio(AppAssets.aarti),
+                              );
                               animationController.forward();
                               _lottieThaliAnimation.repeat();
                               _lottieBellAnimation.repeat();
@@ -386,16 +378,15 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                       children: [
                         InkWell(
                           onTap: () {
-                            if(!rotateAarti){
+                            if(!rotateAarti && !shankhPlaying){
+                              shankhPlaying = true;
                               shankhAsset.open(
                                 Audio(AppAssets.shankhSound),
                               );
-                              if(shankhAsset.isPlaying.value){
-                                shankhAsset.stop();
-                              }
-                              else{
-                                shankhAsset.play();
-                              }
+                            }
+                            else{
+                              shankhPlaying = false;
+                              shankhAsset.dispose();
                             }
                           },
                           child: Container(
@@ -485,7 +476,6 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                             templeBellAsset.open(
                               Audio(AppAssets.templeBell),
                             );
-                            templeBellAsset.play();
                           }
                           _lottieBellAnimation.repeat();
                           bellRinging = true;
@@ -511,7 +501,6 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                             templeBellAsset.open(
                               Audio(AppAssets.templeBell),
                             );
-                            templeBellAsset.play();
                           }
                           _lottieBellAnimation.repeat();
                           bellRinging = true;
@@ -555,7 +544,7 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                 : const SizedBox(),
             !light && showHint
                 ? Align(
-                    alignment: const Alignment(0.6, 0.58),
+                    alignment: const Alignment(0, 0.9),
                     child: Container(
                       color: Colors.white70,
                       child: const Padding(
