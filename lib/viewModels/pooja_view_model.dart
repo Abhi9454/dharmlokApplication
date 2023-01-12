@@ -70,7 +70,8 @@ class PoojaViewModel extends ChangeNotifier {
   getAllPooja() async {
     try {
       _status = Status.loading;
-      _setServiceModel(await _poojaService.getAllPooja(city,userLocation,services,state,type,await getUser.getToken()));
+      String loc = await _locationManager.getLocationName();
+      _setServiceModel(await _poojaService.getAllPooja(city,loc,services,state,type,await getUser.getToken()));
     } on ShowError catch (error) {
       _status = Status.error;
       _setError(error);

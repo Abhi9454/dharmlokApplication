@@ -15,6 +15,8 @@ class LoginPageViewModel extends ChangeNotifier {
 
   late Map<String, dynamic> _userDetails;
 
+  bool showPassword = false;
+
   Map<String, dynamic> get userDetails => _userDetails;
 
   Future<void> _setUserDetails(Map<String, dynamic> userDetails) async {
@@ -33,6 +35,16 @@ class LoginPageViewModel extends ChangeNotifier {
         list[0].token,
       );
       _loginStatus = LoginStatus.success;
+    }
+    notifyListeners();
+  }
+
+  updateShowPassword(){
+    if(showPassword){
+      showPassword = false;
+    }
+    else{
+      showPassword = true;
     }
     notifyListeners();
   }

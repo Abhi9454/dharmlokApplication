@@ -16,7 +16,7 @@ class PoojaService {
         "token" : token
       };
       final Map<String, dynamic> map = <String, dynamic>{
-        'city' : city,
+        'city' : location,
         'location':location,
         'services':services,
         'state':state,

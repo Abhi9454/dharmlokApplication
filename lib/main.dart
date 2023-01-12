@@ -4,7 +4,6 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:dharmlok/viewModels/main_view_model.dart';
 import 'package:dharmlok/viewModels/manage_profile_view_model.dart';
 import 'package:flutter/services.dart';
-import 'package:location/location.dart';
 
 import 'constants/AppAssets.dart';
 import 'viewModels/home_page_view_model.dart';
@@ -14,8 +13,6 @@ import 'views/Login/login_page_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'views/ManageProfilePage/manage_profile_page_widget.dart';
-import 'views/MyOrdersPage/my_orders_page_widget.dart';
-import 'views/NearByEventsPage/near_by_events_page_widget.dart';
 
 import 'constants/AppColors.dart';
 import 'helpers/read_user_data.dart';
@@ -140,9 +137,9 @@ class _NavigationTabState extends State<NavigationTab> {
         showUnselectedLabels: true,
         backgroundColor: AppColors.primary,
         selectedItemColor: AppColors.onPrimary,
-        unselectedFontSize: 14,
-        selectedFontSize: 14,
-        iconSize: 22,
+        unselectedFontSize: 13,
+        selectedFontSize: 13,
+        iconSize: 20,
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[

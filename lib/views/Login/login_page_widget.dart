@@ -95,23 +95,36 @@ class LoginPageWidget extends StatelessWidget {
                           child: TextFormField(
                             autofocus: false,
                             controller: password,
-                            obscureText: true,
+                            obscureText: model.showPassword,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18),
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                                 hintText: 'Password',
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Colors.grey, width: 0.0),
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(10)),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Colors.grey, width: 0.0),
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(10)),
-                                )),
+                                ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  // Based on passwordVisible state choose the icon
+                                  model.showPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  model.updateShowPassword();
+                                  // Update the state i.e. toogle the state of passwordVisible variable
+                                },
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(

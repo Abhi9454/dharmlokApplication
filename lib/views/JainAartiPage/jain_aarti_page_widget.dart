@@ -46,7 +46,7 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
   late SharedPreferences _preferences;
 
   final AutoScrollController controller =
-  AutoScrollController(axis: Axis.horizontal);
+      AutoScrollController(axis: Axis.horizontal);
 
   var commentWidgets = <Widget>[];
 
@@ -60,7 +60,7 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
 
   bool showHint = true;
 
-  bool artiPlaying  = false;
+  bool artiPlaying = false;
 
   bool shankhPlaying = false;
 
@@ -72,10 +72,10 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
     animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 5));
     animation =
-    Tween<double>(begin: -100, end: 800).animate(animationController)
-      ..addListener(() {
-        setState(() {});
-      });
+        Tween<double>(begin: -100, end: 800).animate(animationController)
+          ..addListener(() {
+            setState(() {});
+          });
     _lottieBellAnimation =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
     _lottieAartiAnimation =
@@ -100,7 +100,6 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
     super.dispose();
   }
 
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
@@ -118,8 +117,7 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
       templeAartiAsset.dispose();
       templeBellAsset.dispose();
       shankhAsset.dispose();
-    }
-    else if(state == AppLifecycleState.detached){
+    } else if (state == AppLifecycleState.detached) {
       _lottieBellAnimation.dispose();
       _lottieAartiAnimation.dispose();
       animationController.dispose();
@@ -128,7 +126,6 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
       shankhAsset.dispose();
     }
   }
-
 
   checkDate() async {
     _preferences = await SharedPreferences.getInstance();
@@ -237,28 +234,43 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                       children: [
                         InkWell(
                           onTap: () {
-                            if (rotateAarti && artiPlaying) {
-                              rotateAarti = false;
-                              artiPlaying = false;
-                              //_lottieAartiAnimation.reset();
-                              animationController.reset();
-                              _lottieBellAnimation.reset();
-                              _lottieThaliAnimation.reset();
-                              isFalling = false;
-                              templeAartiAsset.dispose();
-                              shankhAsset.dispose();
-                            } else {
-                              rotateAarti = true;
-                              isFalling = true;
-                              showHint = false;
-                              artiPlaying = true;
-                              templeAartiAsset.open(
-                                Audio(AppAssets.aarti),
-                              );
-                              animationController.forward();
-                              _lottieThaliAnimation.repeat();
-                              _lottieBellAnimation.repeat();
-                              //_lottieAartiAnimation.forward();
+                            if (light) {
+                              if (rotateAarti && artiPlaying) {
+                                rotateAarti = false;
+                                artiPlaying = false;
+                                //_lottieAartiAnimation.reset();
+                                animationController.reset();
+                                _lottieBellAnimation.reset();
+                                _lottieThaliAnimation.reset();
+                                isFalling = false;
+                                templeAartiAsset.dispose();
+                                shankhAsset.dispose();
+                              } else {
+                                rotateAarti = true;
+                                isFalling = true;
+                                showHint = false;
+                                artiPlaying = true;
+                                templeAartiAsset.open(
+                                  Audio(AppAssets.aarti),
+                                );
+
+                                templeAartiAsset.setLoopMode(LoopMode.single);
+                                animationController.repeat();
+                                _lottieThaliAnimation.repeat();
+                                _lottieBellAnimation.repeat();
+                                Future.delayed(const Duration(seconds: 12), () {
+                                  rotateAarti = false;
+                                  artiPlaying = false;
+                                  //_lottieAartiAnimation.reset();
+                                  animationController.reset();
+                                  _lottieBellAnimation.reset();
+                                  _lottieThaliAnimation.reset();
+                                  isFalling = false;
+                                  templeAartiAsset.dispose();
+                                  shankhAsset.dispose();
+                                });
+                                //_lottieAartiAnimation.forward();
+                              }
                             }
                           },
                           child: Container(
@@ -271,7 +283,7 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                                 fit: BoxFit.contain,
                               ),
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(50.0)),
+                                  const BorderRadius.all(Radius.circular(50.0)),
                               border: Border.all(
                                 color: const Color(0XFF2a110c),
                                 width: 4.0,
@@ -281,12 +293,14 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                         ),
                         InkWell(
                           onTap: () {
-                            if (isFalling) {
-                              animationController.reset();
-                              isFalling = false;
-                            } else {
-                              animationController.forward();
-                              isFalling = true;
+                            if (light) {
+                              if (isFalling) {
+                                animationController.reset();
+                                isFalling = false;
+                              } else {
+                                animationController.forward();
+                                isFalling = true;
+                              }
                             }
                           },
                           child: Padding(
@@ -315,54 +329,61 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                     ),
                     !rotateAarti && light
                         ? Lottie.asset(
-                      AppAssets.thaliJson,
-                      fit: BoxFit.contain,
-                      width: 140,
-                      height: 180,
-                    )
-                        : !rotateAarti
-                        ? SizedBox(
-                      width: 160,
-                      height: 220,
-                      child: InkWell(
-                        onTap: () async {
-                          showHint = false;
-                          _preferences =
-                          await SharedPreferences.getInstance();
-                          DateTime currentDate = DateTime.now();
-                          _preferences.setString(
-                              'date', currentDate.toString());
-                          _lottieAartiAnimation.forward();
-                        },
-                        child: Lottie.asset(AppAssets.diyaStick,
+                            AppAssets.thaliJson,
                             fit: BoxFit.contain,
-                            controller: _lottieAartiAnimation),
-                      ),
-                    )
-                        : const SizedBox(),
+                            width: 140,
+                            height: 180,
+                          )
+                        : !rotateAarti
+                            ? SizedBox(
+                                width: 160,
+                                height: 220,
+                                child: InkWell(
+                                  onTap: () async {
+                                    _preferences =
+                                        await SharedPreferences.getInstance();
+                                    DateTime currentDate = DateTime.now();
+                                    _preferences.setString(
+                                        'date', currentDate.toString());
+                                    _lottieAartiAnimation.forward();
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      setState(() {
+                                        showHint = false;
+                                        light = true;
+                                      });
+                                    });
+                                  },
+                                  child: Lottie.asset(AppAssets.diyaStick,
+                                      fit: BoxFit.contain,
+                                      controller: _lottieAartiAnimation),
+                                ),
+                              )
+                            : const SizedBox(),
                     rotateAarti
                         ? SizedBox(
-                      width: 180, height: 220,
-                      //width: context.width * 0.65,
-                      child: Lottie.asset(AppAssets.aartiAnimated,
-                          controller: _lottieThaliAnimation,
-                          fit: BoxFit.contain),
-                    )
+                            width: 180, height: 220,
+                            //width: context.width * 0.65,
+                            child: Lottie.asset(AppAssets.aartiAnimated,
+                                controller: _lottieThaliAnimation,
+                                fit: BoxFit.contain),
+                          )
                         : const SizedBox(),
                     Column(
                       children: [
                         InkWell(
                           onTap: () {
-                            if(!rotateAarti && !shankhPlaying){
-                              shankhPlaying = true;
-                              shankhAsset.open(
-                                Audio(AppAssets.shankhSound),
-                              );
-                            }
-                            else{
-                              shankhPlaying = false;
-                              shankhAsset.dispose();
-                            }
+                           if(light){
+                             if (!rotateAarti && !shankhPlaying) {
+                               shankhPlaying = true;
+                               shankhAsset.open(
+                                 Audio(AppAssets.shankhSound),
+                               );
+                             } else {
+                               shankhPlaying = false;
+                               shankhAsset.dispose();
+                             }
+                           }
                           },
                           child: Container(
                             width: 50.0,
@@ -374,7 +395,7 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                                 fit: BoxFit.contain,
                               ),
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(50.0)),
+                                  const BorderRadius.all(Radius.circular(50.0)),
                               border: Border.all(
                                 color: const Color(0XFF2a110c),
                                 width: 4.0,
@@ -392,15 +413,15 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MultiProvider(
-                                        providers: <
-                                            ChangeNotifierProvider<
-                                                AudioListViewModel>>[
-                                          ChangeNotifierProvider<
-                                              AudioListViewModel>(
-                                              create: (_) =>
-                                                  AudioListViewModel())
-                                        ],
-                                        child: AudioPageWidget())));
+                                            providers: <
+                                                ChangeNotifierProvider<
+                                                    AudioListViewModel>>[
+                                              ChangeNotifierProvider<
+                                                      AudioListViewModel>(
+                                                  create: (_) =>
+                                                      AudioListViewModel())
+                                            ],
+                                            child: AudioPageWidget())));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -444,10 +465,9 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                           bellRinging = false;
                           _lottieBellAnimation.reset();
                         } else {
-                          if(templeBellAsset.isPlaying.value){
+                          if (templeBellAsset.isPlaying.value) {
                             templeBellAsset.stop();
-                          }
-                          else{
+                          } else {
                             templeBellAsset.open(
                               Audio(AppAssets.templeBell),
                             );
@@ -469,10 +489,9 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                           bellRinging = false;
                           _lottieBellAnimation.reset();
                         } else {
-                          if(templeBellAsset.isPlaying.value){
+                          if (templeBellAsset.isPlaying.value) {
                             templeBellAsset.play();
-                          }
-                          else{
+                          } else {
                             templeBellAsset.open(
                               Audio(AppAssets.templeBell),
                             );
@@ -495,474 +514,474 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
             ),
             isFalling
                 ? Align(
-              alignment: Alignment.topCenter,
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: Alignment.topCenter,
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.7, -0.9),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.7, -0.9),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             !light && showHint
                 ? Align(
-              alignment: const Alignment(0, 0.9),
-              child: Container(
-                color: Colors.white70,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'दीप प्रज्वलित करें',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-            )
+                    alignment: const Alignment(0, 0.9),
+                    child: Container(
+                      color: Colors.white70,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'दीप प्रज्वलित करें',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.1, -0.1),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.1, -0.1),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.42, -0.23),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.42, -0.23),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.5, -0.55),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.5, -0.55),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.6, -0.6),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.6, -0.6),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.9, -0.1),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.9, -0.1),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.86, 0.13),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.86, 0.13),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.40, 0.34),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.40, 0.34),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.23, 0.34),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.23, 0.34),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.45, 0.56),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.45, 0.56),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.67, 0.83),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage3,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.67, 0.83),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage3,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.6, -0.6),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.6, -0.6),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.6, -0.6),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.6, -0.6),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.32, -0.35),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage1,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.32, -0.35),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage1,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0, 0.4),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage3,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0, 0.4),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage3,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.86, 0.13),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.86, 0.13),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.86, 0.13),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.86, 0.13),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.16, -0.13),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.16, -0.13),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.39, -0.29),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.39, -0.29),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.46, -0.55),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.46, -0.55),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.59, -0.67),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.59, -0.67),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.78, -0.73),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.78, -0.73),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.60, -0.87),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.60, -0.87),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.49, -0.74),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.49, -0.74),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.43, -0.54),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.43, -0.54),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.37, -0.47),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.37, -0.47),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.25, -0.51),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.25, -0.51),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.56, 0.29),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.56, 0.29),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.56, 0.47),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.56, 0.47),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.61, 0.74),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.61, 0.74),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.73, 0.33),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.73, 0.33),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.36, 0.93),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.36, 0.93),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.7, 0.4),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.7, 0.4),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.26, -0.63),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(-0.26, -0.63),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.92, -0.43),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.92, -0.43),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(0.49, 0.59),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 50,
-                    height: 50,
-                  )),
-            )
+                    alignment: const Alignment(0.49, 0.59),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
                 : const SizedBox(),
             isFalling
                 ? Align(
-              alignment: const Alignment(-0.90, 0.43),
-              child: Transform.translate(
-                  offset: Offset(0, animation.value),
-                  child: Image.asset(
-                    AppAssets.flowerImage2,
-                    width: 40,
-                    height: 40,
-                  )),
-            )
+                    alignment: const Alignment(-0.90, 0.43),
+                    child: Transform.translate(
+                        offset: Offset(0, animation.value),
+                        child: Image.asset(
+                          AppAssets.flowerImage2,
+                          width: 40,
+                          height: 40,
+                        )),
+                  )
                 : const SizedBox(),
           ],
         ),

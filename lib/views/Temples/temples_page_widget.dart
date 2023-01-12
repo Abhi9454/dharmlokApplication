@@ -276,22 +276,22 @@ class TemplePageWidget extends StatelessWidget {
                                                                     imageLinks =
                                                                     [];
                                                                 imageLinks.add(
-                                                                    '${AppStrings.imageUrl}${templeModel.otherTempleList[index].bannerImageUrl}');
+                                                                    '${AppStrings.imageUrl}${templeModel.myTempleList[index].bannerImageUrl}');
                                                                 imageLinks.add(
-                                                                    '${AppStrings.imageUrl}${templeModel.otherTempleList[index].relatedImageUrl}');
+                                                                    '${AppStrings.imageUrl}${templeModel.myTempleList[index].relatedImageUrl}');
                                                                 Navigator.of(
                                                                         context)
                                                                     .push(MaterialPageRoute(
                                                                         builder: (context) => TempleDetailPageWidget(
-                                                                              templeName: templeModel.otherTempleList[index].name,
+                                                                              templeName: templeModel.myTempleList[index].name,
                                                                               imageLink: imageLinks,
-                                                                              description: templeModel.otherTempleList[index].description,
-                                                                              location: templeModel.otherTempleList[index].location,
-                                                                              city: templeModel.otherTempleList[index].city,
-                                                                              state: templeModel.otherTempleList[index].state,
+                                                                              description: templeModel.myTempleList[index].description,
+                                                                              location: templeModel.myTempleList[index].location,
+                                                                              city: templeModel.myTempleList[index].city,
+                                                                              state: templeModel.myTempleList[index].state,
                                                                               userLocation: templeModel.userLocation,
-                                                                              latitude: templeModel.otherTempleList[index].latitude,
-                                                                              longitude: templeModel.otherTempleList[index].longitude,
+                                                                              latitude: templeModel.myTempleList[index].latitude,
+                                                                              longitude: templeModel.myTempleList[index].longitude,
                                                                             )));
                                                               },
                                                               style: ElevatedButton

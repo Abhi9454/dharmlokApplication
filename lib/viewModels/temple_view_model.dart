@@ -73,7 +73,8 @@ class TempleViewModel extends ChangeNotifier {
   getAllTemples() async {
     try {
       _status = Status.loading;
-      _setTempleDetails(await _templeService.getAllTemples(category,city,'en',userLocation,state,await getUser.getToken()));
+      String loc =  await _locationManager.getLocationName();
+      _setTempleDetails(await _templeService.getAllTemples(category,city,'en',loc,state,await getUser.getToken()));
     } on ShowError catch (error) {
       _status = Status.error;
       _setError(error);

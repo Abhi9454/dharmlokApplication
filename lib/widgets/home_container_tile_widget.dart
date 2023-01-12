@@ -20,7 +20,7 @@ class HomeContainerTileWidget extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10))
         ),
         child: Padding(
-          padding: const EdgeInsets.all(1.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,19 +29,19 @@ class HomeContainerTileWidget extends StatelessWidget {
                 image: AssetImage(
                   imageName,
                 ),
-                width: 50,
-                height: 50,
+                width: 80,
+                height: 80,
                 fit: BoxFit.contain,
               ),
-              Text(
-                imageText,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                style: const TextStyle(
-                    color: Color(0XFF604E36),
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal),
-              ),
+              // Text(
+              //   imageText,
+              //   textAlign: TextAlign.center,
+              //   maxLines: 2,
+              //   style: const TextStyle(
+              //       color: Color(0XFF604E36),
+              //       fontSize: 12,
+              //       fontWeight: FontWeight.normal),
+              // ),
             ],
           ),
         ),

@@ -17,6 +17,9 @@ class RegisterViewModel extends ChangeNotifier {
 
   late Map<String, dynamic> _userDetails;
 
+  bool showPassword = false;
+  bool showConfirmPassword = false;
+
   Map<String, dynamic> get userDetails => _userDetails;
 
   Future<void> _setUserDetails(Map<String, dynamic> userDetails, BuildContext context) async {
@@ -38,6 +41,26 @@ class RegisterViewModel extends ChangeNotifier {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const NavigationTab()),
               (Route<dynamic> route) => false);
+    }
+    notifyListeners();
+  }
+
+  updateShowPassword(){
+    if(showPassword){
+      showPassword = false;
+    }
+    else{
+      showPassword = true;
+    }
+    notifyListeners();
+  }
+
+  updateShowConfirmPassword(){
+    if(showConfirmPassword){
+      showConfirmPassword = false;
+    }
+    else{
+      showConfirmPassword = true;
     }
     notifyListeners();
   }

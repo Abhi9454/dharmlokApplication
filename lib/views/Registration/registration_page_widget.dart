@@ -206,21 +206,33 @@ class RegistrationPageWidget extends StatelessWidget {
                           autofocus: false,
                           controller: password,
                           keyboardType: TextInputType.text,
-                          obscureText: true,
+                          obscureText: registerModel.showPassword,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 18),
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
+                          decoration:  InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.grey, width: 0.0),
                               borderRadius:
                               BorderRadius.all(Radius.circular(10)),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.grey, width: 0.0),
                               borderRadius:
                               BorderRadius.all(Radius.circular(10)),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                registerModel.showPassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                registerModel.updateShowPassword();
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                              },
                             ),
                           ),
                         ),
@@ -250,21 +262,33 @@ class RegistrationPageWidget extends StatelessWidget {
                           autofocus: false,
                           controller: confirmPassword,
                           keyboardType: TextInputType.text,
-                          obscureText: true,
+                          obscureText: registerModel.showConfirmPassword,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 18),
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
+                          decoration:  InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.grey, width: 0.0),
                               borderRadius:
                               BorderRadius.all(Radius.circular(10)),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.grey, width: 0.0),
                               borderRadius:
                               BorderRadius.all(Radius.circular(10)),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                registerModel.showConfirmPassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                registerModel.updateShowConfirmPassword();
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                              },
                             ),
                           ),
                         ),

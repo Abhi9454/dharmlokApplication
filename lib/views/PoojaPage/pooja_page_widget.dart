@@ -182,7 +182,7 @@ class PoojaPageWidget extends StatelessWidget {
                                                                               PanditDetailsPageWidget(panditId:   poojaModel
                                                                                   .myPoojaList[
                                                                               index]
-                                                                                  .id, phoneNumber: poojaModel
+                                                                                  .serviceId, phoneNumber: poojaModel
                                                                                   .myPoojaList[
                                                                               index]
                                                                                   .phone,))));

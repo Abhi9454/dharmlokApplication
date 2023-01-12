@@ -14,7 +14,7 @@ class TempleService {
       final Map<String, dynamic> map = <String, dynamic>{
         'category': category,
         'language': language,
-        'city' : city,
+        'city' : location,
         'location':location,
         'state':state
       };

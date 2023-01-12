@@ -191,77 +191,74 @@ class _BuddhaAartiPageWidgetState extends State<BuddhaAartiPageWidget>
               child: SizedBox(
                 width: context.width,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            if(isPlaying){
-                              isPlaying = false;
-                              ardaasAsset.dispose();
-                            }
-                            else{
-                              isPlaying = true;
-                              ardaasAsset.open(
-                                Audio(AppAssets.buddhaAarti),
-                              );
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                color: const Color(0XFF2a110c),
-                                image: const DecorationImage(
-                                  image: AssetImage(AppAssets.aartiImage),
-                                  fit: BoxFit.contain,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(50.0)),
-                                border: Border.all(
-                                  color: const Color(0XFF2a110c),
-                                  width: 4.0,
-                                ),
-                              ),
+                    InkWell(
+                      onTap: () {
+                        if(isPlaying){
+                          isPlaying = false;
+                          ardaasAsset.dispose();
+                        }
+                        else{
+                          isPlaying = true;
+                          ardaasAsset.open(
+                            Audio(AppAssets.buddhaAarti),
+                          );
+                          ardaasAsset.setLoopMode(LoopMode.single);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 50.0,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF2a110c),
+                            image: const DecorationImage(
+                              image: AssetImage(AppAssets.aartiImage),
+                              fit: BoxFit.contain,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(50.0)),
+                            border: Border.all(
+                              color: const Color(0XFF2a110c),
+                              width: 4.0,
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            if (isFalling) {
-                              animationController.reset();
-                              isFalling = false;
-                            } else {
-                              animationController.forward();
-                              isFalling = true;
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                color: const Color(0XFF2a110c),
-                                image: const DecorationImage(
-                                  image: AssetImage(AppAssets.flowerImage),
-                                  fit: BoxFit.contain,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(50.0)),
-                                border: Border.all(
-                                  color: const Color(0XFF2a110c),
-                                  width: 4.0,
-                                ),
-                              ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (isFalling) {
+                          animationController.reset();
+                          isFalling = false;
+                        } else {
+                          animationController.forward();
+                          isFalling = true;
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 50.0,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF2a110c),
+                            image: const DecorationImage(
+                              image: AssetImage(AppAssets.flowerImage),
+                              fit: BoxFit.contain,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(50.0)),
+                            border: Border.all(
+                              color: const Color(0XFF2a110c),
+                              width: 4.0,
                             ),
                           ),
                         ),
-                        //Image.asset(AppAssets.aartiImage, fit: BoxFit.contain, width: 100,height: 100,),
-                      ],
+                      ),
                     ),
                     InkWell(
                       onTap: () {
@@ -304,6 +301,7 @@ class _BuddhaAartiPageWidgetState extends State<BuddhaAartiPageWidget>
                         ),
                       ),
                     ),
+                    //Image.asset(AppAssets.aartiImage, fit: BoxFit.contain, width: 100,height: 100,),
                   ],
                 ),
               ),

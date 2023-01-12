@@ -111,6 +111,7 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
       templeAartiAsset.dispose();
       templeBellAsset.dispose();
       shankhAsset.dispose();
+      Navigator.of(context).pop();
     } else if (state == AppLifecycleState.paused) {
       _lottieBellAnimation.dispose();
       _lottieAartiAnimation.dispose();
@@ -118,6 +119,7 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
       templeAartiAsset.dispose();
       templeBellAsset.dispose();
       shankhAsset.dispose();
+      Navigator.of(context).pop();
     }
     else if(state == AppLifecycleState.detached){
       _lottieBellAnimation.dispose();
@@ -126,6 +128,7 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
       templeAartiAsset.dispose();
       templeBellAsset.dispose();
       shankhAsset.dispose();
+      Navigator.of(context).pop();
     }
   }
 
@@ -262,28 +265,43 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                       children: [
                         InkWell(
                           onTap: () {
-                            if (rotateAarti && artiPlaying) {
-                              rotateAarti = false;
-                              artiPlaying = false;
-                              //_lottieAartiAnimation.reset();
-                              animationController.reset();
-                              _lottieBellAnimation.reset();
-                              _lottieThaliAnimation.reset();
-                              isFalling = false;
-                              templeAartiAsset.dispose();
-                              shankhAsset.dispose();
-                            } else {
-                              rotateAarti = true;
-                              isFalling = true;
-                              showHint = false;
-                              artiPlaying = true;
-                              templeAartiAsset.open(
-                                Audio(AppAssets.aarti),
-                              );
-                              animationController.forward();
-                              _lottieThaliAnimation.repeat();
-                              _lottieBellAnimation.repeat();
-                              //_lottieAartiAnimation.forward();
+                            if(light){
+                              if (rotateAarti && artiPlaying) {
+                                rotateAarti = false;
+                                artiPlaying = false;
+                                //_lottieAartiAnimation.reset();
+                                animationController.reset();
+                                _lottieBellAnimation.reset();
+                                _lottieThaliAnimation.reset();
+                                isFalling = false;
+                                templeAartiAsset.dispose();
+                                shankhAsset.dispose();
+                              } else {
+                                rotateAarti = true;
+                                isFalling = true;
+                                showHint = false;
+                                artiPlaying = true;
+                                templeAartiAsset.open(
+                                  Audio(AppAssets.aarti),
+                                );
+
+                                templeAartiAsset.setLoopMode(LoopMode.single);
+                                animationController.repeat();
+                                _lottieThaliAnimation.repeat();
+                                _lottieBellAnimation.repeat();
+                                Future.delayed(const Duration(seconds: 13), () {
+                                  rotateAarti = false;
+                                  artiPlaying = false;
+                                  //_lottieAartiAnimation.reset();
+                                  animationController.reset();
+                                  _lottieBellAnimation.reset();
+                                  _lottieThaliAnimation.reset();
+                                  isFalling = false;
+                                  templeAartiAsset.dispose();
+                                  shankhAsset.dispose();
+                                });
+                                //_lottieAartiAnimation.forward();
+                              }
                             }
                           },
                           child: Container(
@@ -306,13 +324,15 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                         ),
                         InkWell(
                           onTap: () {
-                            if (isFalling) {
-                              animationController.reset();
-                              isFalling = false;
-                            } else {
-                              animationController.forward();
-                              isFalling = true;
-                            }
+                           if(light){
+                             if (isFalling) {
+                               animationController.reset();
+                               isFalling = false;
+                             } else {
+                               animationController.forward();
+                               isFalling = true;
+                             }
+                           }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -351,13 +371,20 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                                 height: 220,
                                 child: InkWell(
                                   onTap: () async {
-                                    showHint = false;
                                     _preferences =
                                         await SharedPreferences.getInstance();
                                     DateTime currentDate = DateTime.now();
                                     _preferences.setString(
                                         'date', currentDate.toString());
                                     _lottieAartiAnimation.forward();
+                                    Future.delayed(const Duration(seconds: 2), () {
+
+                                      setState(() {
+                                        showHint = false;
+                                        light = true;
+                                      });
+
+                                    });
                                   },
                                   child: Lottie.asset(AppAssets.diyaStick,
                                       fit: BoxFit.contain,
@@ -378,16 +405,18 @@ class _AartiPageWidgetState extends State<AartiPageWidget>
                       children: [
                         InkWell(
                           onTap: () {
-                            if(!rotateAarti && !shankhPlaying){
-                              shankhPlaying = true;
-                              shankhAsset.open(
-                                Audio(AppAssets.shankhSound),
-                              );
-                            }
-                            else{
-                              shankhPlaying = false;
-                              shankhAsset.dispose();
-                            }
+                           if(light){
+                             if(!rotateAarti && !shankhPlaying){
+                               shankhPlaying = true;
+                               shankhAsset.open(
+                                 Audio(AppAssets.shankhSound),
+                               );
+                             }
+                             else{
+                               shankhPlaying = false;
+                               shankhAsset.dispose();
+                             }
+                           }
                           },
                           child: Container(
                             width: 50.0,

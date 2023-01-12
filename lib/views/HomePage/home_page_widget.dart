@@ -64,11 +64,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   initState(){
-    dialogView();
+    dialogView(context);
     super.initState();
   }
 
-  dialogView() async {
+  dialogView(BuildContext context1) async {
     _prefs = await SharedPreferences.getInstance();
     String token = await _userDetails.getToken();
     if (token.isNotEmpty) {
@@ -77,6 +77,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Center(child: Text('Select')),
+              actions: [
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context, false), // passing false
+                  child: const Text('Close'),
+                ),
+              ],
               content: SizedBox(
                 height: MediaQuery
                     .of(context)
@@ -94,9 +100,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       onTap: () {
                         _prefs.setString('religion', religionList[index]);
                         Navigator.of(context).pop();
+                        navigate(context1);
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Card(
                           child: ListTile(
                             title: Text(religionList[index]),
@@ -112,7 +119,40 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     }
  }
 
+
+
+
   List<String> religionList= ['Sanatan','Buddhism','Sikh', 'Jain'];
+
+  navigate(BuildContext context1){
+    String? religion = _prefs.getString('religion');
+
+    if(religion == 'Sanatan'){
+      print('This is religion' + religion.toString());
+      Navigator.push(
+        context1,
+        MaterialPageRoute(builder: (context1) => const AartiPageWidget()),
+      );
+    }
+    else if(religion == 'Sikh'){
+      Navigator.push(
+        context1,
+        MaterialPageRoute(builder: (context1) => const SikhAartiPageWidget()),
+      );
+    }
+    else if(religion == 'Jain'){
+      Navigator.push(
+        context1,
+        MaterialPageRoute(builder: (context1) => const JainAartiPageWidget()),
+      );
+    }
+    else if(religion == 'Buddhism'){
+      Navigator.push(
+        context1,
+        MaterialPageRoute(builder: (context1) => const BuddhaAartiPageWidget()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
