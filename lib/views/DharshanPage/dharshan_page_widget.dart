@@ -16,7 +16,10 @@ import '../../widgets/background_overlay_widget.dart';
 import '../HomePage/components/home_appbar_widget.dart';
 
 class DharshanPageWidget extends StatefulWidget {
-  DharshanPageWidget({Key? key}) : super(key: key);
+  const DharshanPageWidget({this.nowPlayingName = 'Shree Mahakaleshwar Temple Ujjain', this.nowPlayingUrl = 'https://www.youtube.com/watch?v=Oa5WAluC4rs?modestbranding=1',Key? key}) : super(key: key);
+
+  final String nowPlayingName;
+  final String nowPlayingUrl;
 
   @override
   State<DharshanPageWidget> createState() => _DharshanPageWidgetState();
@@ -24,6 +27,7 @@ class DharshanPageWidget extends StatefulWidget {
 
 class _DharshanPageWidgetState extends State<DharshanPageWidget> {
   final GlobalKey<ScaffoldState> _dharshanPageKey = GlobalKey();
+
 
   @override
   void initState() {
@@ -184,6 +188,44 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                     SizedBox(
                       height: context.height * 0.02,
                     ),
+                    dharshanModel
+                        .liveDharshan.isNotEmpty ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: YoutubePlayer(
+                      controller:
+                      YoutubePlayerController(
+                          initialVideoId: YoutubePlayer
+                              .convertUrlToId(
+                              widget.nowPlayingUrl)!,
+                          //Add videoID.
+                          flags:
+                          const YoutubePlayerFlags(
+                            hideControls:
+                            false,
+                            controlsVisibleAtStart:
+                            true,
+                            autoPlay: false,
+                            mute: false,
+                          ),
+                      ),
+                      showVideoProgressIndicator:
+                      true,
+                      progressIndicatorColor:
+                      AppColors
+                            .primary,
+                    ),
+                        ) : const CircularProgressIndicator(),
+                    dharshanModel
+                        .liveDharshan.isNotEmpty ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                      widget.nowPlayingName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                      ),
+                    ),
+                        ) : const SizedBox(),
                     Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
@@ -219,82 +261,105 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                                       ))
                                     : dharshanModel.liveDharshan.isNotEmpty
                                         ? SizedBox(
-                                            height: context.height * 0.38,
+                                            //height: context.height * 0.38,
                                             child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
+                                              scrollDirection: Axis.vertical,
                                               itemCount: dharshanModel
                                                   .liveDharshan.length,
                                               shrinkWrap: true,
+                                              physics: const NeverScrollableScrollPhysics(),
                                               itemBuilder:
                                                   (BuildContext context,
                                                       int index) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0,
-                                                          right: 8.0,
-                                                          bottom: 12.0),
-                                                  child: Container(
-                                                    decoration: const BoxDecoration(
-                                                      // border: Border.all(
-                                                      //     color: Colors.brown,
-                                                      //     width: 8.0),
-                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                        color: Colors.white70),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Column(
-                                                        children: [
-                                                          YoutubePlayer(
-                                                            controller:
-                                                                YoutubePlayerController(
-                                                              initialVideoId: YoutubePlayer
-                                                                  .convertUrlToId(
-                                                                      dharshanModel
-                                                                          .liveDharshan[
-                                                                              index]
-                                                                          .url)!,
-                                                              //Add videoID.
-                                                              flags:
-                                                                  const YoutubePlayerFlags(
-                                                                hideControls:
-                                                                    false,
-                                                                controlsVisibleAtStart:
-                                                                    true,
-                                                                autoPlay: false,
-                                                                mute: false,
+                                                return InkWell(
+                                                  onTap: (){
+                                                    Navigator.of(context).pop();
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                MultiProvider(providers: <
+                                                                    ChangeNotifierProvider<
+                                                                        DharshanViewModel>>[
+                                                                  ChangeNotifierProvider<
+                                                                      DharshanViewModel>(
+                                                                      create: (_) =>
+                                                                          DharshanViewModel())
+                                                                ], child: DharshanPageWidget(
+                                                                  nowPlayingName: dharshanModel
+                                                                      .liveDharshan[index].title,
+                                                                  nowPlayingUrl: dharshanModel
+                                                                      .liveDharshan[index].url,
+                                                                ))));
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0,
+                                                            right: 8.0,
+                                                            bottom: 12.0),
+                                                    child: Container(
+                                                      decoration: const BoxDecoration(
+                                                        // border: Border.all(
+                                                        //     color: Colors.brown,
+                                                        //     width: 8.0),
+                                                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                          color: Colors.white70),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(
+                                                                8.0),
+                                                        child: Column(
+                                                          children: [
+                                                            // YoutubePlayer(
+                                                            //   controller:
+                                                            //       YoutubePlayerController(
+                                                            //     initialVideoId: YoutubePlayer
+                                                            //         .convertUrlToId(
+                                                            //             dharshanModel
+                                                            //                 .liveDharshan[
+                                                            //                     index]
+                                                            //                 .url)!,
+                                                            //     //Add videoID.
+                                                            //     flags:
+                                                            //         const YoutubePlayerFlags(
+                                                            //       hideControls:
+                                                            //           false,
+                                                            //       controlsVisibleAtStart:
+                                                            //           true,
+                                                            //       autoPlay: false,
+                                                            //       mute: false,
+                                                            //     ),
+                                                            //   ),
+                                                            //   showVideoProgressIndicator:
+                                                            //       true,
+                                                            //   progressIndicatorColor:
+                                                            //       AppColors
+                                                            //           .primary,
+                                                            // ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Text(
+                                                                dharshanModel
+                                                                    .liveDharshan[
+                                                                        index]
+                                                                    .title,
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontSize: 14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
                                                             ),
-                                                            showVideoProgressIndicator:
-                                                                true,
-                                                            progressIndicatorColor:
-                                                                AppColors
-                                                                    .primary,
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Text(
-                                                              dharshanModel
-                                                                  .liveDharshan[
-                                                                      index]
-                                                                  .title,
-                                                              maxLines: 2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: const TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -308,143 +373,143 @@ class _DharshanPageWidgetState extends State<DharshanPageWidget> {
                                               child: Text('No Record Found'),
                                             ),
                                           ),
-                            SizedBox(
-                              height: context.height * 0.02,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.all(12),
-                              child: Text(
-                                'Live TV',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.brown,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            dharshanModel.status == Status.loading
-                                ? SizedBox(
-                                    height: context.height * 0.2,
-                                    child: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                : dharshanModel.status == Status.error
-                                    ? Center(
-                                        child: Text(
-                                        dharshanModel.error.message.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(fontSize: 18),
-                                      ))
-                                    : dharshanModel.liveTV.isNotEmpty
-                                        ? SizedBox(
-                                            height: context.height * 0.38,
-                                            child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount:
-                                                  dharshanModel.liveTV.length,
-                                              shrinkWrap: true,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0,
-                                                          right: 8.0,
-                                                          bottom: 12.0),
-                                                  child: Container(
-                                                    decoration: const BoxDecoration(
-                                                      // border: Border.all(
-                                                      //     color: Colors.brown,
-                                                      //     width: 8.0),
-                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                        color: Colors.white70),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Column(
-                                                        children: [
-                                                          YoutubePlayerBuilder(
-                                                            onExitFullScreen:
-                                                                () {
-                                                              // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
-                                                              SystemChrome
-                                                                  .setPreferredOrientations([
-                                                                DeviceOrientation
-                                                                    .portraitUp
-                                                              ]);
-                                                            },
-                                                            player:
-                                                                YoutubePlayer(
-                                                              controller:
-                                                                  YoutubePlayerController(
-                                                                initialVideoId: YoutubePlayer.convertUrlToId(
-                                                                    dharshanModel
-                                                                        .liveTV[
-                                                                            index]
-                                                                        .url)!,
-                                                                //Add videoID.
-                                                                flags:
-                                                                    const YoutubePlayerFlags(
-                                                                  hideControls:
-                                                                      false,
-                                                                  isLive: true,
-                                                                  controlsVisibleAtStart:
-                                                                      true,
-                                                                  autoPlay:
-                                                                      false,
-                                                                  mute: false,
-                                                                ),
-                                                              ),
-                                                              showVideoProgressIndicator:
-                                                                  true,
-                                                              progressIndicatorColor:
-                                                                  AppColors
-                                                                      .primary,
-                                                            ),
-                                                            builder: (context,
-                                                                player) {
-                                                              return SizedBox(
-                                                                child: player,
-                                                              );
-                                                            },
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Text(
-                                                              dharshanModel
-                                                                  .liveTV[index]
-                                                                  .title,
-                                                              maxLines: 2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: const TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          )
-                                        : SizedBox(
-                                            height: context.height * 0.2,
-                                            child: const Center(
-                                              child: Text('No Record Found'),
-                                            ),
-                                          ),
+                            // SizedBox(
+                            //   height: context.height * 0.02,
+                            // ),
+                            // const Padding(
+                            //   padding: EdgeInsets.all(12),
+                            //   child: Text(
+                            //     'Live TV',
+                            //     textAlign: TextAlign.center,
+                            //     style: TextStyle(
+                            //         color: Colors.brown,
+                            //         fontSize: 25,
+                            //         fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
+                            // dharshanModel.status == Status.loading
+                            //     ? SizedBox(
+                            //         height: context.height * 0.2,
+                            //         child: const Center(
+                            //           child: CircularProgressIndicator(),
+                            //         ),
+                            //       )
+                            //     : dharshanModel.status == Status.error
+                            //         ? Center(
+                            //             child: Text(
+                            //             dharshanModel.error.message.toString(),
+                            //             textAlign: TextAlign.center,
+                            //             style: const TextStyle(fontSize: 18),
+                            //           ))
+                            //         : dharshanModel.liveTV.isNotEmpty
+                            //             ? SizedBox(
+                            //                 height: context.height * 0.38,
+                            //                 child: ListView.builder(
+                            //                   scrollDirection: Axis.horizontal,
+                            //                   itemCount:
+                            //                       dharshanModel.liveTV.length,
+                            //                   shrinkWrap: true,
+                            //                   itemBuilder:
+                            //                       (BuildContext context,
+                            //                           int index) {
+                            //                     return Padding(
+                            //                       padding:
+                            //                           const EdgeInsets.only(
+                            //                               left: 8.0,
+                            //                               right: 8.0,
+                            //                               bottom: 12.0),
+                            //                       child: Container(
+                            //                         decoration: const BoxDecoration(
+                            //                           // border: Border.all(
+                            //                           //     color: Colors.brown,
+                            //                           //     width: 8.0),
+                            //                             borderRadius: BorderRadius.all(Radius.circular(10)),
+                            //                             color: Colors.white70),
+                            //                         child: Padding(
+                            //                           padding:
+                            //                               const EdgeInsets.all(
+                            //                                   8.0),
+                            //                           child: Column(
+                            //                             children: [
+                            //                               YoutubePlayerBuilder(
+                            //                                 onExitFullScreen:
+                            //                                     () {
+                            //                                   // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
+                            //                                   SystemChrome
+                            //                                       .setPreferredOrientations([
+                            //                                     DeviceOrientation
+                            //                                         .portraitUp
+                            //                                   ]);
+                            //                                 },
+                            //                                 player:
+                            //                                     YoutubePlayer(
+                            //                                   controller:
+                            //                                       YoutubePlayerController(
+                            //                                     initialVideoId: YoutubePlayer.convertUrlToId(
+                            //                                         dharshanModel
+                            //                                             .liveTV[
+                            //                                                 index]
+                            //                                             .url)!,
+                            //                                     //Add videoID.
+                            //                                     flags:
+                            //                                         const YoutubePlayerFlags(
+                            //                                       hideControls:
+                            //                                           false,
+                            //                                       isLive: true,
+                            //                                       controlsVisibleAtStart:
+                            //                                           true,
+                            //                                       autoPlay:
+                            //                                           false,
+                            //                                       mute: false,
+                            //                                     ),
+                            //                                   ),
+                            //                                   showVideoProgressIndicator:
+                            //                                       true,
+                            //                                   progressIndicatorColor:
+                            //                                       AppColors
+                            //                                           .primary,
+                            //                                 ),
+                            //                                 builder: (context,
+                            //                                     player) {
+                            //                                   return SizedBox(
+                            //                                     child: player,
+                            //                                   );
+                            //                                 },
+                            //                               ),
+                            //                               Padding(
+                            //                                 padding:
+                            //                                     const EdgeInsets
+                            //                                         .all(8.0),
+                            //                                 child: Text(
+                            //                                   dharshanModel
+                            //                                       .liveTV[index]
+                            //                                       .title,
+                            //                                   maxLines: 2,
+                            //                                   overflow:
+                            //                                       TextOverflow
+                            //                                           .ellipsis,
+                            //                                   style: const TextStyle(
+                            //                                       color: Colors.black,
+                            //                                       fontSize: 14,
+                            //                                       fontWeight:
+                            //                                           FontWeight
+                            //                                               .bold),
+                            //                                 ),
+                            //                               ),
+                            //                             ],
+                            //                           ),
+                            //                         ),
+                            //                       ),
+                            //                     );
+                            //                   },
+                            //                 ),
+                            //               )
+                            //             : SizedBox(
+                            //                 height: context.height * 0.2,
+                            //                 child: const Center(
+                            //                   child: Text('No Record Found'),
+                            //                 ),
+                            //               ),
                             SizedBox(
                               height: context.height * 0.02,
                             ),

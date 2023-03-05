@@ -79,7 +79,7 @@ class _PdfViewPageWidgetState extends State<PdfViewPageWidget> {
                 ),
                 Expanded(
                   child: SfPdfViewer.network(
-                    'https://www.dharmlok.com/view/${widget.pdfLink}',
+                    'https://dharmlok.s3.amazonaws.com/${widget.pdfLink}',
                   ),
                 )
               ],

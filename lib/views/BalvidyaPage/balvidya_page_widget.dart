@@ -247,6 +247,10 @@ class BalVidyaPageWidget extends StatelessWidget {
                                                 ),
                                                 ElevatedButton(
                                                   onPressed: () {
+                                                    print('this is url '+balModel
+                                                        .balVidyaDetails[
+                                                    index]
+                                                        .PDFuploadUrl);
                                                     Navigator.of(context).push(MaterialPageRoute(
                                                         builder: (context) =>
                                                             PdfViewPageWidget(

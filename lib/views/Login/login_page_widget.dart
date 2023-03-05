@@ -9,6 +9,7 @@ import '../../viewModels/login_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../Registration/registration_page_widget.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginPageWidget extends StatelessWidget {
   LoginPageWidget({Key? key}) : super(key: key);
@@ -193,6 +194,22 @@ class LoginPageWidget extends StatelessWidget {
                               ),
                             )
                           ],
+                        ),
+                        SizedBox(height: context.height * 0.05,),
+                        SignInButton(
+                          Buttons.Google,
+                          text: "Sign up with Google",
+                          onPressed: () async {
+                            await model.loginGoogle();
+                          },
+                        ),
+                        SizedBox(height: context.height * 0.02,),
+                        SignInButton(
+                          Buttons.Facebook,
+                          text: "Sign in with Facebook",
+                          onPressed: () {
+                            model.loginFaceBook();
+                          },
                         ),
                         SizedBox(height: context.height * 0.1,),
                         model.loginStatus == LoginStatus.failed

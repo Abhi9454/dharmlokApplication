@@ -190,6 +190,99 @@ class _PanditDetailsPageWidgetState extends State<PanditDetailsPageWidget> {
                               SizedBox(
                                 height: context.height * 0.01,
                               ),
+                              SizedBox(
+                                height: context.height * 0.38,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                  panditDetailsModel.panditService.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context,
+                                      int index) {
+                                    return Padding(
+                                      padding:
+                                      const EdgeInsets.only(
+                                          left: 8.0,
+                                          right: 8.0,
+                                          bottom: 12.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          // border: Border.all(
+                                          //     color: Colors.brown,
+                                          //     width: 8.0),
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            color: Colors.white70),
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.all(
+                                              8.0),
+                                          child: Column(
+                                            children: [
+                                              Image.network(
+                                                '${AppStrings.imageUrl}${panditDetailsModel.panditService[index].imageUrl}',
+                                                fit: BoxFit.cover,
+                                                height:
+                                                context.height *
+                                                    0.2,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets
+                                                    .all(8.0),
+                                                child: Text(
+                                                  panditDetailsModel.panditService[
+                                                  index]
+                                                      .services,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                  TextOverflow
+                                                      .ellipsis,
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .bold),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                                child: Text(
+                                                  'Service Available : ${panditDetailsModel.panditService[index].type == 'Both' ? 'Online and Offline' : panditDetailsModel.panditService[index].type == 'Online' ? 'Online' : 'Offline'}',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                                child: Text(
+                                                  'Rs : ${panditDetailsModel.panditService[index].price}',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: context.height * 0.01,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 20.0,right: 20.0),
                                 child: Container(

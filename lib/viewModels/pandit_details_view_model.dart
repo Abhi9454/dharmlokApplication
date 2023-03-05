@@ -1,4 +1,5 @@
 import 'package:dharmlok/models/pandit_details_model.dart';
+import 'package:dharmlok/models/pandit_service_model.dart';
 
 import 'package:flutter/cupertino.dart';
 
@@ -22,6 +23,10 @@ class PanditDetailsViewModel extends ChangeNotifier {
   PanditDetails get panditDetails => _panditDetails;
 
 
+  late List<PanditService> _panditService;
+
+  List<PanditService> get panditService => _panditService;
+
 
   final LocationManager _locationManager = LocationManager();
 
@@ -37,9 +42,17 @@ class PanditDetailsViewModel extends ChangeNotifier {
 
   Future<void> _setPanditDetails(PanditDetails panditDetails) async {
     _panditDetails = panditDetails;
+    getPanditService(_panditDetails.message.userId);
+    //_status = Status.success;
+    notifyListeners();
+  }
+
+  Future<void> _setPanditService( List<PanditService> panditService) async {
+    _panditService = panditService;
     _status = Status.success;
     notifyListeners();
   }
+
 
   late ShowError _error;
 
@@ -54,6 +67,18 @@ class PanditDetailsViewModel extends ChangeNotifier {
     try {
       _status = Status.loading;
       _setPanditDetails(await _poojaService.getPanditDetails(id,await getUser.getToken()));
+
+    } on ShowError catch (error) {
+      _status = Status.error;
+      _setError(error);
+    }
+    notifyListeners();
+  }
+
+  getPanditService(String id) async {
+    try {
+      _status = Status.loading;
+      _setPanditService(await _poojaService.getPanditService(id,await getUser.getToken()));
     } on ShowError catch (error) {
       _status = Status.error;
       _setError(error);

@@ -114,6 +114,35 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       InkWell(
+                                        onTap: (){
+                                          profileModel.setSelectedTab(1);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            // border:
+                                            //     Border.all(color: Colors.brown),
+                                            color: profileModel.selectedTab == 1
+                                                ? Colors.white70
+                                                : Colors.white30,
+                                            borderRadius: const BorderRadius
+                                                .all(
+                                                Radius.circular(
+                                                    5.0) //                 <--- border radius here
+                                            ),
+                                          ),
+                                          width: context.width * 0.22,
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Center(
+                                              child: Text(
+                                                'Biography',
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
                                         onTap: () =>
                                             profileModel.setSelectedTab(0),
                                         child: Container(
@@ -134,35 +163,6 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                             padding: EdgeInsets.all(8.0),
                                             child: Center(
                                               child: Text('Posts'),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: (){
-                                          profileModel.setSelectedTab(1);
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            // border:
-                                            //     Border.all(color: Colors.brown),
-                                            color: profileModel.selectedTab == 1
-                                                ? Colors.white70
-                                                : Colors.white30,
-                                            borderRadius: const BorderRadius
-                                                    .all(
-                                                Radius.circular(
-                                                    5.0) //                 <--- border radius here
-                                                ),
-                                          ),
-                                          width: context.width * 0.22,
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: Text(
-                                                'Biography',
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
                                             ),
                                           ),
                                         ),

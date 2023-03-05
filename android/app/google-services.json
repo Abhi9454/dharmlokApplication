@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "828870687890",
+    "project_id": "dharmlok-376506",
+    "storage_bucket": "dharmlok-376506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828870687890:android:83b160b2c811136f073a4b",
+        "android_client_info": {
+          "package_name": "com.dharmlok.app.dharmlok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828870687890-29b4eptou6fv22gbfo0nsog536t40tg8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa76X3khh6X-aANqUdagH_SZToffhcCGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828870687890-29b4eptou6fv22gbfo0nsog536t40tg8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
