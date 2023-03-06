@@ -8,6 +8,7 @@ import 'package:dharmlok/viewModels/ebook_view_model.dart';
 import 'package:dharmlok/viewModels/eshop_view_model.dart';
 import 'package:dharmlok/viewModels/event_view_model.dart';
 import 'package:dharmlok/viewModels/home_page_view_model.dart';
+import 'package:dharmlok/viewModels/panchang_view_model.dart';
 import 'package:dharmlok/viewModels/pooja_view_model.dart';
 import 'package:dharmlok/viewModels/temple_view_model.dart';
 import 'package:dharmlok/views/AartiPage/aarti_page_widget.dart';
@@ -166,16 +167,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             const BackgroundImageWidget(),
             const BackgroundOverlayWidget(),
             SafeArea(
-              child: Column(
-                children: [
-                  HomePageAppBarWidget(
-                    scaffoldKey: _key,
-                    location: homeModel.userLocation,
-                    languageButtonPressed: () {},
-                    logoutPressed: () {},
-                  ),
-                  Expanded(
-                    child: Column(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    HomePageAppBarWidget(
+                      scaffoldKey: _key,
+                      location: homeModel.userLocation,
+                      languageButtonPressed: () {},
+                      logoutPressed: () {},
+                    ),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -420,10 +422,24 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               HomeContainerTileWidget(
                                   imageName: AppAssets.panchangImage,
                                   imageText: AppStrings.dailyPanchang,
-                                  onPressed: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PanchangPageWidget(userLocation: homeModel.userLocation,)))),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MultiProvider(
+                                                    providers: <
+                                                        ChangeNotifierProvider<
+                                                            PanchangViewModel>>[
+                                                      ChangeNotifierProvider<
+                                                          PanchangViewModel>(
+                                                          create: (_) =>
+                                                              PanchangViewModel())
+                                                    ],
+                                                    child:
+                                                    PanchangPageWidget(userLocation: homeModel.userLocation,))));
+                                  }
+                              ),
                             ],
                           ),
                         ),
@@ -499,11 +515,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ],
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: context.height * 0.06,)
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],

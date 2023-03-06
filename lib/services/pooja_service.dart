@@ -114,4 +114,29 @@ class PoojaService {
       }
     }
   }
+
+  // Future<List<PanditService>> getPanditService(String id, String token) async {
+  //   try {
+  //     final Map<String, dynamic> _header = <String, dynamic>{
+  //       "token" : token
+  //     };
+  //     final Map<String, dynamic> map = <String, dynamic>{
+  //       'id' : id,
+  //       'type':''
+  //     };
+  //     final Response<dynamic> response = await httpService.postUrl(AppStrings.apiUrl + 'myservice',map, _header);
+  //     var jsonString = response.data as Map<String, dynamic>;
+  //     print("this is pandit service resp" + jsonString.toString());
+  //     return jsonString['message']
+  //         .map<PanditService>((json) => PanditService.fromJson(json))
+  //         .toList();
+  //   } on DioError catch (error) {
+  //     if (error.type == DioErrorType.receiveTimeout ||
+  //         error.type == DioErrorType.connectTimeout) {
+  //       throw ShowError('Server timeout ');
+  //     } else {
+  //       throw ShowError('We are working at backend. Please try again in few minutes');
+  //     }
+  //   }
+  // }
 }

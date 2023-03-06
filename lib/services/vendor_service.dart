@@ -54,4 +54,28 @@ class VendorService {
       }
     }
   }
+
+
+
+  Future<Map<dynamic,dynamic>> getPDetails() async {
+    try {
+      final Map<String, dynamic> _header = <String, dynamic>{
+        "token" : ''
+      };
+      final Map<String, dynamic> map = <String, dynamic>{
+        'id': 'id',
+        //'typeVendor': typeVendor
+      };
+      final Response<dynamic> response = await httpService.getUrl(AppStrings.apiUrl + 'getpanchang', map, _header);
+      print('this is panchang resp' + response.data.toString());
+      return response.data as Map<dynamic,dynamic>;
+    } on DioError catch (error) {
+      if (error.type == DioErrorType.receiveTimeout ||
+          error.type == DioErrorType.connectTimeout) {
+        throw ShowError('Server timeout');
+      } else {
+        throw ShowError('We are working at backend. Please try again in few minutes');
+      }
+    }
+  }
 }

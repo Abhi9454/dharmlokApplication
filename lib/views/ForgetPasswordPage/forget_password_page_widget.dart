@@ -1,0 +1,143 @@
+import 'package:dharmlok/extensions/device_size.dart';
+import 'package:dharmlok/widgets/logo_widget.dart';
+import 'package:flutter/material.dart';
+import '../../constants/AppColors.dart';
+import '../../constants/AppStrings.dart';
+import '../../helpers/enum.dart';
+import '../../main.dart';
+import '../../viewModels/login_view_model.dart';
+import 'package:provider/provider.dart';
+
+class ForgetPasswordPageWidget extends StatelessWidget {
+  ForgetPasswordPageWidget({Key? key}) : super(key: key);
+
+  final TextEditingController email = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<LoginPageViewModel>(
+      create: (context) => LoginPageViewModel(),
+      child: Consumer<LoginPageViewModel>(
+        builder: (con, model, _) {
+          return Scaffold(
+            backgroundColor: AppColors.onPrimary,
+            body: SafeArea(
+              child: model.forgetPasswordStatus == ForgetPassword.loading
+                  ? const SizedBox(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: context.height * 0.05,
+                            ),
+                            const LogoWidget(),
+                            SizedBox(
+                              height: context.height * 0.06,
+                            ),
+                            const Text(
+                              'Forget Password',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 25),
+                            ),
+                            SizedBox(
+                              height: context.height * 0.06,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15.0, right: 15, top: 5.0, bottom: 5.0),
+                              child: TextFormField(
+                                autofocus: false,
+                                controller: email,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                                decoration: const InputDecoration(
+                                    hintText: 'Email',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 0.0),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    )),
+                              ),
+                            ),
+                            SizedBox(
+                              height: context.height * 0.05,
+                            ),
+                            SizedBox(
+                              width: context.width * 0.5,
+                              height: context.height * 0.06,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  if (email.text.isNotEmpty) {
+                                    model.forgetPass(email.text);
+                                  } else {
+                                    const snackBar = SnackBar(
+                                      content: Text(
+                                        'Empty Fields....',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white),
+                                      ),
+                                      backgroundColor: (AppColors.primary),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: const StadiumBorder(), backgroundColor: AppColors.onPrimary,
+                                  side: const BorderSide(
+                                      width: 1.5, color: AppColors.primary),
+                                ),
+                                child: const Text(
+                                  'Send Email',
+                                  style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: context.height * 0.05,
+                            ),
+                            model.forgetPasswordStatus == ForgetPassword.success
+                                ? const Text(
+                                    'Check your email to reset password.',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  )
+                                : const SizedBox(),
+                            model.forgetPasswordStatus == ForgetPassword.error
+                                ? Text(
+                                    model.error.message,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  )
+                                : const SizedBox()
+                          ],
+                        ),
+                      ),
+                    ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

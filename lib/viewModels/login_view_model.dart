@@ -8,22 +8,30 @@ import '../helpers/set_user_data.dart';
 import '../models/user_model.dart';
 import '../services/authenticate_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class LoginPageViewModel extends ChangeNotifier {
   final AuthenticateService _authenticateService = AuthenticateService();
   e.LoginStatus _loginStatus = e.LoginStatus.pending;
+  e.ForgetPassword _forgetPasswordStatus = e.ForgetPassword.pending;
   final UserDetailsSet setUser = UserDetailsSet();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth auth = FirebaseAuth.instance;
   final fb = FacebookLogin();
 
   e.LoginStatus get loginStatus => _loginStatus;
+  e.ForgetPassword get forgetPasswordStatus => _forgetPasswordStatus;
 
   late Map<String, dynamic> _userDetails;
+
+  late Map<String, dynamic> _forgetPassword;
 
   bool showPassword = false;
 
   Map<String, dynamic> get userDetails => _userDetails;
+
+  Map<String, dynamic> get forgetPassword => _forgetPassword;
 
   Future<void> _setUserDetails(Map<String, dynamic> userDetails) async {
     _userDetails = userDetails;
@@ -45,16 +53,33 @@ class LoginPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _setForgetPassword(Map<String, dynamic> forgetPassword) async {
+    _forgetPassword = forgetPassword;
+    if (_forgetPassword['success'] == false) {
+      _forgetPasswordStatus = e.ForgetPassword.failed;
+    } else {
+      _forgetPasswordStatus = e.ForgetPassword.success;
+    }
+    notifyListeners();
+  }
+
 
   loginGoogle() async{
-    GoogleSignIn _googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
-      ],
+    // GoogleSignIn _googleSignIn = GoogleSignIn(
+    //     //   scopes: [
+    //     //     'email',
+    //     //     'https://www.googleapis.com/auth/contacts.readonly',
+    //     //   ],
+    //     // );
+    //     // await _googleSignIn.signIn();
+    //     // login(_googleSignIn.currentUser!.email, _googleSignIn.currentUser!.email);
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: ['email', 'profile']
     );
-    await _googleSignIn.signIn();
-    login(_googleSignIn.currentUser!.email, _googleSignIn.currentUser!.email);
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      login(googleSignInAccount.email, googleSignInAccount.email);
+    }
   }
 
   loginFaceBook() async {
@@ -95,6 +120,17 @@ class LoginPageViewModel extends ChangeNotifier {
       _setUserDetails(await _authenticateService.login(email, password));
     } on ShowError catch (error) {
       _loginStatus = e.LoginStatus.error;
+      _setError(error);
+    }
+    notifyListeners();
+  }
+
+  forgetPass(String email) async {
+    try {
+      _forgetPasswordStatus = e.ForgetPassword.loading;
+      _setForgetPassword(await _authenticateService.forgetPassword(email));
+    } on ShowError catch (error) {
+      _forgetPasswordStatus = e.ForgetPassword.error;
       _setError(error);
     }
     notifyListeners();

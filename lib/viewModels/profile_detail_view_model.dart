@@ -1,9 +1,11 @@
 
 
 import '../helpers/location_manager.dart';
+import '../models/photo_model.dart';
 import '../models/post_model.dart';
 import '../models/profile_detail_model.dart';
 
+import '../models/video_model.dart';
 import '../services/profile_detail_service.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -30,13 +32,13 @@ class ProfileDetailViewModel extends ChangeNotifier {
 
   List<PostModel> _postList = [];
 
-  List<String> _videoList = [];
+  List<VideoModel> _videoList = [];
 
-  List<String> _photoList = [];
+  List<PhotoModel> _photoList = [];
 
-  List<String> get videoList => _videoList;
+  List<VideoModel> get videoList => _videoList;
 
-  List<String> get photoList => _photoList;
+  List<PhotoModel> get photoList => _photoList;
 
   ProfileModel get profileDetails => _profileDetails;
 
@@ -63,13 +65,13 @@ class ProfileDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _setVideoList(List<String> videoList) async {
+  Future<void> _setVideoList(List<VideoModel> videoList) async {
     _videoList = videoList;
     _userPostStatus = UserPostStatus.success;
     notifyListeners();
   }
 
-  Future<void> _setPhotoList(List<String> photoList) async {
+  Future<void> _setPhotoList(List<PhotoModel> photoList) async {
     _photoList = photoList;
     _userPostStatus = UserPostStatus.success;
     notifyListeners();
@@ -111,6 +113,28 @@ class ProfileDetailViewModel extends ChangeNotifier {
       _setPostList(await _profileDetailService.getUserPosts(userType,await getUser.getToken()));
     } on ShowError catch (error) {
       _userPostStatus = UserPostStatus.error;
+      _setError(error);
+    }
+    notifyListeners();
+  }
+
+  getUserPhotos(String id) async {
+    try {
+      _status = Status.loading;
+      _setPhotoList(await _profileDetailService.getUserPhotos(id,await getUser.getToken()));
+    } on ShowError catch (error) {
+      _status = Status.error;
+      _setError(error);
+    }
+    notifyListeners();
+  }
+
+  getUserVideos(String id) async {
+    try {
+      _status = Status.loading;
+      _setVideoList(await _profileDetailService.getUserVideos(id,await getUser.getToken()));
+    } on ShowError catch (error) {
+      _status = Status.error;
       _setError(error);
     }
     notifyListeners();

@@ -14,7 +14,7 @@ class HomeContainerTileWidget extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: context.width * 0.28,
-        height: context.height * 0.13,
+        height: context.height * 0.135,
         decoration: const BoxDecoration(
           color: Colors.white70,
           borderRadius: BorderRadius.all(Radius.circular(10))

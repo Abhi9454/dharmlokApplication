@@ -19,6 +19,7 @@ import 'helpers/read_user_data.dart';
 import 'views/HomePage/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -31,6 +32,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dharmlok/viewModels/profile_detail_view_model.dart';
 import 'package:dharmlok/views/ProfileDetailPage/widget/profile_head_container.dart';
 import 'package:dharmlok/views/ProfileDetailPage/widget/profile_name_container.dart';
+import 'package:dharmlok/views/ProfileDetailPage/widget/video_widget.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get_time_ago/get_time_ago.dart';
@@ -24,7 +25,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
       required this.name,
       required this.category,
       required this.profileImageUrl,
-        required this.coverImageUrl,
+      required this.coverImageUrl,
       required this.userType,
       Key? key})
       : super(key: key);
@@ -38,7 +39,6 @@ class ProfileDetailPageWidget extends StatelessWidget {
 
   String updatedBiography = '';
 
-
   final GlobalKey<ScaffoldState> _profileDetailPageKey = GlobalKey();
 
   @override
@@ -49,6 +49,10 @@ class ProfileDetailPageWidget extends StatelessWidget {
         .getProfileDetail(id);
     Provider.of<ProfileDetailViewModel>(context, listen: false)
         .getAllPosts(category);
+    Provider.of<ProfileDetailViewModel>(context, listen: false)
+        .getUserPhotos(id);
+    Provider.of<ProfileDetailViewModel>(context, listen: false)
+        .getUserVideos(id);
     return Consumer<ProfileDetailViewModel>(
       builder: (con, profileModel, _) {
         return Scaffold(
@@ -114,37 +118,9 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       InkWell(
-                                        onTap: (){
-                                          profileModel.setSelectedTab(1);
+                                        onTap: () {
+                                          profileModel.setSelectedTab(0);
                                         },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            // border:
-                                            //     Border.all(color: Colors.brown),
-                                            color: profileModel.selectedTab == 1
-                                                ? Colors.white70
-                                                : Colors.white30,
-                                            borderRadius: const BorderRadius
-                                                .all(
-                                                Radius.circular(
-                                                    5.0) //                 <--- border radius here
-                                            ),
-                                          ),
-                                          width: context.width * 0.22,
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: Text(
-                                                'Biography',
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () =>
-                                            profileModel.setSelectedTab(0),
                                         child: Container(
                                           decoration: BoxDecoration(
                                             // border:
@@ -162,7 +138,35 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                           child: const Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Center(
-                                              child: Text('Posts'),
+                                              child: Text('Biography'),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () =>
+                                            profileModel.setSelectedTab(1),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            // border:
+                                            //     Border.all(color: Colors.brown),
+                                            color: profileModel.selectedTab == 1
+                                                ? Colors.white70
+                                                : Colors.white30,
+                                            borderRadius: const BorderRadius
+                                                    .all(
+                                                Radius.circular(
+                                                    5.0) //                 <--- border radius here
+                                                ),
+                                          ),
+                                          width: context.width * 0.22,
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Center(
+                                              child: Text(
+                                                'Posts',
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -222,7 +226,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                   SizedBox(
                                     height: context.height * 0.02,
                                   ),
-                                  profileModel.selectedTab == 1
+                                  profileModel.selectedTab == 0
                                       ? Padding(
                                           padding: const EdgeInsets.all(12.0),
                                           child: Container(
@@ -241,14 +245,17 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                 //       fontSize: 15),
                                                 // ),
                                                 child: Html(
-                                                    data: profileModel.profileDetails.biography!.description,
+                                                  data: profileModel
+                                                      .profileDetails
+                                                      .biography!
+                                                      .description,
                                                 ),
                                               ),
                                             ),
                                           ),
                                         )
                                       : const SizedBox(),
-                                  profileModel.selectedTab == 0
+                                  profileModel.selectedTab == 1
                                       ? const Padding(
                                           padding: EdgeInsets.only(left: 16.0),
                                           child: Text(
@@ -260,7 +267,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                           ),
                                         )
                                       : const SizedBox(),
-                                  profileModel.selectedTab == 0
+                                  profileModel.selectedTab == 1
                                       ? profileModel.postList.isEmpty
                                           ? const SizedBox(
                                               height: 100,
@@ -316,13 +323,19 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                                           .start,
                                                                   children: [
                                                                     Text(
-                                                                      profileModel.postList[index].userName,
+                                                                      profileModel
+                                                                          .postList[
+                                                                              index]
+                                                                          .userName,
                                                                       style: const TextStyle(
                                                                           color:
                                                                               AppColors.onPrimary),
                                                                     ),
                                                                     Text(
-                                                                      GetTimeAgo.parse(profileModel.postList[index].createdAt),
+                                                                      GetTimeAgo.parse(profileModel
+                                                                          .postList[
+                                                                              index]
+                                                                          .createdAt),
                                                                       style: const TextStyle(
                                                                           color:
                                                                               AppColors.onPrimary),
@@ -334,7 +347,9 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                           ),
                                                         ),
                                                         Image.asset(
-                                                            profileModel.postList[index].imageUrl,
+                                                            profileModel
+                                                                .postList[index]
+                                                                .imageUrl,
                                                             width:
                                                                 context.width,
                                                             fit: BoxFit.cover,
@@ -400,7 +415,7 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                   child:
                                                       Text('No Videos Found')))
                                           : ListView.builder(
-                                              itemCount: 10,
+                                              itemCount: profileModel.videoList.length,
                                               shrinkWrap: true,
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
@@ -446,18 +461,40 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .start,
-                                                                  children: const [
-                                                                    Text(
-                                                                      'Goswami Mridul Krishna Ji',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              AppColors.onPrimary),
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      width: context.width * 0.65,
+                                                                      child: Text(
+                                                                        profileModel
+                                                                            .videoList[
+                                                                                index]
+                                                                            .title,
+                                                                        maxLines:
+                                                                            1,
+                                                                        overflow:
+                                                                            TextOverflow
+                                                                                .ellipsis,
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                AppColors.onPrimary),
+                                                                      ),
                                                                     ),
-                                                                    Text(
-                                                                      '1 month Ago',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              AppColors.onPrimary),
+                                                                    SizedBox(
+                                                                      width: context.width * 0.7,
+                                                                      child: Text(
+                                                                        profileModel
+                                                                            .videoList[
+                                                                                index]
+                                                                            .description,
+                                                                        maxLines:
+                                                                            5,
+                                                                        overflow:
+                                                                            TextOverflow
+                                                                                .ellipsis,
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                AppColors.onPrimary),
+                                                                      ),
                                                                     )
                                                                   ],
                                                                 ),
@@ -465,45 +502,10 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                                             ],
                                                           ),
                                                         ),
-                                                        Image.asset(
-                                                            'images/dashboard.jpeg',
-                                                            width:
-                                                                context.width,
-                                                            fit: BoxFit.cover,
-                                                            height:
-                                                                context.height *
-                                                                    0.25),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 15.0),
-                                                          child: SizedBox(
-                                                            height:
-                                                                context.height *
-                                                                    0.05,
-                                                            child: Row(
-                                                              children: [
-                                                                const Text(
-                                                                  '2 Likes',
-                                                                  style: TextStyle(
-                                                                      color: AppColors
-                                                                          .onPrimary),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: context
-                                                                          .width *
-                                                                      0.05,
-                                                                ),
-                                                                const Text(
-                                                                  '12 Comments',
-                                                                  style: TextStyle(
-                                                                      color: AppColors
-                                                                          .onPrimary),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
+                                                        VideoWidget(
+                                                          play: true,
+
+                                                          url: 'https://dharmlok.s3.amazonaws.com/${profileModel.videoList[index].videoUrl}',
                                                         ),
                                                       ],
                                                     ),
@@ -514,135 +516,119 @@ class ProfileDetailPageWidget extends StatelessWidget {
                                       : const SizedBox(),
                                   profileModel.selectedTab == 3
                                       ? const Padding(
-                                    padding: EdgeInsets.only(left: 16.0),
-                                    child: Text(
-                                      'Photos',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
+                                          padding: EdgeInsets.only(left: 16.0),
+                                          child: Text(
+                                            'Photos',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
                                       : const SizedBox(),
                                   profileModel.selectedTab == 3
                                       ? profileModel.photoList.isEmpty
-                                      ? const SizedBox(
-                                      height: 100,
-                                      child: Center(
-                                          child:
-                                          Text('No Photos Found')))
-                                      : ListView.builder(
-                                    itemCount: 10,
-                                    shrinkWrap: true,
-                                    physics:
-                                    const NeverScrollableScrollPhysics(),
-                                    scrollDirection: Axis.vertical,
-                                    itemBuilder:
-                                        (BuildContext context,
-                                        int index) {
-                                      return Padding(
-                                        padding:
-                                        const EdgeInsets.only(
-                                            left: 12.0,
-                                            right: 12.0,
-                                            bottom: 12.0),
-                                        child: Card(
-                                          elevation: 2,
-                                          color: Colors.brown,
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(
-                                                    left: 15.0),
-                                                child: Row(
-                                                  children: [
-                                                    const CircleAvatar(
-                                                      radius:
-                                                      20, // Image radius
-                                                      backgroundImage:
-                                                      AssetImage(
-                                                          AppAssets
-                                                              .profileImage),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                      const EdgeInsets
-                                                          .all(
-                                                          10.0),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .start,
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: const [
-                                                          Text(
-                                                            'Goswami Mridul Krishna Ji',
-                                                            style: TextStyle(
-                                                                color:
-                                                                AppColors.onPrimary),
+                                          ? const SizedBox(
+                                              height: 100,
+                                              child: Center(
+                                                  child:
+                                                      Text('No Photos Found')))
+                                          : ListView.builder(
+                                              itemCount: profileModel.photoList.length,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              scrollDirection: Axis.vertical,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 12.0,
+                                                          right: 12.0,
+                                                          bottom: 12.0),
+                                                  child: Card(
+                                                    elevation: 2,
+                                                    color: Colors.brown,
+                                                    child: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 15.0),
+                                                          child: Row(
+                                                            children: [
+                                                              const CircleAvatar(
+                                                                radius:
+                                                                    20, // Image radius
+                                                                backgroundImage:
+                                                                    AssetImage(
+                                                                        AppAssets
+                                                                            .profileImage),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        10.0),
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      profileModel
+                                                                          .photoList[
+                                                                              index]
+                                                                          .title,
+                                                                      maxLines:
+                                                                          1,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: const TextStyle(
+                                                                          color:
+                                                                              AppColors.onPrimary),
+                                                                    ),
+                                                                    Text(
+                                                                      profileModel
+                                                                          .photoList[
+                                                                              index]
+                                                                          .description,
+                                                                      maxLines:
+                                                                          5,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: const TextStyle(
+                                                                          color:
+                                                                              AppColors.onPrimary),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
                                                           ),
-                                                          Text(
-                                                            '1 month Ago',
-                                                            style: TextStyle(
-                                                                color:
-                                                                AppColors.onPrimary),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              Image.asset(
-                                                  'images/dashboard.jpeg',
-                                                  width:
-                                                  context.width,
-                                                  fit: BoxFit.cover,
-                                                  height:
-                                                  context.height *
-                                                      0.25),
-                                              Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(
-                                                    left: 15.0),
-                                                child: SizedBox(
-                                                  height:
-                                                  context.height *
-                                                      0.05,
-                                                  child: Row(
-                                                    children: [
-                                                      const Text(
-                                                        '2 Likes',
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .onPrimary),
-                                                      ),
-                                                      SizedBox(
-                                                        width: context
-                                                            .width *
-                                                            0.05,
-                                                      ),
-                                                      const Text(
-                                                        '12 Comments',
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .onPrimary),
-                                                      )
-                                                    ],
+                                                        ),
+                                                        Image.network(
+                                                            'https://dharmlok.s3.amazonaws.com/${profileModel.photoList[index].imageUrl}',
+                                                            width:
+                                                                context.width,
+                                                            fit: BoxFit.cover,
+                                                            height:
+                                                                context.height *
+                                                                    0.25),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  )
+                                                );
+                                              },
+                                            )
                                       : const SizedBox(),
                                 ],
                               ),

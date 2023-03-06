@@ -8,6 +8,7 @@ import '../../main.dart';
 import '../../viewModels/login_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../ForgetPasswordPage/forget_password_page_widget.dart';
 import '../Registration/registration_page_widget.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
@@ -194,6 +195,32 @@ class LoginPageWidget extends StatelessWidget {
                               ),
                             )
                           ],
+                        ),
+                        SizedBox(height: context.height * 0.02,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MultiProvider(
+                                            providers: <
+                                                ChangeNotifierProvider<
+                                                    LoginPageViewModel>>[
+                                              ChangeNotifierProvider<
+                                                  LoginPageViewModel>(
+                                                  create: (_) =>
+                                                      LoginPageViewModel())
+                                            ],
+                                            child:
+                                            ForgetPasswordPageWidget())));
+                          },
+                          child: const Text(
+                            'Forget Password?',
+                            style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(height: context.height * 0.05,),
                         SignInButton(
