@@ -168,7 +168,7 @@ class DharamshalaPageWidget extends StatelessWidget {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
-                                                      print('This is location${dharmshalaModel.dharmshalaList[index].longitude}');
+                                                      print('This is location${dharmshalaModel.dharmshalaList[index].description}');
                                                       List<String> imageLinks =
                                                           [];
                                                       imageLinks.add(

@@ -5,6 +5,7 @@ import 'package:dharmlok/extensions/device_size.dart';
 import 'package:dharmlok/viewModels/dharmshala_form_view_model.dart';
 import 'package:dharmlok/views/DharmshalaFormPage/dharmshala_form_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -149,22 +150,14 @@ class DharmshalaDetailsPageWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Container(
-                          color: Colors.brown,
+                          color: Colors.white70,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Text(
-                                  description,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 15,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.normal),
+                              SizedBox(
+                                child: Html(
+                                  data : description,
                                 ),
                               ),
                             ],
