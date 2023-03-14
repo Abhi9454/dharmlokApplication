@@ -15,7 +15,7 @@ class AuthenticateService {
   final Dio _dio = Dio();
 
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>> login(String email, String password, String name, String phone, int social) async {
 
     try {
       final Map<String, dynamic> _header = <String, dynamic>{
@@ -23,7 +23,13 @@ class AuthenticateService {
       };
       final Map<String, dynamic>  map = <String, dynamic>{
         'email' : email,
-        'password' : password
+        'password' : password,
+        'name':name,
+        'phone':phone,
+        'userType': 'user',
+        'typeVendor': '',
+        'category':'',
+        'social' : social
       };
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (HttpClient dioClient) {
@@ -57,7 +63,8 @@ class AuthenticateService {
         'phone':phone,
         'userType': 'user',
         'typeVendor': '',
-        'category':''
+        'category':'',
+        'social' : 0
       };
       print('This is again called');
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =

@@ -191,7 +191,7 @@ class _PanditDetailsPageWidgetState extends State<PanditDetailsPageWidget> {
                                 height: context.height * 0.01,
                               ),
                               SizedBox(
-                                height: context.height * 0.38,
+                                height: context.height * 0.45,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount:
@@ -270,6 +270,36 @@ class _PanditDetailsPageWidgetState extends State<PanditDetailsPageWidget> {
                                                       color: Colors.black,
                                                       fontSize: 18,
                                                       fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () async{
+                                                  await panditDetailsModel.getServiceDetails(panditDetailsModel.panditService[index].id);
+                                                  Navigator.of(context).pop();
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              MultiProvider(
+                                                                  providers: <
+                                                                      ChangeNotifierProvider<
+                                                                          PanditDetailsViewModel>>[
+                                                                    ChangeNotifierProvider<
+                                                                        PanditDetailsViewModel>(
+                                                                        create: (_) =>
+                                                                            PanditDetailsViewModel())
+                                                                  ],
+                                                                  child:
+                                                                  PanditDetailsPageWidget(panditId:   panditDetailsModel.serviceDetails.message.id, phoneNumber: widget.phoneNumber,))));
+                                                },
+                                                style:
+                                                ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                    Colors.red),
+                                                child: const Text(
+                                                  'View Details',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
                                                 ),
                                               ),
                                             ],

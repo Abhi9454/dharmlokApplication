@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dharmlok/extensions/device_size.dart';
 import 'package:dharmlok/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +141,7 @@ class LoginPageWidget extends StatelessWidget {
                             onPressed: () {
                               if (email.text.isNotEmpty &&
                                   password.text.isNotEmpty) {
-                                model.login(email.text, password.text);
+                                model.login(email.text, password.text, " ", (Random().nextInt(3331212323) + 2311232212).toString(),"user", "","", 0);
                               } else {
                                 const snackBar = SnackBar(
                                   content: Text(

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 
@@ -9,6 +12,7 @@ import '../models/user_model.dart';
 import '../services/authenticate_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 
 class LoginPageViewModel extends ChangeNotifier {
@@ -78,21 +82,19 @@ class LoginPageViewModel extends ChangeNotifier {
     );
     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     if (googleSignInAccount != null) {
-      login(googleSignInAccount.email, googleSignInAccount.email);
+      login(googleSignInAccount.email, googleSignInAccount.email,googleSignInAccount.displayName ?? 'Google User', (Random().nextInt(3331212323) + 2311232212).toString(),"user", "","", 1);
     }
   }
 
   loginFaceBook() async {
-    final res = await fb.logIn(permissions: [
-      FacebookPermission.publicProfile,
-      FacebookPermission.email,
-    ]).then((value) async{
-      final FacebookAccessToken? accessToken = value.accessToken;
-      final profile = await fb.getUserProfile();
-      print("this is user value${profile!.firstName}");
-    });
+    var facebookLoginResult =
+    await fb.logIn(permissions: [FacebookPermission.email, FacebookPermission.publicProfile]);
+    if(facebookLoginResult.status == FacebookLoginStatus.success){
+      var graphResponse = await http.get(Uri.parse('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${facebookLoginResult.accessToken?.token}'));
 
-    print(res.toString());
+      var profile = json.decode(graphResponse.body);
+      login(profile["email"], profile["email"], profile["name"], (Random().nextInt(3331212323) + 2311232212).toString(),"user", "","", 1);
+    }
   }
 
   updateShowPassword(){
@@ -114,10 +116,10 @@ class LoginPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  login(String email, String password) async {
+  login(String email, String password,String name,String phone,String userType,String typeVendor,String category,int social) async {
     try {
       _loginStatus = e.LoginStatus.loading;
-      _setUserDetails(await _authenticateService.login(email, password));
+      _setUserDetails(await _authenticateService.login(email, password, name ,phone, social));
     } on ShowError catch (error) {
       _loginStatus = e.LoginStatus.error;
       _setError(error);
