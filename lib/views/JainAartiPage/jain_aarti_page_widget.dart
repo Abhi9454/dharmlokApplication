@@ -33,7 +33,7 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
 
   List<String> imageList = [
     AppAssets.jainBhagwan,
-    // AppAssets.durgaImage,
+    AppAssets.mahavirImage,
     // AppAssets.hanuManImage,
     // AppAssets.shivImage,
     // AppAssets.kaliImage,

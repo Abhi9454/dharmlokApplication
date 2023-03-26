@@ -59,5 +59,6 @@ class AppAssets{
   static const buddhaAarti = '$basePath/budh-aarti.mp3';
   static const jainBhagwan = '$basePath/jain-bhagwan.png';
   static const buddhaBhagwan = '$basePath/budh-bhagwan.png';
+  static const mahavirImage = '$basePath/mahavir.jpeg';
 
 }
