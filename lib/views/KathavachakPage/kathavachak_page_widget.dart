@@ -1,5 +1,6 @@
 import 'package:dharmlok/viewModels/vendor_view_model.dart';
 import 'package:dharmlok/views/DharmguruPage/widget/list_container.dart';
+import 'package:dharmlok/views/KathavachakPage/widget/kathavachak_list_container.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/AppAssets.dart';
@@ -211,7 +212,7 @@ class KathavachakPageWidget extends StatelessWidget {
                                             scrollDirection: Axis.vertical,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
-                                              return DharmguruListContainer(
+                                              return KathavachakListContainer(
                                                   profileImage: vendorModel
                                                       .vendorDetails[index]
                                                       .profileImageUrl,

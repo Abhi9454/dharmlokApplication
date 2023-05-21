@@ -193,7 +193,33 @@ class _JainAartiPageWidgetState extends State<JainAartiPageWidget>
                       color: Colors.white,
                     ),
                   ),
+                  title: SizedBox(
+                    width: context.width * 0.6,
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                          enlargeCenterPage: true,
+                          viewportFraction: 0.20,
+                          enableInfiniteScroll: false,
+                          onPageChanged: (item, reason) async {
+                            _scrollToIndex(item);
+                          }),
+                      items: imageList.map((i) {
+                        return Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: CircleAvatar(
+                            radius: 25,
+                            child: Image.asset(
+                              i,
+                              width: 65,
+                              height: 65,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
+
               ),
             ),
             Padding(

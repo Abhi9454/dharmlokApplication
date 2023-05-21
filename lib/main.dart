@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:dharmlok/viewModels/main_view_model.dart';
 import 'package:dharmlok/viewModels/manage_profile_view_model.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/services.dart';
 
 import 'constants/AppAssets.dart';
@@ -78,6 +79,11 @@ class NavigationTab extends StatefulWidget {
 }
 
 class _NavigationTabState extends State<NavigationTab> {
+
+
+  final String DynamicLink = 'https://dharmlok.com/#/welcome';
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
   final UserDetails _userDetails = UserDetails();
   int _currentIndex = 0;
   final templeBellAsset = AssetsAudioPlayer();
@@ -103,6 +109,16 @@ class _NavigationTabState extends State<NavigationTab> {
       Audio(AppAssets.templeBell),
     );
     templeBellAsset.play();
+    initDynamicLinks();
+  }
+
+
+  Future<void> initDynamicLinks() async {
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      checkLoginStatus();
+    }).onError((error) {
+      print('onLink error');
+    });
   }
 
 

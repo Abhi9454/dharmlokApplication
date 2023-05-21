@@ -3,13 +3,15 @@ import 'package:dharmlok/extensions/device_size.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/AppAssets.dart';
+import '../../../constants/AppStrings.dart';
 
 
 class KathavachakListContainer extends StatelessWidget {
-  const KathavachakListContainer({required this.name, required this.category, required this.imageLink,required this.onPressed,Key? key}) : super(key: key);
+  const KathavachakListContainer({required this.name, required this.category, required this.profileImage,required this.onPressed,Key? key}) : super(key: key);
 
+
+  final String profileImage;
   final String name;
-  final String imageLink;
   final String category;
   final VoidCallback onPressed;
 
@@ -20,8 +22,8 @@ class KathavachakListContainer extends StatelessWidget {
       child: Container(
         height: context.height * 0.12,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.brown),
-          color: Colors.brown,
+          border: Border.all(color: Colors.white70),
+          color: Colors.white70,
           borderRadius: const BorderRadius.all(
               Radius.circular(
                   5.0) //                 <--- border radius here
@@ -37,27 +39,37 @@ class KathavachakListContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                     const CircleAvatar(
+                    CircleAvatar(
                       radius: 30, // Image radius
-                      backgroundImage: AssetImage(
-                          AppAssets.profileImage),
+                      backgroundImage: NetworkImage(
+                          '${AppStrings.imageUrl}$profileImage'),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                        CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            name,
-                            style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 16),
+                          SizedBox(
+                            width : context.width * 0.45,
+                            child: Center(
+                              child: Text(
+                                name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Color(0XFF604e36),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            ),
                           ),
                           Text(
                             'Kathavachak/$category',
                             style: const TextStyle(
-                                color: AppColors.secondary,
+                                color: Color(0XFF604e36),
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16),
                           ),
                         ],
@@ -74,7 +86,7 @@ class KathavachakListContainer extends StatelessWidget {
                   style:
                   ElevatedButton.styleFrom(
                       backgroundColor:
-                      Colors.red),
+                      Color(0XFFA60606)),
                   child: const Text(
                     'View',
                     style: TextStyle(
